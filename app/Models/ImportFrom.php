@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace MailMarketing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserAccount extends Model
+class ImportFrom extends Model
 {
 
     /**
@@ -19,6 +19,5 @@ class UserAccount extends Model
      *
      * @var string $table
      */
-    protected $table = 'UserAccount';
-
+    protected $table = 'ImportFrom';
 }

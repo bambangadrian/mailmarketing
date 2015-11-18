@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace MailMarketing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SegmentCriteria extends Model
+class Template extends Model
 {
 
     /**
@@ -19,5 +19,5 @@ class SegmentCriteria extends Model
      *
      * @var string $table
      */
-    protected $table = 'SegmentCriteria';
+    protected $table = 'Template';
 }

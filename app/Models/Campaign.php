@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace MailMarketing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MailSchedule extends Model
+class Campaign extends Model
 {
 
     /**
@@ -19,5 +19,5 @@ class MailSchedule extends Model
      *
      * @var string $table
      */
-    protected $table = 'MailSchedule';
+    protected $table = 'Campaign';
 }

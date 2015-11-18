@@ -12,7 +12,7 @@
 */
 
 $factory->define(
-    App\User::class,
+    MailMarketing\User::class,
     function (Faker\Generator $faker) {
         return [
             'name'           => $faker->name,

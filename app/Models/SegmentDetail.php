@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace MailMarketing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserRole extends Model
+class SegmentDetail extends Model
 {
 
     /**
@@ -19,5 +19,5 @@ class UserRole extends Model
      *
      * @var string $table
      */
-    protected $table = 'UserRole';
+    protected $table = 'SegmentDetail';
 }

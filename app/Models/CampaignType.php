@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace MailMarketing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Template extends Model
+class CampaignType extends Model
 {
 
     /**
@@ -19,5 +19,5 @@ class Template extends Model
      *
      * @var string $table
      */
-    protected $table = 'Template';
+    protected $table = 'CampaignType';
 }

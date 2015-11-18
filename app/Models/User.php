@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace MailMarketing\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

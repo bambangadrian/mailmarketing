@@ -131,10 +131,10 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        MailMarketing\Providers\AppServiceProvider::class,
+        MailMarketing\Providers\AuthServiceProvider::class,
+        MailMarketing\Providers\EventServiceProvider::class,
+        MailMarketing\Providers\RouteServiceProvider::class,
 
     ],
     /*

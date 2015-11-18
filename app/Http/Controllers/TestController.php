@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace MailMarketing\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use MailMarketing\Http\Requests;
+use MailMarketing\Http\Controllers\Controller;
 
 class TestController extends Controller
 {
