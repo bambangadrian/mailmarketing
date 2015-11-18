@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<!--
+<!DOCTYPE html><!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
@@ -56,16 +55,16 @@ desired effect
     <!-- Header -->
     @include('admin.template.lte.header')
 
-    <!-- Sidebar -->
+            <!-- Sidebar -->
     @include('admin.template.lte.sidebar')
 
-    <!-- Main Content -->
+            <!-- Main Content -->
     @include('admin.template.lte.content')
 
-    <!-- Control Sidebar -->
+            <!-- Control Sidebar -->
     @include('admin.template.lte.control')
 
-    <!-- Footer -->
+            <!-- Footer -->
     @include('admin.template.lte.footer')
 </div>
 <!-- ./wrapper -->

@@ -59,16 +59,13 @@
                     </label>
 
                     <p>
-                        Some information about this general settings option
-                    </p>
+                        Some information about this general settings option </p>
                 </div>
                 <!-- /.form-group -->
             </form>
         </div>
         <!-- /.tab-pane -->
     </div>
-</aside>
-<!-- /.control-sidebar -->
-<!-- Add the sidebar's background. This div must be placed
+</aside><!-- /.control-sidebar --><!-- Add the sidebar's background. This div must be placed
      immediately after the control sidebar -->
 <div class="control-sidebar-bg"></div>

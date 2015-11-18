@@ -34,7 +34,8 @@
                                     <a href="#">
                                         <div class="pull-left">
                                             <!-- User Image -->
-                                            <img src="{{ asset("/bower_components/AdminLTE/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image">
+                                            <img src="{{ asset("/bower_components/AdminLTE/dist/img/user2-160x160.jpg") }}"
+                                                 class="img-circle" alt="User Image">
                                         </div>
                                         <!-- Message title and timestamp -->
                                         <h4>
@@ -99,7 +100,9 @@
                                         <!-- The progress bar -->
                                         <div class="progress xs">
                                             <!-- Change the css width attribute to simulate progress -->
-                                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar progress-bar-aqua" style="width: 20%"
+                                                 role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                 aria-valuemax="100">
                                                 <span class="sr-only">20% Complete</span>
                                             </div>
                                         </div>
@@ -118,14 +121,16 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="{{ asset("/bower_components/AdminLTE/dist/img/avatar5.png") }}" class="user-image" alt="User Image">
+                        <img src="{{ asset("/bower_components/AdminLTE/dist/img/avatar5.png") }}" class="user-image"
+                             alt="User Image">
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">{{ $user->name or 'Administrator' }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="{{ asset("/bower_components/AdminLTE/dist/img/avatar5.png") }}" class="img-circle" alt="User Image">
+                            <img src="{{ asset("/bower_components/AdminLTE/dist/img/avatar5.png") }}" class="img-circle"
+                                 alt="User Image">
 
                             <p>
                                 Admnistrator - CBN
@@ -135,18 +140,18 @@
 
                         {{--<!-- Menu Body -->--}}
                         {{--<li class="user-body">--}}
-                            {{--<div class="row">--}}
-                                {{--<div class="col-xs-4 text-center">--}}
-                                    {{--<a href="#">Followers</a>--}}
-                                {{--</div>--}}
-                                {{--<div class="col-xs-4 text-center">--}}
-                                    {{--<a href="#">Sales</a>--}}
-                                {{--</div>--}}
-                                {{--<div class="col-xs-4 text-center">--}}
-                                    {{--<a href="#">Friends</a>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<!-- /.row -->--}}
+                        {{--<div class="row">--}}
+                        {{--<div class="col-xs-4 text-center">--}}
+                        {{--<a href="#">Followers</a>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-xs-4 text-center">--}}
+                        {{--<a href="#">Sales</a>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-xs-4 text-center">--}}
+                        {{--<a href="#">Friends</a>--}}
+                        {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<!-- /.row -->--}}
                         {{--</li>--}}
                         <!-- Menu Footer-->
                         <li class="user-footer">

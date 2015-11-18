@@ -8,32 +8,34 @@ use App\Http\Controllers\Controller;
 
 class TestController extends Controller
 {
-    public function index(){
+
+    public function index()
+    {
         $data['tasks'] = [
             [
-                'name' => 'Design New Dashboard',
+                'name'     => 'Design New Dashboard',
                 'progress' => '87',
-                'color' => 'danger'
+                'color'    => 'danger'
             ],
             [
-                'name' => 'Create Home Page',
+                'name'     => 'Create Home Page',
                 'progress' => '76',
-                'color' => 'warning'
+                'color'    => 'warning'
             ],
             [
-                'name' => 'Some Other Task',
+                'name'     => 'Some Other Task',
                 'progress' => '32',
-                'color' => 'success'
+                'color'    => 'success'
             ],
             [
-                'name' => 'Start Building Website',
+                'name'     => 'Start Building Website',
                 'progress' => '56',
-                'color' => 'info'
+                'color'    => 'info'
             ],
             [
-                'name' => 'Develop an Awesome Algorithm',
+                'name'     => 'Develop an Awesome Algorithm',
                 'progress' => '10',
-                'color' => 'success'
+                'color'    => 'success'
             ]
         ];
         return view('admin.index')->with($data);

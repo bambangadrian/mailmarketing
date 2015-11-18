@@ -7,6 +7,7 @@ use Illuminate\Foundation\Inspiring;
 
 class Inspire extends Command
 {
+
     /**
      * The name and signature of the console command.
      *
@@ -28,6 +29,6 @@ class Inspire extends Command
      */
     public function handle()
     {
-        $this->comment(PHP_EOL.Inspiring::quote().PHP_EOL);
+        $this->comment(PHP_EOL . Inspiring::quote() . PHP_EOL);
     }
 }
