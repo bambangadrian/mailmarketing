@@ -72,6 +72,6 @@ class AuthController extends Controller
     public function doLogout()
     {
         \Auth::logout();
-        return redirect($this->loginPath());
+        return redirect($this->loginPath())->with('info', 'You have been logout. See Yaa!!...');
     }
 }

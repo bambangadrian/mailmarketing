@@ -4,9 +4,14 @@ body {
   color: #838383;
 }
 
+.login-logo,
+.register-logo {
+  margin-bottom: 20px !important;
+}
+
 .login-box-body {
-  border: 1px solid #eee;
-  border-radius: 5px;
+  border: 2px solid rgba(200, 200, 200, 0.3);
+  border-radius: 3px;
 }
 
 #fixedCopyRight {

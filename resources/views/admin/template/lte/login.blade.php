@@ -19,15 +19,24 @@
 <body class="hold-transition login-page">
 <div class="login-box">
 
-    <div class="login-logo">
-        <a href="#" style="text-shadow: 1px 1px 1px #fff;">
-            <b style="color:darkkhaki;">CBN</b> <span style="color:darkred;font-weight: bolder;">Mail Marketing</span>
+    <div class="login-logo" style="text-align: right">
+        <a href="#" style="text-shadow: 1px 1px 1px white;">
+            <span style="transform: rotate(0deg);left:5px;font-size:14px;color:#F5bb2A;line-height: 10px;" class="glyphicon glyphicon-envelope"><br/>mail</span>
+            <span style="color:#E81E29;font-weight: bolder;"> MARKETING</span>
+            <span style="color:#666666;font-weight: bold;">CBN</span> &raquo;
         </a>
     </div>
     <div class="login-box-body">
         <p class="login-box-msg">{{ $pageHeader or 'Sign in to start your session' }}</p>
+        @if(Session::has('info'))
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                {{ Session::get('info') }}
+            </div>
+        @endif
         @if($errors->any())
-            <div class="alert alert-danger alert-dismissible">
+            <div class="alert alert-danger alert-important alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 @foreach ($errors->all() as $error)
@@ -77,6 +86,7 @@
             radioClass: 'iradio_square-blue',
             increaseArea: '20%'
         });
+        $('div.alert').not('.alert-important').delay(3000).slideUp(300);
     });
 </script>
 </body>
