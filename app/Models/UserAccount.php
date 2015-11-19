@@ -25,16 +25,23 @@ class UserAccount extends Model implements Authenticatable
     /**
      * The primary key field name.
      *
-     * @var string
+     * @var string $primaryKey
      */
     protected $primaryKey = 'Usr_ID';
 
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+     * @var array $hidden
      */
     protected $hidden = ['Usr_Password', 'Usr_Token'];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array $fillable
+     */
+    protected $fillable = ['Usr_Name', 'Usr_Email', 'Usr_Password'];
 
     /**
      * Override required, otherwise existing Authentication system will not match credentials

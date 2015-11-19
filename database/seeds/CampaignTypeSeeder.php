@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\CampaignType as CampaignType;
+use MailMarketing\Models\CampaignType as CampaignType;
 
 class CampaignTypeSeeder extends Seeder
 {

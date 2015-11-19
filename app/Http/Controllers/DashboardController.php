@@ -16,7 +16,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        echo \Auth::user()->Usr_UserName;
+        echo Auth::user()->Usr_UserName;
     }
 
     /**

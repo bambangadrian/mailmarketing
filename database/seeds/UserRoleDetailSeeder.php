@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use MailMarketing\Models\UserRoleDetail as UserRoleDetail;
 
@@ -27,6 +26,13 @@ class UserRoleDetailSeeder extends Seeder
             [
                 'Urd_UserID'    => 2,
                 'Urd_RoleID'    => 2,
+                'Urd_CreatedOn' => Carbon\Carbon::now(),
+                'Urd_CreatedBy' => 1,
+                'Urd_GUID'      => (string)Uuid::generate(4)
+            ],
+            [
+                'Urd_UserID'    => 3,
+                'Urd_RoleID'    => 3,
                 'Urd_CreatedOn' => Carbon\Carbon::now(),
                 'Urd_CreatedBy' => 1,
                 'Urd_GUID'      => (string)Uuid::generate(4)
