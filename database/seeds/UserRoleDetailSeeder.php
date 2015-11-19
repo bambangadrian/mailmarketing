@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\UserRoleDetail as UserRoleDetail;
+use MailMarketing\Models\UserRoleDetail as UserRoleDetail;
 
 class UserRoleDetailSeeder extends Seeder
 {

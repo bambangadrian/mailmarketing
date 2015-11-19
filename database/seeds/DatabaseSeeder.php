@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
         # Disable Foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $this->call(UserAccountTableSeeder::class);
+        $this->call(UserAccountSeeder::class);
         $this->command->info('UserAccount Table Seeded !!');
         $this->call(UserRoleSeeder::class);
         $this->command->info('UserRole Table Seeded !!');

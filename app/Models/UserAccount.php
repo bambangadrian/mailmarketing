@@ -2,9 +2,10 @@
 
 namespace MailMarketing\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAccount extends Model
+class UserAccount extends Model implements Authenticatable
 {
 
     /**
@@ -21,4 +22,69 @@ class UserAccount extends Model
      */
     protected $table = 'UserAccount';
 
+    /**
+     * The primary key field name.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'Usr_ID';
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['Usr_Password', 'Usr_Token'];
+
+    /**
+     * Override required, otherwise existing Authentication system will not match credentials
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->attributes['Usr_Password'];
+    }
+
+    /**
+     * Get the user remember token value.
+     *
+     * @return string
+     */
+    public function getRememberToken()
+    {
+        return $this->attributes[$this->getRememberTokenName()];
+    }
+
+    /**
+     * Get the remember token field/attribute name.
+     *
+     * @return string
+     */
+    public function getRememberTokenName()
+    {
+        return 'Usr_Token';
+    }
+
+    /**
+     * Get authentication identifier.
+     *
+     * @return string
+     */
+    public function getAuthIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Set the token value for the "remember me" session.
+     *
+     * @param  string $value
+     *
+     * @return void
+     */
+    public function setRememberToken($value)
+    {
+        $this->attributes[$this->getRememberTokenName()] = $value;
+    }
 }

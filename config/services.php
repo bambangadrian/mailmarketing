@@ -27,7 +27,7 @@ return [
         'region' => 'us-east-1',
     ],
     'stripe'   => [
-        'model'  => MailMarketing\User::class,
+        'model'  => MailMarketing\Models\UserAccount::class,
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

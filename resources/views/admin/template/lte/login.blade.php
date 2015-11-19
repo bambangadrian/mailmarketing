@@ -18,6 +18,7 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
+
     <div class="login-logo">
         <a href="#" style="text-shadow: 1px 1px 1px #fff;">
             <b style="color:darkkhaki;">CBN</b> <span style="color:darkred;font-weight: bolder;">Mail Marketing</span>
@@ -26,33 +27,35 @@
     <div class="login-box-body">
         <p class="login-box-msg">{{ $pageHeader or 'Sign in to start your session' }}</p>
         {!! Form::open() !!}
-            <div class="form-group has-feedback">
-                <input type="email" name="Usr_Email" class="form-control" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" name="Usr_Password" class="form-control" placeholder="Password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox" name="RememberMe"> Remember Me
-                        </label>
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+        <div class="form-group has-feedback">
+            <input type="email" name="Usr_Email" class="form-control" placeholder="Email"
+                   value="{{ old('Usr_Email') }}">
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="checkbox icheck">
+                    <label>
+                        <input type="checkbox" name="remember"> Remember Me
+                    </label>
                 </div>
             </div>
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            </div>
+        </div>
         {!! Form::close() !!}
         <a href="#">I forgot my password</a><br>
     </div>
-    <div class="text-muted small text-right" id="fixedCopyRight">
-        <div>CopyRights&copy; : BRainsFusion Production&trade;</div>
-        <div>Design Modified By : Yuh7Predators</div>
-    </div>
+</div>
+
+<div class="text-muted small text-right" id="fixedCopyRight">
+    <div>CopyRights&copy; : BRainsFusion Production&trade;</div>
+    <div>Design Modified By : Yuh7Predators</div>
 </div>
 
 <script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>

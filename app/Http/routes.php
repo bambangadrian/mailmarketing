@@ -15,7 +15,7 @@ Route::group(
     ['prefix' => 'admin',],
     function () {
         Route::group(
-            ['middleware' => ['acl']],
+            ['middleware' => ['auth', 'acl']],
             function () {
                 Route::get('test', 'TestController@index');
 

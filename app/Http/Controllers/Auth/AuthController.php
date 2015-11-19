@@ -2,8 +2,7 @@
 
 namespace MailMarketing\Http\Controllers\Auth;
 
-use MailMarketing\User;
-use Validator;
+use Illuminate\Http\Request;
 use MailMarketing\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -25,56 +24,43 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
+     * Redirect path if authentication successful.
+     *
+     * @var string $redirectPath
+     */
+    protected $redirectPath;
+
+    /**
      * Create a new authentication controller instance.
      *
      */
     public function __construct()
     {
+        $this->redirectPath = 'admin/dashboard';
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
     /**
+     * Get login page.
      *
+     * @return string
      */
     public function getLogin()
     {
         return view('admin.login');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array $data
-     *
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function doAuth(Request $request)
     {
-        return Validator::make(
-            $data,
-            [
-                'name'     => 'required|max:255',
-                'email'    => 'required|email|max:255|unique:users',
-                'password' => 'required|confirmed|min:6',
-            ]
-        );
+        $this->validate($request, ['Usr_Email' => 'required|email', 'password' => 'required']);
+        $credentials = $request->only('Usr_Email', 'password');
+        $remember = ($request->has('remember')) ? true : false;
+        if (Auth::attempt($credentials, $remember)) {
+            return redirect()->intended($this->redirectPath());
+        }
+        return redirect('/admin/login')
+            ->withInput($request->only('Usr_Email'))
+            ->withErrors(['email' => 'Your credentials data do not match our records']);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array $data
-     *
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create(
-            [
-                'name'     => $data['name'],
-                'email'    => $data['email'],
-                'password' => bcrypt($data['password']),
-            ]
-        );
-    }
 }

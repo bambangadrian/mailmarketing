@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\UserRole as UserRole;
+use MailMarketing\Models\UserRole as UserRole;
 
 class UserRoleSeeder extends Seeder
 {
