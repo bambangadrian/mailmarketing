@@ -27,7 +27,7 @@ return [
     |
     */
 
-    'model'    => MailMarketing\UserAccount::class,
+    'model'    => MailMarketing\Models\UserAccount::class,
     /*
     |--------------------------------------------------------------------------
     | Authentication Table

@@ -135,6 +135,8 @@ return [
         MailMarketing\Providers\AuthServiceProvider::class,
         MailMarketing\Providers\EventServiceProvider::class,
         MailMarketing\Providers\RouteServiceProvider::class,
+        # Add the html service provider
+        Illuminate\Html\HtmlServiceProvider::class,
 
     ],
     /*
@@ -184,6 +186,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Uuid'      => Webpatser\Uuid\Uuid::class,
-    ],
-
+        'Html'      => Illuminate\Html\HtmlFacade::class,
+        'Form'      => Illuminate\Html\FormFacade::class
+    ]
 ];
