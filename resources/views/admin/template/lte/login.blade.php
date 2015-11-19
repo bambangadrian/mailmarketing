@@ -26,6 +26,15 @@
     </div>
     <div class="login-box-body">
         <p class="login-box-msg">{{ $pageHeader or 'Sign in to start your session' }}</p>
+        @if($errors->any())
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                @foreach ($errors->all() as $error)
+                    {{ $error }} <br/>
+                @endforeach
+            </div>
+        @endif
         {!! Form::open() !!}
         <div class="form-group has-feedback">
             <input type="email" name="Usr_Email" class="form-control" placeholder="Email"

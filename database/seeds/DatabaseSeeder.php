@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +25,10 @@ class DatabaseSeeder extends Seeder
         $this->command->info('MailTrackingStatus Table Seeded !!');
         $this->call(CampaignTypeSeeder::class);
         $this->command->info('CampaignType Table Seeded !!');
+        $this->call(PermissionSeeder::class);
+        $this->command->info('Permission Table Seeded !!');
+        $this->call(PermissionRoleSeeder::class);
+        $this->command->info('PermissionRole Table Seeded !!');
         Model::reguard();
     }
 }

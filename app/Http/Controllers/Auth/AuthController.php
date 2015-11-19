@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
@@ -20,7 +19,6 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
-
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
@@ -31,13 +29,21 @@ class AuthController extends Controller
     protected $redirectPath;
 
     /**
+     * Login path authentication.
+     *
+     * @var stirng $loginPath
+     */
+    protected $loginPath;
+
+    /**
      * Create a new authentication controller instance.
      *
      */
     public function __construct()
     {
         $this->redirectPath = 'admin/dashboard';
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->loginPath = 'admin/login';
+        $this->middleware('guest', ['except' => 'doLogout']);
     }
 
     /**
@@ -55,12 +61,17 @@ class AuthController extends Controller
         $this->validate($request, ['Usr_Email' => 'required|email', 'password' => 'required']);
         $credentials = $request->only('Usr_Email', 'password');
         $remember = ($request->has('remember')) ? true : false;
-        if (Auth::attempt($credentials, $remember)) {
+        if (\Auth::attempt($credentials, $remember)) {
             return redirect()->intended($this->redirectPath());
         }
-        return redirect('/admin/login')
+        return redirect($this->loginPath())
             ->withInput($request->only('Usr_Email'))
             ->withErrors(['email' => 'Your credentials data do not match our records']);
     }
 
+    public function doLogout()
+    {
+        \Auth::logout();
+        return redirect($this->loginPath());
+    }
 }

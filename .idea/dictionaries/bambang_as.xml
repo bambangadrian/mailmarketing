@@ -4,6 +4,7 @@
       <w>fillable</w>
       <w>guid</w>
       <w>maillist</w>
+      <w>trackstatus</w>
     </words>
   </dictionary>
 </component>

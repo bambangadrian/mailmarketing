@@ -32,7 +32,7 @@ class CreatePermissionRoleTable extends Migration
                 $table->char('Pmr_GUID', 36);
                 # Add all the table constraint.
                 $table->unique(['Pmr_PermissionID', 'Pmr_RoleID']);
-                $table->foreign('Pmr_PermssionID')->references('Pm_ID')->on('Permission');
+                $table->foreign('Pmr_PermissionID')->references('Pm_ID')->on('Permission');
                 $table->foreign('Pmr_RoleID')->references('Ur_ID')->on('UserRole');
             }
         );

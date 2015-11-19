@@ -121,16 +121,16 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="{{ asset("/vendor/bower_components/AdminLTE/dist/img/avatar5.png") }}" class="user-image"
-                             alt="User Image">
+                        <img src="{{ asset("/vendor/bower_components/AdminLTE/dist/img/avatar5.png") }}"
+                             class="user-image" alt="User Image">
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">{{ $user->name or 'Administrator' }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="{{ asset("/vendor/bower_components/AdminLTE/dist/img/avatar5.png") }}" class="img-circle"
-                                 alt="User Image">
+                            <img src="{{ asset("/vendor/bower_components/AdminLTE/dist/img/avatar5.png") }}"
+                                 class="img-circle" alt="User Image">
 
                             <p>
                                 Admnistrator - CBN
@@ -159,7 +159,7 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ url('admin/logout') }}" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>
