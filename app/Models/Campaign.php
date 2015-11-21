@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -20,4 +19,13 @@ class Campaign extends Model
      * @var string $table
      */
     protected $table = 'Campaign';
+
+    /**
+     * The primary key field name.
+     *
+     * @var string $primaryKey
+     */
+    protected $primaryKey = 'Cpg_ID';
+
+
 }

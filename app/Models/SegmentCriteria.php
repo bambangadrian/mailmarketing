@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -20,4 +19,11 @@ class SegmentCriteria extends Model
      * @var string $table
      */
     protected $table = 'SegmentCriteria';
+
+    /**
+     * The primary key field name.
+     *
+     * @var string $primaryKey
+     */
+    protected $primaryKey = 'Sc_ID';
 }

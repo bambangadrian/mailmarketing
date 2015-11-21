@@ -15,6 +15,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        dd(\Auth::user()->campaigns);
+
         $data['tasks'] = [
             [
                 'name'     => 'Design New Dashboard',

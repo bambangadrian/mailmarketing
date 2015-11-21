@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -10,7 +9,6 @@
 | database. Just tell the factory how a default model should look.
 |
 */
-
 $factory->define(
     MailMarketing\User::class,
     function (Faker\Generator $faker) {

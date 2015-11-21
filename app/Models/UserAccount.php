@@ -1,12 +1,18 @@
 <?php
-
 namespace MailMarketing\Models;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
-class UserAccount extends Model implements Authenticatable
+class UserAccount extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
+
+    use Authenticatable, Authorizable, CanResetPassword;
 
     /**
      * Indicates if the model should not be timestamped.
@@ -93,5 +99,25 @@ class UserAccount extends Model implements Authenticatable
     public function setRememberToken($value)
     {
         $this->attributes[$this->getRememberTokenName()] = $value;
+    }
+
+    /**
+     * User role relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('MailMarketing\Models\UserRole', 'UserRoleDetail', 'Urd_UserID', 'Urd_RoleID');
+    }
+
+    /**
+     * Campaign relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function campaigns()
+    {
+        return $this->hasMany('MailMarketing\Models\Campaign', 'Cpg_CreatedOn', 'Usr_ID');
     }
 }
