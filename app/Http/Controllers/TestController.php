@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -38,6 +37,6 @@ class TestController extends Controller
                 'color'    => 'success'
             ]
         ];
-        return view('admin.index')->with($data);
+        return view('admin.sample')->with($data);
     }
 }

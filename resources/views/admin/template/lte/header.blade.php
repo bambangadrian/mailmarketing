@@ -6,7 +6,9 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>C</b>BN</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>CBN</b> MailMarketing</span>
+        <span class="logo-lg">
+            <b>CBN</b> MailMarketing
+        </span>
     </a>
 
     <!-- Header Navbar -->

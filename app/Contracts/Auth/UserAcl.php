@@ -12,7 +12,7 @@ trait UserAcl
     /**
      * Checks if has permission.
      *
-     * @param  string $permission Name of a permission
+     * @param  string $permission Name of a permission.
      *
      * @return boolean true if has permission, otherwise false
      */
@@ -22,7 +22,7 @@ trait UserAcl
     }
 
     /**
-     * Check if has role
+     * Check if has role.
      *
      * @param string $role Role parameter.
      *
@@ -34,15 +34,15 @@ trait UserAcl
             function ($roleName) {
                 return strtolower(trim($roleName));
             },
-            $this->roles->pluck('Ur_Name')->toArray()
+            $this->roles->pluck('Ur_Slug')->toArray()
         );
         return in_array(strtolower(trim($role)), $roles, true);
     }
 
     /**
-     * Make string to array if already not
+     * Make string to array if already not.
      *
-     * @param  array|string $data String/Array
+     * @param  array|string $data Data parameter.
      *
      * @return array
      */
@@ -59,9 +59,9 @@ trait UserAcl
     }
 
     /**
-     * Check if the permission matches with any permission user has
+     * Check if the permission matches with any permission user has.
      *
-     * @param  array $permissionSlug permission slug of a permission
+     * @param  array $permissionSlug permission slug of a permission.
      *
      * @return boolean true if permission exists, otherwise false
      */
@@ -73,13 +73,13 @@ trait UserAcl
     }
 
     /**
-     * Get all permission slugs from all permissions of all roles
+     * Get all permission slugs from all permissions of all roles.
      *
-     * @return Array of permission slugs
+     * @return array of permission slugs
      */
     protected function getAllPermissionsFormAllRoles()
     {
-        $permissions = $this->roles->load('permissions')->pluck('permissions')->toArray();;
+        $permissions = $this->roles->load('permissions')->pluck('permissions')->toArray();
         return array_map(
             'strtolower',
             array_unique(

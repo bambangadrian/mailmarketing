@@ -17,7 +17,7 @@ class CreatePermissionTable extends Migration
             function (Blueprint $table) {
                 $table->increments('Pm_ID');
                 $table->string('Pm_Name', 100);
-                $table->string('Pm_Slug', 50);
+                $table->string('Pm_Slug', 50)->unique();
                 $table->string('Pm_Description', 255)->nullable();
                 $table->char('Pm_Active', 1)->default('Y');
                 # Create all timestamps.
@@ -31,7 +31,6 @@ class CreatePermissionTable extends Migration
                 # Add the uuid column field.
                 $table->char('Pm_GUID', 36);
                 # Add all the table constraint.
-                $table->unique('Pm_Slug');
             }
         );
     }
