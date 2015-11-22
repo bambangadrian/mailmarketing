@@ -8,11 +8,12 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use MailMarketing\Contracts\Auth\UserAcl;
 
 class UserAccount extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
 
-    use Authenticatable, Authorizable, CanResetPassword;
+    use Authenticatable, Authorizable, CanResetPassword, UserAcl;
 
     /**
      * Indicates if the model should not be timestamped.
@@ -40,7 +41,7 @@ class UserAccount extends Model implements AuthenticatableContract, Authorizable
      *
      * @var array $hidden
      */
-    protected $hidden = ['Usr_Password', 'Usr_Token'];
+    protected $hidden = ['Usr_Password', 'Usr_Token', 'Usr_GUID'];
 
     /**
      * The attributes that are mass assignable.

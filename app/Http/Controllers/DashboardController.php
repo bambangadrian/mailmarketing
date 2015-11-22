@@ -15,7 +15,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        dd(\Auth::user()->campaigns);
+
+        $permissions = \Auth::user()->roles->pluck('Ur_Name')->toArray();
+        dd($permissions);
 
         $data['tasks'] = [
             [

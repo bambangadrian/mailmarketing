@@ -1,8 +1,6 @@
 <?php
 namespace MailMarketing\Contracts\Auth;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class UserAcl trait.
  *
@@ -12,135 +10,88 @@ trait UserAcl
 {
 
     /**
-     * Can Checks a Permission
+     * Checks if has permission.
      *
-     * @param  string $perm Name of a permission
-     *
-     * @return boolean true if has permission, otherwise false
-     */
-    public function can($perm = null)
-    {
-        if ($perm) {
-            return $this->checkPermission($this->getArray($perm));
-        }
-        return false;
-    }
-
-    /**
-     * hasPermission Checks if has a Permission (Same as 'can')
-     *
-     * @param  string $perm Name of a permission parameter.
+     * @param  string $permission Name of a permission
      *
      * @return boolean true if has permission, otherwise false
      */
-    public function hasPermission($perm = null)
+    public function hasPermission($permission = null)
     {
-        return $this->can($perm);
+        return $permission !== null and $this->checkPermission($this->getArray($permission));
     }
 
     /**
-     * Checks if has a role
+     * Check if has role
      *
-     * @param  string $role Name of role parameter.
+     * @param string $role Role parameter.
      *
-     * @return boolean true if has permission, otherwise false
+     * @return boolean
      */
-    public function hasRole($role = null)
+    public function hasRole($role)
     {
-        if (is_null($role)) {
-            return false;
-        }
-        return strtolower($this->role->role_slug) === strtolower($role);
-    }
-
-    /**
-     * Check if user has given role
-     *
-     * @param  string $role role_slug
-     *
-     * @return boolean TRUE or FALSE
-     */
-    public function is($role)
-    {
-        return $this->role->role_slug === $role;
-    }
-
-    /**
-     * Check if user has permission to a route
-     *
-     * @param  String $routeName
-     *
-     * @return Boolean true/false
-     */
-    public function hasRoute($routeName)
-    {
-        $route = app('router')->getRoutes()->getByName($routeName);
-        if ($route) {
-            $action = $route->getAction();
-            if (isset($action['permission'])) {
-                $array = explode('|', $action['permission']);
-                return $this->checkPermission($array);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Check if a top level menu is visible to user
-     *
-     * @param  String $perm
-     *
-     * @return Boolean true/false
-     */
-    public function canSeeMenuItem($perm)
-    {
-        return $this->can($perm) || $this->hasAnylike($perm);
+        $roles = array_map(
+            function ($roleName) {
+                return strtolower(trim($roleName));
+            },
+            $this->roles->pluck('Ur_Name')->toArray()
+        );
+        return in_array(strtolower(trim($role)), $roles, true);
     }
 
     /**
      * Make string to array if already not
      *
-     * @param  string|array $perm String/Array
+     * @param  array|string $data String/Array
      *
-     * @return Array
+     * @return array
      */
-    protected function getArray($perm)
+    protected function getArray($data)
     {
-        return is_array($perm) ? $perm : explode('|', $perm);
+        return array_unique(
+            array_map(
+                function ($slug) {
+                    return strtolower(trim($slug));
+                },
+                is_array($data) ? $data : explode('|', $data)
+            )
+        );
     }
 
     /**
      * Check if the permission matches with any permission user has
      *
-     * @param  array $perm Name of a permission (one or more separated with |)
+     * @param  array $permissionSlug permission slug of a permission
      *
      * @return boolean true if permission exists, otherwise false
      */
-    protected function checkPermission(Array $permArray = [])
+    protected function checkPermission(array $permissionSlug)
     {
-        $perms = $this->role->permissions->fetch('permission_slug');
-        $perms = array_map('strtolower', $perms->toArray());
-        return count(array_intersect($perms, $permArray));
+        $permissions = $this->getAllPermissionsFormAllRoles();
+        $result = array_intersect($permissions, $permissionSlug);
+        return count($permissionSlug) === count($result);
     }
 
     /**
-     * Checks if user has any permission in this group
+     * Get all permission slugs from all permissions of all roles
      *
-     * @param  String $perm  Required Permission
-     * @param  Array  $perms User's Permissions
-     *
-     * @return Boolean true/false
+     * @return Array of permission slugs
      */
-    protected function hasAnylike($perm)
+    protected function getAllPermissionsFormAllRoles()
     {
-        $parts = explode('_', $perm);
-        $requiredPerm = array_pop($parts);
-        $perms = $this->role->permissions->fetch('permission_slug');
-        foreach ($perms as $perm) {
-            if (ends_with($perm, $requiredPerm)) {
-                return true;
-            }
-        }
-        return false;
+        $permissions = $this->roles->load('permissions')->pluck('permissions')->toArray();;
+        return array_map(
+            'strtolower',
+            array_unique(
+                array_flatten(
+                    array_map(
+                        function ($permission) {
+                            return array_pluck($permission, 'Pm_Slug');
+                        },
+                        $permissions
+                    )
+                )
+            )
+        );
     }
 }
