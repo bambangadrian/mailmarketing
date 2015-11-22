@@ -26,4 +26,14 @@ class Template extends Model
      * @var string $primaryKey
      */
     protected $primaryKey = 'Tpl_ID';
+
+    /**
+     * Campaign relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function campaigns()
+    {
+        return $this->hasMany('MailMarketing\Models\Campaign', 'Cpg_TemplateID');
+    }
 }

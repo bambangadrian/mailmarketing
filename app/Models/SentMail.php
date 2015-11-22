@@ -26,4 +26,24 @@ class SentMail extends Model
      * @var string $primaryKey
      */
     protected $primaryKey = 'Sm_ID';
+
+    /**
+     * Mail schedule relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function mailSchedule()
+    {
+        return $this->belongsTo('MailMarketing\Models\MailSchedule', 'Sm_MailScheduleID');
+    }
+
+    /**
+     * Subscriber group detail relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function subscriberList()
+    {
+        return $this->belongsTo('MailMarketing\Models\SubscriberGroupDetail', 'Sm_SubscriberListID');
+    }
 }

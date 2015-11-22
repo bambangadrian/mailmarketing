@@ -26,4 +26,19 @@ class Segment extends Model
      * @var string $primaryKey
      */
     protected $primaryKey = 'Seg_ID';
+
+    /**
+     * Segment criteria relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function segmentCriterias()
+    {
+        return $this->belongsToMany(
+            'MailMarketing\Models\SegmentCriteria',
+            'SegmentDetail',
+            'Sed_SegmentID',
+            'Sed_SegmentCriteriaID'
+        );
+    }
 }

@@ -26,4 +26,14 @@ class MailList extends Model
      * @var string $primaryKey
      */
     protected $primaryKey = 'Mls_ID';
+
+    /**
+     * Subscriber group relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subscriberGroups()
+    {
+        return $this->hasMany('MailMarketing\Models\SubscriberGroup', 'Sbg_MailListID');
+    }
 }

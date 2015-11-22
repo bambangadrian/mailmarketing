@@ -26,4 +26,24 @@ class MailTracking extends Model
      * @var string $primaryKey
      */
     protected $primaryKey = 'Mtr_ID';
+
+    /**
+     * Sent mail relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sentMail()
+    {
+        return $this->belongsTo('MailMarketing\Models\SentMail', 'Mtr_SentMailID');
+    }
+
+    /**
+     * Mail tracking status relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function trackingStatus()
+    {
+        return $this->belongsTo('MailMarketing\Models\MailTrackingStatus', 'Mtr_StatusID');
+    }
 }

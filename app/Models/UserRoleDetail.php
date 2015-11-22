@@ -26,4 +26,24 @@ class UserRoleDetail extends Model
      * @var string $primaryKey
      */
     protected $primaryKey = 'Urd_ID';
+
+    /**
+     * User relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('MailMarketing\Models\UserAccount', 'Urd_UserID');
+    }
+
+    /**
+     * Role relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role()
+    {
+        return $this->belongsTo('MailMarketing\Models\UserRole', 'Urd_RoleID');
+    }
 }

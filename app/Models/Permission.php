@@ -26,4 +26,14 @@ class Permission extends Model
      * @var string $primaryKey
      */
     protected $primaryKey = 'Pm_ID';
+
+    /**
+     * Role relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('MailMarketing\Models\Role', 'PermissionRole', 'Pmr_PermissionID', 'Pmr_RoleID');
+    }
 }

@@ -26,4 +26,14 @@ class ImportFrom extends Model
      * @var string $primaryKey
      */
     protected $primaryKey = 'Imf_ID';
+
+    /**
+     * Subscriber relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subscribers()
+    {
+        return $this->hasMany('MailMarketing\Models\Subscriber', 'Sbr_ImportFromID');
+    }
 }
