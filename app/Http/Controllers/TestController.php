@@ -36,6 +36,6 @@ class TestController extends Controller
                 'color'    => 'success'
             ]
         ];
-        return view('admin.sample')->with($data);
+        return view('admin.template.sample.index')->with($data);
     }
 }

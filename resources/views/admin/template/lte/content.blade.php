@@ -3,13 +3,23 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            {{ $pageHeader or 'Page Header' }}
-            <small>{{ $pageDescription or 'Optional Description' }}</small>
+            @section('segment-title')
+                {{ $pageHeader or 'Page Header' }}
+            @show
+
+            <small>
+                @section('segment-desc')
+                    {{ $pageDescription or 'Optional Description' }}
+                @show
+            </small>
+
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-            <li class="active">Here</li>
-        </ol>
+        @section('breadcrumb')
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        @show
     </section>
 
     <!-- Main content -->

@@ -1,5 +1,5 @@
 @extends('admin.template.lte.index')
 
 @section('content')
-    @include('admin.partials.content.detail')
-@endsection
+    @include('admin.template.sample.content.detail')
+@stop

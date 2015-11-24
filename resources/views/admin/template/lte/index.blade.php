@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ $pageTitle or 'Admin LTE Dashboard' }}</title>
+    <title>{{ $pageTitle or 'CBN Mail Marketing System' }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" type="image/png" href="{{ asset('/assets/img/favicon.png') }}" >
     <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -48,6 +49,10 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 <script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
 <script src="{{ asset("/vendor/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js") }}"></script>
+<!-- Slimscroll -->
+<script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js") }}"></script>
 <script src="{{ asset("/vendor/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
+@yield('add-css')
+@yield('add-js')
 </body>
 </html>
