@@ -1,11 +1,11 @@
 <?php
-
 namespace MailMarketing\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 class ViewComposerServiceProvider extends ServiceProvider
 {
+
     /**
      * Bootstrap the application services.
      *
@@ -23,6 +23,6 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        view()->composer('admin.index', 'MailMarketing\Http\Composers\DefaultComposer');
     }
 }

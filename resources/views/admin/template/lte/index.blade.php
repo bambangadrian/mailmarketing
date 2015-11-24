@@ -42,7 +42,7 @@ desired effect
     @include('admin.template.lte.header')
     @include('admin.template.lte.sidebar')
     @include('admin.template.lte.content')
-    @include('admin.template.lte.control')
+    {{--@include('admin.template.lte.control')--}}
     @include('admin.template.lte.footer')
 </div>
 <!-- REQUIRED JS SCRIPTS -->
