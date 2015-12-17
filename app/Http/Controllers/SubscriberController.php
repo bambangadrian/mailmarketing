@@ -5,9 +5,22 @@ namespace MailMarketing\Http\Controllers;
 use Illuminate\Http\Request;
 
 use MailMarketing\Http\Requests;
+use MailMarketing\Models\Subscriber;
 
-class SubscriberController extends Controller
+class SubscriberController extends AbstractPageController
 {
+
+    /**
+     * Class constructor.
+     */
+    public function __construct()
+    {
+        $this->contentName = 'subscriber';
+        $this->data['pageHeader'] = 'Subscriber';
+        $this->data['pageDescription'] = 'Manage subscriber data as your market';
+        $this->data['activeMenu'] = 'subscriber';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +28,8 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        //
+        $this->data['model'] = Subscriber::with('importFrom')->paginate(10);
+        return $this->renderPage();
     }
 
     /**

@@ -21,16 +21,16 @@ class AbstractPageController extends Controller
     /**
      * Layout directory property.
      *
-     * @var string $layoutDir
+     * @var string $contentName
      */
-    protected $layoutDir = 'layouts';
+    protected $contentName;
 
     /**
      * Content directory property.
      *
      * @var string $contentDir
      */
-    protected $contentDir = 'contents';
+    protected $contentDir = 'partials/contents';
 
     /**
      * Blade base view directory property.
@@ -45,6 +45,7 @@ class AbstractPageController extends Controller
      * @var string $defaultPage
      */
     protected $defaultPage = 'default';
+
 
     /**
      * Set mass model binding.
@@ -116,16 +117,19 @@ class AbstractPageController extends Controller
     /**
      * Set page content blade view.
      *
-     * @param string $contentName    The content name that will be set.
      * @param string $contentSegment The content segment name.
+     * @param string $contentName    The content name that will be set.
      *
      * @return \Illuminate\Http\Response
      */
-    protected function renderPage($contentSegment = 'index', $contentName = 'home')
+    protected function renderPage($contentSegment = 'index', $contentName = null)
     {
         $bladeFile = $this->viewDir . '.' . $this->defaultPage;
-        $checkBladeFile = app_path(
-            'views/' . $this->viewDir . '/' . $this->contentDir . '/' . $contentName . '/' . $contentSegment . self::$bladeExt
+        if (empty($contentName) === true) {
+            $contentName = $this->contentName;
+        }
+        $checkBladeFile = base_path(
+            'resources/views/' . $this->viewDir . '/' . $this->contentDir . '/' . $contentName . '/' . $contentSegment . self::$bladeExt
         );
         if (file_exists($checkBladeFile) === true) {
             $bladeFile = $this->viewDir . '.' . $this->contentDir . '.' . $contentName . '.' . $contentSegment;

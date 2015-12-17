@@ -17,14 +17,20 @@ Route::group(
             function () {
                 Route::get('test', 'TestController@index');
                 Route::resource('user', 'UserController');
+                Route::resource('profile', 'ProfileController');
+                Route::resource('import', 'ImportFromController');
                 Route::resource('subscriber', 'SubscriberController');
                 Route::resource('criteria', 'SegmentCriteriaController');
                 Route::resource('segment', 'SegmentController');
                 Route::resource('template', 'TemplateController');
                 Route::resource('maillist', 'MailListController');
+                Route::resource('maillist/group', 'SubscriberGroupController');
                 Route::resource('trackstatus', 'TrackingStatusController');
-                Route::resource('group', 'SubscriberGroupController');
-                Route::resource('company', 'SubscriberGroupController', ['only' => ['index', 'update']]);
+                Route::resource('campaign', 'CampaignController');
+                Route::resource('schedule', 'CampaignScheduleController');
+                Route::resource('mail/tracking', 'MailTrackingController');
+                Route::resource('report/tracking', 'SentMailController');
+                Route::resource('company', 'CompanyController');
                 Route::get('dashboard', 'DashboardController@index');
                 Route::get('logout', 'Auth\AuthController@doLogout');
             }

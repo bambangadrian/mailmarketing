@@ -3,13 +3,13 @@
     404
 @stop
 @section('segment-desc')
-    Halaman Tidak Ditemukan
+    Requested page was not found
 @stop
 
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="{{ url('/admin/dashboard') }}"><i class="fa fa-home"></i> Home</a></li>
-        <li>Kesalahan</li>
+        <li><i class="fa fa-exclamation-triangle"></i> Error Page</li>
         <li class="active">404</li>
     </ol>
 @stop
@@ -20,10 +20,11 @@
         <h2 class="headline text-red"> 404</h2>
 
         <div class="error-content">
-            <h3><i class="fa fa-warning text-yellow"></i> Halaman Tidak Ditemukan.</h3>
+            <h3><i class="fa fa-warning text-yellow"></i>&nbsp; Page Not Found !!!</h3>
             <p>
-                Kami tidak dapat menemukan halaman yang anda cari.Untuk sementara, anda dapat kembali ke halaman
-                <a href="{{ url('/admin/dashboard') }}" class="alert-link"> dasbor </a>, atau anda dapat menghubungi pengurus di +62(022) XXXYZ.
+                We can not found your page request, please back to the previous page
+                <a href="{{ url('/admin/dashboard') }}" class="alert-link"> (dashboard) </a>,
+                or you can contact our staff/webmaster on +62(022) XXXYZ.
             </p>
         </div>
     </div>

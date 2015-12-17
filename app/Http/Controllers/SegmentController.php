@@ -5,9 +5,22 @@ namespace MailMarketing\Http\Controllers;
 use Illuminate\Http\Request;
 
 use MailMarketing\Http\Requests;
+use MailMarketing\Models\Segment;
 
-class SegmentController extends Controller
+class SegmentController extends AbstractPageController
 {
+
+    /**
+     * Class constructor.
+     */
+    public function __construct()
+    {
+        $this->contentName = 'segment';
+        $this->data['pageHeader'] = 'Segment';
+        $this->data['pageDescription'] = 'Manage your segment for search tools';
+        $this->data['activeMenu'] = 'master';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +28,8 @@ class SegmentController extends Controller
      */
     public function index()
     {
-        //
+        $this->data['model'] = Segment::paginate(10);
+        return $this->renderPage();
     }
 
     /**

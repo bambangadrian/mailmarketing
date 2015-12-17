@@ -29,6 +29,18 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Permission Table Seeded !!');
         $this->call(PermissionRoleSeeder::class);
         $this->command->info('PermissionRole Table Seeded !!');
+        $this->call(CompanySeeder::class);
+        $this->command->info('Company Table Seeded !!');
+        $this->call(ImportFromSeeder::class);
+        $this->command->info('ImportFrom Table Seeded !!');
+        $this->call(MailListSeeder::class);
+        $this->command->info('MailList Table Seeded !!');
+        $this->call(SegmentSeeder::class);
+        $this->command->info('Segment Table Seeded !!');
+        $this->call(SegmentCriteriaSeeder::class);
+        $this->command->info('SegmentCriteria Table Seeded !!');
+        $this->call(SubscriberSeeder::class);
+        $this->command->info('Subscriber Table Seeded !!');
         Model::reguard();
     }
 }

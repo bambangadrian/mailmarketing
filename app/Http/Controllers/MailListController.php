@@ -1,13 +1,24 @@
 <?php
-
 namespace MailMarketing\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use MailMarketing\Http\Requests;
+use MailMarketing\Models\MailList;
 
-class MailListController extends Controller
+class MailListController extends AbstractPageController
 {
+
+    /**
+     * Class constructor.
+     */
+    public function __construct()
+    {
+        $this->contentName = 'mailList';
+        $this->data['pageHeader'] = 'Mail List';
+        $this->data['pageDescription'] = 'Manage your mailing list for your campaign purpose';
+        $this->data['activeMenu'] = 'maillist';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,8 @@ class MailListController extends Controller
      */
     public function index()
     {
-        //
+        $this->data['model'] = MailList::paginate(10);
+        return $this->renderPage();
     }
 
     /**
@@ -31,7 +43,8 @@ class MailListController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,7 +55,8 @@ class MailListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -53,7 +67,8 @@ class MailListController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -64,8 +79,9 @@ class MailListController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -76,7 +92,8 @@ class MailListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

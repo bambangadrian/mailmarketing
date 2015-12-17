@@ -9,14 +9,14 @@
 
             <small>
                 @section('segment-desc')
-                    {{ $pageDescription or 'Optional Description' }}
+                    <i>{{ $pageDescription or 'Optional Description' }}</i>
                 @show
             </small>
 
         </h1>
         @section('breadcrumb')
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li><a href="#"><i class="fa fa-support"></i> Level</a></li>
                 <li class="active">Here</li>
             </ol>
         @show

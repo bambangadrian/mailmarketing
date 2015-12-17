@@ -56,4 +56,14 @@ class Subscriber extends Model
             'Sm_SubscriberListID'
         );
     }
+
+    /**
+     * Import from relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function importFrom()
+    {
+        return $this->belongsTo('MailMarketing\Models\ImportFrom', 'Sbr_ImportFromID');
+    }
 }

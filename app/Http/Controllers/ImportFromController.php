@@ -3,9 +3,10 @@ namespace MailMarketing\Http\Controllers;
 
 use Illuminate\Http\Request;
 use MailMarketing\Http\Requests;
-use MailMarketing\Models\MailTrackingStatus;
+use MailMarketing\Http\Controllers\Controller;
+use MailMarketing\Models\ImportFrom;
 
-class TrackingStatusController extends AbstractPageController
+class ImportFromController extends AbstractPageController
 {
 
     /**
@@ -13,9 +14,9 @@ class TrackingStatusController extends AbstractPageController
      */
     public function __construct()
     {
-        $this->contentName = 'trackingStatus';
-        $this->data['pageHeader'] = 'Tracking Status';
-        $this->data['pageDescription'] = 'Manage tracking status data';
+        $this->contentName = 'importFrom';
+        $this->data['pageHeader'] = 'Import From';
+        $this->data['pageDescription'] = 'Manage your import list for subscribers';
         $this->data['activeMenu'] = 'master';
     }
 
@@ -26,7 +27,7 @@ class TrackingStatusController extends AbstractPageController
      */
     public function index()
     {
-        $this->data['model'] = MailTrackingStatus::paginate(10);
+        $this->data['model'] = ImportFrom::paginate(10);
         return $this->renderPage();
     }
 
@@ -37,7 +38,7 @@ class TrackingStatusController extends AbstractPageController
      */
     public function create()
     {
-        //
+        return $this->renderPage('create');
     }
 
     /**
@@ -49,7 +50,6 @@ class TrackingStatusController extends AbstractPageController
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -61,7 +61,7 @@ class TrackingStatusController extends AbstractPageController
      */
     public function show($id)
     {
-        //
+        return $this->renderPage('edit');
     }
 
     /**
@@ -73,7 +73,7 @@ class TrackingStatusController extends AbstractPageController
      */
     public function edit($id)
     {
-        //
+        return $this->renderPage('edit');
     }
 
     /**

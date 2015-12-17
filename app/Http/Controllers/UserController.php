@@ -5,9 +5,23 @@ namespace MailMarketing\Http\Controllers;
 use Illuminate\Http\Request;
 
 use MailMarketing\Http\Requests;
+use MailMarketing\Models\UserAccount;
 
-class UserController extends Controller
+class UserController extends AbstractPageController
 {
+
+    /**
+     * Class constructor.
+     */
+    public function __construct()
+    {
+        $this->contentName = 'userAccount';
+        $this->data['pageHeader'] = 'User Account';
+        $this->data['pageDescription'] = 'Manage user list that will use this system';
+        $this->data['activeMenu'] = 'master';
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +29,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $this->data['model'] = UserAccount::paginate(10);
+        return $this->renderPage();
+
     }
 
     /**
@@ -25,7 +41,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return $this->renderPage('create');
     }
 
     /**
