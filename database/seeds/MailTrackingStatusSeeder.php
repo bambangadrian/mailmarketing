@@ -1,7 +1,6 @@
 <?php
-
 use Illuminate\Database\Seeder;
-use App\MailTrackingStatus as MailTrackingStatus;
+use MailMarketing\Models\MailTrackingStatus as MailTrackingStatus;
 
 class MailTrackingStatusSeeder extends Seeder
 {

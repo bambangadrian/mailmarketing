@@ -1,9 +1,8 @@
 <?php
-
 use Illuminate\Database\Seeder;
-use App\UserAccount as UserAccount;
+use MailMarketing\Models\UserAccount as UserAccount;
 
-class UserAccountTableSeeder extends Seeder
+class UserAccountSeeder extends Seeder
 {
 
     /**
@@ -18,7 +17,7 @@ class UserAccountTableSeeder extends Seeder
         # Seed the table.
         $userAccounts = [
             [
-                'Usr_UserName'  => 'admin',
+                'Usr_Name'      => 'Administrator',
                 'Usr_Email'     => 'bambang.adrian@gmail.com',
                 'Usr_Password'  => bcrypt('optilog2014'),
                 'Usr_CreatedOn' => Carbon\Carbon::now(),
@@ -26,11 +25,19 @@ class UserAccountTableSeeder extends Seeder
                 'Usr_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Usr_UserName'  => 'bambang.adrian',
+                'Usr_Name'      => 'Bambang Adrian',
                 'Usr_Email'     => 'bambang.adrian@yahoo.co.id',
                 'Usr_Password'  => bcrypt('content2015'),
                 'Usr_CreatedOn' => Carbon\Carbon::now(),
                 'Usr_CreatedBy' => 1,
+                'Usr_GUID'      => (string)Uuid::generate(4)
+            ],
+            [
+                'Usr_Name'      => 'Faber Banjarnahor',
+                'Usr_Email'     => 'faber.banjarnahor@gmail.com',
+                'Usr_Password'  => bcrypt('supervisor2015'),
+                'Usr_CreatedOn' => Carbon\Carbon::now(),
+                'Usr_CreatedBy' => 3,
                 'Usr_GUID'      => (string)Uuid::generate(4)
             ]
         ];

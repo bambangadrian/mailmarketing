@@ -30,5 +30,6 @@ class Kernel extends HttpKernel
         'auth'       => \MailMarketing\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest'      => \MailMarketing\Http\Middleware\RedirectIfAuthenticated::class,
+        'acl'        => \MailMarketing\Http\Middleware\CheckPermission::class
     ];
 }

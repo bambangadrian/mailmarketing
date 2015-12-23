@@ -1,9 +1,7 @@
 <?php
-
 namespace MailMarketing\Http\Controllers\Auth;
 
-use MailMarketing\User;
-use Validator;
+use Illuminate\Http\Request;
 use MailMarketing\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -21,8 +19,21 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
-
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+
+    /**
+     * Redirect path if authentication successful.
+     *
+     * @var string $redirectPath
+     */
+    protected $redirectPath;
+
+    /**
+     * Login path authentication.
+     *
+     * @var stirng $loginPath
+     */
+    protected $loginPath;
 
     /**
      * Create a new authentication controller instance.
@@ -30,51 +41,37 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->redirectPath = 'admin/dashboard';
+        $this->loginPath = 'admin/login';
+        $this->middleware('guest', ['except' => 'doLogout']);
     }
 
     /**
+     * Get login page.
      *
+     * @return string
      */
     public function getLogin()
     {
         return view('admin.login');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array $data
-     *
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function doAuth(Request $request)
     {
-        return Validator::make(
-            $data,
-            [
-                'name'     => 'required|max:255',
-                'email'    => 'required|email|max:255|unique:users',
-                'password' => 'required|confirmed|min:6',
-            ]
-        );
+        $this->validate($request, ['Usr_Email' => 'required|email', 'password' => 'required']);
+        $credentials = $request->only('Usr_Email', 'password');
+        $remember = ($request->has('remember')) ? true : false;
+        if (\Auth::attempt($credentials, $remember)) {
+            return redirect()->intended($this->redirectPath());
+        }
+        return redirect($this->loginPath())
+            ->withInput($request->only('Usr_Email'))
+            ->withErrors(['email' => 'Your credentials data do not match our records']);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array $data
-     *
-     * @return User
-     */
-    protected function create(array $data)
+    public function doLogout()
     {
-        return User::create(
-            [
-                'name'     => $data['name'],
-                'email'    => $data['email'],
-                'password' => bcrypt($data['password']),
-            ]
-        );
+        \Auth::logout();
+        return redirect($this->loginPath())->with('info', 'You have been logout. See Yaa!!...');
     }
 }

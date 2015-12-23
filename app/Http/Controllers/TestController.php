@@ -1,10 +1,8 @@
 <?php
-
 namespace MailMarketing\Http\Controllers;
 
 use Illuminate\Http\Request;
 use MailMarketing\Http\Requests;
-use MailMarketing\Http\Controllers\Controller;
 
 class TestController extends Controller
 {
@@ -38,6 +36,6 @@ class TestController extends Controller
                 'color'    => 'success'
             ]
         ];
-        return view('admin.index')->with($data);
+        return view('admin.template.sample.index')->with($data);
     }
 }

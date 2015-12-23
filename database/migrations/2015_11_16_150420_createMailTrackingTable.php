@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -34,8 +33,12 @@ class CreateMailTrackingTable extends Migration
                 # Add the uuid column field.
                 $table->char('Mtr_GUID', 36);
                 # Add all the table constraint.
-                $table->foreign('Mtr_SentMailID')->references('Sm_ID')->on('SentMail');
-                $table->foreign('Mtr_StatusID')->references('Mts_ID')->on('MailTrackingStatus');
+                $table->foreign('Mtr_SentMailID', 'Idx_MailTracking_Mtr_SentMailID_SentMail_Sm_ID')
+                      ->references('Sm_ID')
+                      ->on('SentMail');
+                $table->foreign('Mtr_StatusID', 'Idx_MailTracking_Mtr_StatusID_MailTrackingStatus_Mts_ID')
+                      ->references('Mts_ID')
+                      ->on('MailTrackingStatus');
             }
         );
     }

@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -17,9 +16,10 @@ class CreateUserAccountTable extends Migration
             'UserAccount',
             function (Blueprint $table) {
                 $table->increments('Usr_ID');
-                $table->string('Usr_UserName', 50);
+                $table->string('Usr_Name', 50);
                 $table->string('Usr_Email', 50);
                 $table->char('Usr_Password', 128);
+                $table->char('Usr_Token', 128)->nullable();
                 $table->char('Usr_Active', 1)->default('Y');
                 # Create all timestamps.
                 $table->timestamp('Usr_CreatedOn');

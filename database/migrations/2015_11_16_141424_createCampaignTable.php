@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -36,8 +35,12 @@ class CreateCampaignTable extends Migration
                 # Add the uuid column field.
                 $table->char('Cpg_GUID', 36);
                 # Add all the table constraint.
-                $table->foreign('Cpg_TypeID')->references('Cgt_ID')->on('CampaignType');
-                $table->foreign('Cpg_TemplateID')->references('Tpl_ID')->on('Template');
+                $table->foreign('Cpg_TypeID', 'Idx_Campaign_Cpg_TypeID_CampaignType_Cgt_ID')
+                      ->references('Cgt_ID')
+                      ->on('CampaignType');
+                $table->foreign('Cpg_TemplateID', 'Idx_Campaign_Cpg_TemplateID_Template_Tpl_ID')
+                      ->references('Tpl_ID')
+                      ->on('Template');
             }
         );
     }

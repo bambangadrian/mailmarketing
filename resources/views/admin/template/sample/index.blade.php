@@ -50,4 +50,4 @@
         </div><!-- /.col -->
 
     </div><!-- /.row -->
-@endsection
+@stop

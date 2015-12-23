@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -12,7 +10,6 @@ return [
     | application. If disabled, a simple generic error page is shown.
     |
     */
-
     'debug'           => env('APP_DEBUG', false),
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +21,6 @@ return [
     | your application so that it is used when running Artisan tasks.
     |
     */
-
     'url'             => 'http://localhost',
     /*
     |--------------------------------------------------------------------------
@@ -36,7 +32,6 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-
     'timezone'        => 'UTC',
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +43,6 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-
     'locale'          => 'en',
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +54,6 @@ return [
     | the language folders that are provided through your application.
     |
     */
-
     'fallback_locale' => 'en',
     /*
     |--------------------------------------------------------------------------
@@ -72,7 +65,6 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
-
     'key'             => env('APP_KEY', 'SomeRandomString'),
     'cipher'          => 'AES-256-CBC',
     /*
@@ -87,7 +79,6 @@ return [
     | Available Settings: "single", "daily", "syslog", "errorlog"
     |
     */
-
     'log'             => 'single',
     /*
     |--------------------------------------------------------------------------
@@ -99,9 +90,7 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-
     'providers'       => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -135,7 +124,9 @@ return [
         MailMarketing\Providers\AuthServiceProvider::class,
         MailMarketing\Providers\EventServiceProvider::class,
         MailMarketing\Providers\RouteServiceProvider::class,
-
+        MailMarketing\Providers\ViewComposerServiceProvider::class,
+        # Add the html service provider
+        Illuminate\Html\HtmlServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -147,9 +138,7 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-
     'aliases'         => [
-
         'App'       => Illuminate\Support\Facades\App::class,
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
         'Auth'      => Illuminate\Support\Facades\Auth::class,
@@ -184,6 +173,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Uuid'      => Webpatser\Uuid\Uuid::class,
-    ],
-
+        'Html'      => Illuminate\Html\HtmlFacade::class,
+        'Form'      => Illuminate\Html\FormFacade::class
+    ]
 ];

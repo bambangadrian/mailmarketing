@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -32,7 +31,9 @@ class CreateMailScheduleTable extends Migration
                 # Add the uuid column field.
                 $table->char('Msd_GUID', 36);
                 # Add all the table constraint.
-                $table->foreign('Msd_CampaignID')->references('Cpg_ID')->on('Campaign');
+                $table->foreign('Msd_CampaignID', 'Idx_MailSchedule_Msd_CampaignID_Campaign_Cpg_ID')
+                      ->references('Cpg_ID')
+                      ->on('Campaign');
             }
         );
     }

@@ -2,8 +2,8 @@
 <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-        Anything you want
+        <b>Version</b> 1.0.0 <i>BRainsFusion Production&trade;</i>
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2015 <a href="#">CBN Indonesia</a>.</strong> All rights reserved.
 </footer>

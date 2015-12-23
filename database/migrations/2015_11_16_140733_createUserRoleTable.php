@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -18,6 +17,7 @@ class CreateUserRoleTable extends Migration
             function (Blueprint $table) {
                 $table->increments('Ur_ID');
                 $table->string('Ur_Name', 50);
+                $table->string('Ur_Slug', 50);
                 $table->char('Ur_Active', 1)->default('Y');
                 # Create all timestamps.
                 $table->timestamp('Ur_CreatedOn');
@@ -30,6 +30,7 @@ class CreateUserRoleTable extends Migration
                 # Add the uuid column field.
                 $table->char('Ur_GUID', 36);
                 # Add all the table constraint.
+                $table->unique('Ur_Slug', 'Idx_UserRole_Ur_Slug');
             }
         );
     }

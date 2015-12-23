@@ -1,30 +1,19 @@
-<!DOCTYPE html><!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ $pageTitle or 'Admin LTE Dashboard' }}</title>
+    <title>{{ $pageTitle or 'CBN Mail Marketing System' }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
-    <!-- Font Awesome -->
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" type="image/x-ico" href="{{ asset('/assets/img/favicon.ico') }}" >
+    <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/AdminLTE.min.css") }}">
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-          page. However, you can choose any other skin. Make sure you
-          apply the skin class to the body tag so the changes take effect.
-    -->
-    <link rel="stylesheet" href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css") }}">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <link rel="stylesheet" href="{{ asset("/assets/css/app.css") }}">
+    <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/dist/css/AdminLTE.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css") }}">
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -50,37 +39,21 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini fixed">
 <div class="wrapper">
-    <!-- Header -->
     @include('admin.template.lte.header')
-
-            <!-- Sidebar -->
     @include('admin.template.lte.sidebar')
-
-            <!-- Main Content -->
     @include('admin.template.lte.content')
-
-            <!-- Control Sidebar -->
-    @include('admin.template.lte.control')
-
-            <!-- Footer -->
+    {{--@include('admin.template.lte.control')--}}
     @include('admin.template.lte.footer')
 </div>
-<!-- ./wrapper -->
-
 <!-- REQUIRED JS SCRIPTS -->
-
-<!-- jQuery 2.1.4 -->
-<script src="{{ asset("/bower_components/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="{{ asset("/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js") }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset("/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
+<script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
+<script src="{{ asset("/vendor/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js") }}"></script>
+<!-- Slimscroll -->
+<script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js") }}"></script>
+<script src="{{ asset("/vendor/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
+@yield('add-css')
+@yield('add-js')
 </body>
 </html>
