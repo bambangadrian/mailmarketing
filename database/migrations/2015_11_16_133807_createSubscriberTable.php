@@ -36,7 +36,9 @@ class CreateSubscriberTable extends Migration
                 # Add the uuid column field.
                 $table->char('Sbr_GUID', 36);
                 # Add all the table constraint.
-                $table->foreign('Sbr_ImportFromID')->references('Imf_ID')->on('ImportFrom');
+                $table->foreign('Sbr_ImportFromID', 'Idx_Subscriber_Sbr_ImportFromID_ImportFrom_Imf_ID')
+                      ->references('Imf_ID')
+                      ->on('ImportFrom');
             }
         );
     }

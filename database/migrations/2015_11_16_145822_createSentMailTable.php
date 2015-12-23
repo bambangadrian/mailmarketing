@@ -30,8 +30,12 @@ class CreateSentMailTable extends Migration
                 # Add the uuid column field.
                 $table->char('Sm_GUID', 36);
                 # Add all the table constraint.
-                $table->foreign('Sm_MailScheduleID')->references('Msd_ID')->on('MailSchedule');
-                $table->foreign('Sm_SubscriberListID')->references('Sgd_ID')->on('SubscriberGroupDetail');
+                $table->foreign('Sm_MailScheduleID', 'Idx_SentMail_Sm_MailScheduleID_MailSchedule_Msd_ID')
+                      ->references('Msd_ID')
+                      ->on('MailSchedule');
+                $table->foreign('Sm_SubscriberListID', 'Idx_SentMail_Sm_SubscriberListID_SubscriberGroupDetail_Sgd_ID')
+                      ->references('Sgd_ID')
+                      ->on('SubscriberGroupDetail');
             }
         );
     }

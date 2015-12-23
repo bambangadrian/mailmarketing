@@ -30,8 +30,12 @@ class CreateSegmentDetailTable extends Migration
                 # Add the uuid column field.
                 $table->char('Sed_GUID', 36);
                 # Add all the table constraint.
-                $table->foreign('Sed_SegmentID')->references('Seg_ID')->on('Segment');
-                $table->foreign('Sed_SegmentCriteriaID')->references('Sc_ID')->on('SegmentCriteria');
+                $table->foreign('Sed_SegmentID', 'Idx_SegmentDetail_Sed_SegmentID_Segment_Seg_ID')
+                      ->references('Seg_ID')
+                      ->on('Segment');
+                $table->foreign('Sed_SegmentCriteriaID', 'Idx_SegmentDetail_Sed_SegmentCriteriaID_SegmentCriteria_Sc_ID')
+                      ->references('Sc_ID')
+                      ->on('SegmentCriteria');
             }
         );
     }

@@ -30,8 +30,12 @@ class CreateUserRoleDetailTable extends Migration
                 # Add the uuid column field.
                 $table->char('Urd_GUID', 36);
                 # Add all the table constraint.
-                $table->foreign('Urd_UserID')->references('Usr_ID')->on('UserAccount');
-                $table->foreign('Urd_RoleID')->references('Ur_ID')->on('UserRole');
+                $table->foreign('Urd_UserID', 'Idx_UserRoleDetail_Urd_UserID_UserAccount_Usr_ID')
+                      ->references('Usr_ID')
+                      ->on('UserAccount');
+                $table->foreign('Urd_RoleID', 'Idx_UserRoleDetail_Urd_RoleID_UserRole_Ur_ID')
+                      ->references('Ur_ID')
+                      ->on('UserRole');
             }
         );
     }

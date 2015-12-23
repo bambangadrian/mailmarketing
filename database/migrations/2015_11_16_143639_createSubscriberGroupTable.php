@@ -32,8 +32,12 @@ class CreateSubscriberGroupTable extends Migration
                 # Add the uuid column field.
                 $table->char('Sbg_GUID', 36);
                 # Add all the table constraint.
-                $table->foreign('Sbg_MailListID')->references('Mls_ID')->on('MailList');
-                $table->foreign('Sbg_ParentID')->references('Sbg_ID')->on('SubscriberGroup');
+                $table->foreign('Sbg_MailListID', 'Idx_SubscriberGroup_Sbg_MailListID_MailList_Mls_ID')
+                      ->references('Mls_ID')
+                      ->on('MailList');
+                $table->foreign('Sbg_ParentID', 'Idx_SubscriberGroup_Sbg_ParentID_SubscriberGroup_Sbg_ID')
+                      ->references('Sbg_ID')
+                      ->on('SubscriberGroup');
             }
         );
     }
