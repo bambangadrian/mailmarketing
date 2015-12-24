@@ -38,6 +38,26 @@ class Campaign extends Model
     }
 
     /**
+     * Campaign category relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function campaignCategory()
+    {
+        return $this->belongsTo('MailMarketing\Models\CampaignCategory', 'Cpg_CategoryID');
+    }
+
+    /**
+     * Campaign topic relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function campaignTopic()
+    {
+        return $this->belongsTo('MailMarketing\Models\CampaignTopic', 'Cpg_TopicID');
+    }
+
+    /**
      * Template relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
