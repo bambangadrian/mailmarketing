@@ -41,6 +41,12 @@ class DatabaseSeeder extends Seeder
         $this->command->info('SegmentCriteria Table Seeded !!');
         $this->call(SubscriberSeeder::class);
         $this->command->info('Subscriber Table Seeded !!');
+        $this->call(DssRandomIndexSeeder::class);
+        $this->command->info('Dss Random Index Table Seeded !!');
+        $this->call(DssSeeder::class);
+        $this->command->info('Dss Master Table Seeded !!');
+        $this->call(DssCriteriaSeeder::class);
+        $this->command->info('Dss Criteria Table Seeded !!');
         Model::reguard();
     }
 }
