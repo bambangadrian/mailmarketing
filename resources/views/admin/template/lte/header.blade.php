@@ -4,10 +4,10 @@
     <!-- Logo -->
     <a href="index2.html" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>C</b>BN</span>
+        <span class="logo-mini"><i class="glyphicon glyphicon-envelope"></i></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
-            <b>CBN</b> MailMarketing
+            <span class="glyphicon glyphicon-envelope"></span> MARKETING CBN
         </span>
     </a>
 
@@ -156,10 +156,10 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ action('ProfileController@index') }}" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{ action('Admin\ProfileController@index') }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ url('admin/logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ action('Admin\Auth\AuthController@doLogout') }}" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

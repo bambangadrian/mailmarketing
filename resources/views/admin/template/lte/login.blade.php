@@ -18,7 +18,6 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-
     <div class="login-logo" style="text-align: right">
         <a href="#" style="text-shadow: 1px 1px 1px white;">
             <span style="transform: rotate(0deg);left:5px;font-size:14px;color:#F5bb2A;line-height: 10px;" class="glyphicon glyphicon-envelope"><br/>mail</span>
