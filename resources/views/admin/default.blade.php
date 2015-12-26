@@ -1,4 +1,5 @@
-@extends('admin.template.lte.index')
+@extends('admin.template.lte.layout.basic')
+
 @section('segment-title')
     404
 @stop
@@ -14,8 +15,7 @@
     </ol>
 @stop
 
-
-@section('content')
+@section('content-page')
     <div class="error-page">
         <h2 class="headline text-red"> 404</h2>
 

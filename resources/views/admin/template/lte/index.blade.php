@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ $pageTitle or 'CBN Mail Marketing System' }}</title>
+    <title>CBN Mail Marketing System {{ isset($pageTitle) ? ' | ' . $pageTitle: '' }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" type="image/x-ico" href="{{ asset('/assets/img/favicon.ico') }}" >
+    <link rel="icon" type="image/x-ico" href="{{ asset('/assets/img/favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -43,7 +43,7 @@ desired effect
 <div class="wrapper">
     @include('admin.template.lte.header')
     @include('admin.template.lte.sidebar')
-    @include('admin.template.lte.content')
+    @yield('content-layout')
     {{--@include('admin.template.lte.control')--}}
     @include('admin.template.lte.footer')
 </div>

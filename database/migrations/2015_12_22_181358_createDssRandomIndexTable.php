@@ -35,7 +35,7 @@ class CreateDssRandomIndexTable extends Migration
         Schema::table(
             'Dss',
             function (Blueprint $table) {
-                $table->integer('Dss_RandomIndexID')->unsigned()->after('Dss_ID');
+                $table->integer('Dss_RandomIndexID')->unsigned()->nullable()->after('Dss_ID');
                 $table->foreign('Dss_RandomIndexID', 'Idx_Dss_Dss_RandomIndexID_DssRandomIndex_Dri_ID')
                       ->references('Dri_ID')
                       ->on('DssRandomIndex');

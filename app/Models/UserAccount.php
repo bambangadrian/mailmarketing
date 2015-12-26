@@ -119,6 +119,6 @@ class UserAccount extends Model implements AuthenticatableContract, Authorizable
      */
     public function campaigns()
     {
-        return $this->hasMany('MailMarketing\Models\Campaign', 'Cpg_CreatedOn', 'Usr_ID');
+        return $this->hasMany('MailMarketing\Models\Campaign', 'Cpg_CreatedOn');
     }
 }

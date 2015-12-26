@@ -16,8 +16,7 @@ class CreateDssAlternativeDetailTable extends Migration
             'DssAlternativeDetail',
             function (Blueprint $table) {
                 $table->increments('Dad_ID');
-                $table->integer('Dad_CriteriaID')->unsigned();
-                $table->integer('Dad_AlternativeID')->unsigned();
+                $table->integer('Dad_EigenID')->unsigned();
                 $table->integer('Dad_CompareID')->unsigned();
                 $table->float('Dad_ComparisonMatrixValue', 10, 8)->default(1);
                 # Create all timestamps.
@@ -31,12 +30,9 @@ class CreateDssAlternativeDetailTable extends Migration
                 # Add the uuid column field.
                 $table->char('Dad_GUID', 36);
                 # Add all the table constraint.
-                $table->foreign('Dad_CriteriaID', 'Idx_DssAlternativeDetail_Dad_CriteriaID_DssCriteria_Dcr_ID')
-                      ->references('Dcr_ID')
-                      ->on('DssCriteria');
-                $table->foreign('Dad_AlternativeID', 'Idx_DssAlternativeDetail_Dad_AlternativeID_DssAlternative_Dal_ID')
-                      ->references('Dal_ID')
-                      ->on('DssAlternative');
+                $table->foreign('Dad_EigenID', 'Idx_DssAlternativeDetail_Dad_EigenID_DssEv_Deac_ID')
+                      ->references('Deac_ID')
+                      ->on('DssEvAlternativeCriteria');
                 $table->foreign('Dad_CompareID', 'Idx_DssAlternativeDetail_Dad_CompareID_DssAlternative_Dal_ID')
                       ->references('Dal_ID')
                       ->on('DssAlternative');
