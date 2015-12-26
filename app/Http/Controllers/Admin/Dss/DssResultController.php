@@ -1,7 +1,8 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Dss;
 
 use Illuminate\Http\Request;
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Http\Requests;
 
 class DssResultController extends AbstractAdminController

@@ -1,4 +1,4 @@
-@extends('admin.template.lte.index')
+@extends('admin.template.lte.layout.basic')
 
 @section('content')
     <h4 class="page-header">Selamat Datang,  {{  Auth::user()->Usr_Name }}</h4>

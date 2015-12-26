@@ -1,11 +1,12 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Dss;
 
 use Illuminate\Http\Request;
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Http\Requests;
-use MailMarketing\Models\Template;
+use MailMarketing\Models\Dss;
 
-class TemplateController extends AbstractAdminController
+class DssPeriodController extends AbstractAdminController
 {
 
     /**
@@ -14,11 +15,11 @@ class TemplateController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->contentDir = 'master/template';
-        $this->data['pageHeader'] = 'Template';
-        $this->data['pageDescription'] = 'Manage your template that will be used for campaign';
-        $this->data['activeMenu'] = 'master';
-        $this->data['activeSubMenu'] = 'template';
+        $this->contentDir = 'dss/period';
+        $this->data['pageHeader'] = 'DSS Period';
+        $this->data['pageDescription'] = 'Manage your decision support period';
+        $this->data['activeMenu'] = 'dss';
+        $this->data['activeSubMenu'] = 'dssPeriod';
     }
 
     /**
@@ -28,7 +29,7 @@ class TemplateController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = Template::paginate(10);
+        $this->data['model'] = Dss::paginate(10);
         return $this->renderPage();
     }
 

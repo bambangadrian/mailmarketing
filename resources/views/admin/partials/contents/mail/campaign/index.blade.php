@@ -4,7 +4,7 @@
     <ol class="breadcrumb">
         <li><a href="{{ action('Admin\DashboardController@index') }}"><i class="fa fa-home"></i> Home</a></li>
         <li><i class="fa fa-envelope"></i> Mail</li>
-        <li><a href="{{ action('Admin\SubscriberController@index') }}"><i class="fa fa-user-md"></i> Subscriber</a></li>
+        <li><a href="{{ action('Admin\CampaignController@index') }}"><i class="fa fa-indent"></i> Campaign</a></li>
     </ol>
 @stop
 
@@ -12,22 +12,21 @@
     <table class="table table-bordered table-hover">
         <tr>
             <th style="width: 20px">#</th>
-            <th>Email</th>
-            <th>Full Name</th>
-            <th>Address</th>
-            <th>Active</th>
-            <th>Import From</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Topic</th>
+            <th>Subject</th>
         </tr>
         <?php $counter = 1; ?>
         @foreach($model as $index => $row)
             <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
             <tr>
                 <td>{{ $no }}</td>
-                <td>{{ $row->Sbr_EmailAddress }}</td>
-                <td>{{ $row->Sbr_FirstName . ' ' . $row->Sbr_LastName }}</td>
-                <td>{{ $row->Sbr_Address1 . ' ' . $row->Sbr_Address2 }}</td>
-                <td>{{ $row->Sbr_Active }}</td>
-                <td>{{ $row->importFrom->Imf_Name }}</td>
+                <td>{{ $row->Cpg_Name }}</td>
+                <td>{{ $row->campaignType->Cgt_Name }}</td>
+                <td>{{ $row->campaignTopic->Cto_Name }}</td>
+                <td>{{ $row->Cpg_EmailSubject }}</td>
             </tr>
         @endforeach
     </table>

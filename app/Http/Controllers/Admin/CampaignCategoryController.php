@@ -3,9 +3,9 @@ namespace MailMarketing\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use MailMarketing\Http\Requests;
-use MailMarketing\Models\Template;
+use MailMarketing\Models\CampaignCategory;
 
-class TemplateController extends AbstractAdminController
+class CampaignCategoryController extends AbstractAdminController
 {
 
     /**
@@ -14,11 +14,11 @@ class TemplateController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->contentDir = 'master/template';
-        $this->data['pageHeader'] = 'Template';
-        $this->data['pageDescription'] = 'Manage your template that will be used for campaign';
+        $this->contentDir = 'master/campaign/category';
+        $this->data['pageHeader'] = 'Campaign Category';
+        $this->data['pageDescription'] = 'Manage your campaign category';
         $this->data['activeMenu'] = 'master';
-        $this->data['activeSubMenu'] = 'template';
+        $this->data['activeSubMenu'] = 'campaignCategory';
     }
 
     /**
@@ -28,7 +28,7 @@ class TemplateController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = Template::paginate(10);
+        $this->data['model'] = CampaignCategory::paginate(10);
         return $this->renderPage();
     }
 

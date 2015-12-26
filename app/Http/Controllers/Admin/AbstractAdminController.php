@@ -10,6 +10,7 @@ abstract class AbstractAdminController extends BaseController
 {
 
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use \Illuminate\Console\AppNamespaceDetectorTrait;
 
     /**
      * Blade extension.
@@ -58,6 +59,8 @@ abstract class AbstractAdminController extends BaseController
         # Set the default active menu and sub menu.
         $this->data['activeMenu'] = 'dashboard';
         $this->data['activeSubMenu'] = '';
+        $reflectionClass = new \ReflectionClass($this);
+        $this->data['controller'] = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
     }
 
     /**

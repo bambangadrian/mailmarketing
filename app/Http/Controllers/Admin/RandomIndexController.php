@@ -3,9 +3,9 @@ namespace MailMarketing\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use MailMarketing\Http\Requests;
-use MailMarketing\Models\Template;
+use MailMarketing\Models\DssRandomIndex;
 
-class TemplateController extends AbstractAdminController
+class RandomIndexController extends AbstractAdminController
 {
 
     /**
@@ -14,11 +14,11 @@ class TemplateController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->contentDir = 'master/template';
-        $this->data['pageHeader'] = 'Template';
-        $this->data['pageDescription'] = 'Manage your template that will be used for campaign';
-        $this->data['activeMenu'] = 'master';
-        $this->data['activeSubMenu'] = 'template';
+        $this->contentDir = 'dss/randomIndex';
+        $this->data['pageHeader'] = 'Random Index';
+        $this->data['pageDescription'] = 'List all random index to check consistency';
+        $this->data['activeMenu'] = 'dss';
+        $this->data['activeSubMenu'] = 'randomIndex';
     }
 
     /**
@@ -28,7 +28,7 @@ class TemplateController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = Template::paginate(10);
+        $this->data['model'] = DssRandomIndex::paginate(10);
         return $this->renderPage();
     }
 

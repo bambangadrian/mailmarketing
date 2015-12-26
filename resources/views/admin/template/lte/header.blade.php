@@ -7,7 +7,7 @@
         <span class="logo-mini"><i class="glyphicon glyphicon-envelope"></i></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
-            <span class="glyphicon glyphicon-envelope"></span> MARKETING CBN
+            <span class="glyphicon glyphicon-envelope" style="vertical-align: text-top;"></span> MARKETING CBN
         </span>
     </a>
 
