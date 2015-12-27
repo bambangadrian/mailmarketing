@@ -1,7 +1,10 @@
 @extends('admin.template.lte.layout.basic')
 
 @section('content-title')
-    <h3 class="box-title"></h3>
+    <h3 class="box-title">
+        <i class="fa fa-th-list"></i>
+        Listing Data
+    </h3>
 
     @section('content-search')
         <div class="box-tools">
@@ -13,6 +16,19 @@
             </div>
         </div>
     @show
+@stop
+
+@section('content-message')
+    @if (session('message'))
+        @if(session('status') === 'success')
+            <div class="alert alert-success alert-listing">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <i class="icon fa fa-check"></i> {{ session('message') }}
+            </div>
+        @endif
+    @endif
 @stop
 
 @section('content-page')
