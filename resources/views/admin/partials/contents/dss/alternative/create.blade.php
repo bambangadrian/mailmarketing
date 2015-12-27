@@ -8,19 +8,21 @@
     </ol>
 @stop
 
-
 @section('data-form')
-        <!-- text input -->
     <div class="form-group">
-        <label>Alternative Name</label>
-        <input type="text" class="form-control" placeholder="Enter ...">
+        {!! Form::label('Dal_Name', 'Alternative Name') !!}
+        {!! Form::text('Dal_Name', null, ['class' => 'form-control', 'placeholder' => 'Enter ...']) !!}
     </div>
-    <!-- radio -->
-    <div class="form-group">
-        <label>Active Option</label>
-        <div class="radio">
-            <label><input type="radio" name="Dal_Name" value="Y">Yes</label>
-            <label><input type="radio" name="Dal_Name" value="N">No</label>
+    <div class="checkbox">
+        <label for="Dal_Active">
+            {!! Form::checkbox('Dal_Active', 'Y') !!}
+            Active
+        </label>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-2 col-md-offset-10">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Insert</button>
         </div>
     </div>
+
 @stop

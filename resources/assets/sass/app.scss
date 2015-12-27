@@ -1,7 +1,24 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+.box {
+  padding: 5px;
+}
+
+.box-header, .box-body, .box-footer {
+  padding: 10px 15px !important;
+}
+
 table tr th {
   background: #3C8DBC;
   color: #fff;
 }
 
+.alert-listing {
+  position: absolute;
+  bottom: 51px;
+  right: 5px;
+  padding: 10px;
+  background: #eee;
+  border: 1px solid #ddd;
+  min-width: 200px;
+}

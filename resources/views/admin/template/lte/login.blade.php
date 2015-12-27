@@ -71,8 +71,8 @@
 </div>
 
 <div class="text-muted small text-right" id="fixedCopyRight">
-    <div>CopyRights&copy; : BRainsFusion Production&trade;</div>
-    <div>Design Modified By : Yuh7Predators</div>
+    <div>Copyrights : Splendix Production&reg;</div>
+    <div>Designed by : Yuh7Predators</div>
 </div>
 
 <script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>

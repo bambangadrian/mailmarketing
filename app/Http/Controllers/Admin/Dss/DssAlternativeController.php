@@ -65,6 +65,12 @@ class DssAlternativeController extends AbstractAdminController
      */
     public function store(Request $request)
     {
-        return '';
+        $status = 'success';
+        $message = 'test';
+        $passedData = [
+            'status'  => $status,
+            'message' => $message
+        ];
+        return redirect()->action('Admin\Dss\DssAlternativeController@index')->with($passedData);
     }
 }

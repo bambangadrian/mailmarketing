@@ -3,6 +3,7 @@
 @section('content-layout')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        @yield('content-message')
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -28,10 +29,9 @@
             @section('content')
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="box">
+                        <div class="box box-primary">
                             <div class="box-header with-border">
                                 @yield('content-title')
-                                @yield('content-message')
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -51,5 +51,24 @@
     </div><!-- /.content-wrapper -->
 @stop
 
+@section('add-css')
+    @if(isset($css) === true)
+        @foreach($css as $item)
+            <link rel="stylesheet" href="{{ $item }}">
+        @endforeach
+    @endif
+@stop
 
+@section('add-js')
+    @if(isset($js) === true)
+        @foreach($js as $item)
+            <script src="{{ $item }}"></script>
+        @endforeach
+    @endif
+    <script>
+        $(function () {
+            $('div.alert').not('.alert-important').delay(3000).slideUp(300);
+        });
+    </script>
+@stop
 
