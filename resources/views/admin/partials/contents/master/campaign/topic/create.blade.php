@@ -4,22 +4,18 @@
     <ol class="breadcrumb">
         <li><a href="{{ action('Admin\DashboardController@index') }}"><i class="fa fa-home"></i> Home</a></li>
         <li><i class="fa fa-table"></i> Master</li>
-        <li><a href="{{ action('Admin\ImportFromController@index') }}"><i class="fa fa-folder-open-o"></i> Import From</a></li>
+        <li><a href="{{ action('Admin\CampaignTopicController@index') }}"><i class="fa fa-map"></i> Campaign Topic</a></li>
     </ol>
 @stop
 
 @section('data-form')
     <div class="form-group">
-        {!! Form::label('Imf_Name', 'Import Name', ['class' => 'required']) !!}
-        {!! Form::text('Imf_Name', null, ['class' => 'form-control', 'placeholder' => 'Enter ...']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('Imf_Description', 'Description') !!}
-        {!! Form::textarea('Imf_Description', null, ['class' => 'form-control', 'placeholder' => 'Enter ...']) !!}
+        {!! Form::label('Cto_Name', 'Topic Name', ['class' => 'required']) !!}
+        {!! Form::text('Cto_Name', null, ['class' => 'form-control', 'placeholder' => 'Enter ...']) !!}
     </div>
     <div class="checkbox">
-        <label for="Imf_Active">
-            {!! Form::checkbox('Imf_Active', 'Y') !!}
+        <label for="Cto_Active">
+            {!! Form::checkbox('Cto_Active', 'Y') !!}
             Active
         </label>
     </div>

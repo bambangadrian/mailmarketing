@@ -39,7 +39,7 @@ class SubscriberController extends AbstractAdminController
      */
     public function create()
     {
-        //
+        return $this->renderPage('create');
     }
 
     /**

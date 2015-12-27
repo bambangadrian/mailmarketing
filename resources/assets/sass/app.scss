@@ -8,6 +8,11 @@
   padding: 10px 15px !important;
 }
 
+label.required:after {
+  content: " *";
+  color: red;
+}
+
 table tr th {
   background: #3C8DBC;
   color: #fff;
