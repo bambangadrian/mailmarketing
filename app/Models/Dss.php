@@ -1,31 +1,19 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use MailMarketing\Contracts\Model\ActiveScopeModel;
 
-class Dss extends Model
+class Dss extends AbstractBaseModel
 {
 
-    /**
-     * Indicates if the model should not be timestamped.
-     *
-     * @var boolean $timestamps
-     */
-    public $timestamps = false;
+    use ActiveScopeModel;
 
     /**
-     * Table name property.
+     * Fillable field using for mass assignment.
      *
-     * @var string $table
+     * @var array $fillable
      */
-    protected $table = 'Dss';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Dss_ID';
+    protected $fillable = ['Dss_Name', 'Dss_Description', 'Dss_RandomIndexID', 'Dss_StartPeriod', 'Dss_EndPeriod'];
 
     /**
      * Dss alternative relationship.

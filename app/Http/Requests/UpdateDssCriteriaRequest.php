@@ -4,7 +4,7 @@ namespace MailMarketing\Http\Requests;
 
 use MailMarketing\Http\Requests\Request;
 
-class CreateSubscriberRequest extends Request
+class UpdateDssCriteriaRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

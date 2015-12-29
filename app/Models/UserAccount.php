@@ -10,31 +10,10 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use MailMarketing\Contracts\Auth\UserAcl;
 
-class UserAccount extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
+class UserAccount extends AbstractBaseModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
 
     use Authenticatable, Authorizable, CanResetPassword, UserAcl;
-
-    /**
-     * Indicates if the model should not be timestamped.
-     *
-     * @var boolean $timestamps
-     */
-    public $timestamps = false;
-
-    /**
-     * Table name property.
-     *
-     * @var string $table
-     */
-    protected $table = 'UserAccount';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Usr_ID';
 
     /**
      * The attributes excluded from the model's JSON form.

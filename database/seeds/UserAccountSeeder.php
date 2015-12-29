@@ -37,7 +37,7 @@ class UserAccountSeeder extends Seeder
                 'Usr_Email'     => 'faber.banjarnahor@gmail.com',
                 'Usr_Password'  => bcrypt('supervisor2015'),
                 'Usr_CreatedOn' => Carbon\Carbon::now(),
-                'Usr_CreatedBy' => 3,
+                'Usr_CreatedBy' => 1,
                 'Usr_GUID'      => (string)Uuid::generate(4)
             ]
         ];

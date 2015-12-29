@@ -8,17 +8,23 @@
 @stop
 
 @section('content-page')
-    @if (session('validation-message'))
-        <div class="alert alert-warning">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <i class="icon fa fa-warning"></i> {{ session('validation-message') }}
-        </div>
-    @endif
     {!! Form::open(['action' => $controller.'@store']) !!}
         @yield('data-form')
     {!! Form::close() !!}
+    @if ($errors->any())
+        <div class="alert alert-danger alert-important">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <i class="icon fa fa-warning"></i> Invalid data found
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
 @stop
 
 @section('content-status')

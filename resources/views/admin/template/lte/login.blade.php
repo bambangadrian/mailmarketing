@@ -29,15 +29,13 @@
         <p class="login-box-msg">{{ $pageHeader or 'Sign in to start your session' }}</p>
         @if(Session::has('info'))
             <div class="alert alert-info">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 {{ Session::get('info') }}
             </div>
         @endif
         @if($errors->any())
             <div class="alert alert-danger alert-important alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 @foreach ($errors->all() as $error)
                     {{ $error }} <br/>
                 @endforeach
@@ -45,12 +43,11 @@
         @endif
         {!! Form::open() !!}
         <div class="form-group has-feedback">
-            <input type="email" name="Usr_Email" class="form-control" placeholder="Email"
-                   value="{{ old('Usr_Email') }}">
+            <input type="email" name="Usr_Email" required="required" class="form-control" placeholder="Email" value="{{ old('Usr_Email') }}">
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            <input type="password" name="password" class="form-control" placeholder="Password">
+            <input type="password" name="password" required="required" class="form-control" placeholder="Password">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">

@@ -1,10 +1,11 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin\Dss;
 
-use Illuminate\Http\Request;
+use Illuminate\Database\DatabaseServiceProvider;
 use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
-use MailMarketing\Http\Requests;
+use MailMarketing\Http\Requests\UpdateDssAlternativeRequest;
 use MailMarketing\Models\DssAlternative;
+use MailMarketing\Models\Dss;
 
 class DssAlternativeController extends AbstractAdminController
 {
@@ -41,6 +42,7 @@ class DssAlternativeController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new decision support alternative item';
+        $this->data['dssOptions'] = Dss::active()->lists('Dss_Name', 'Dss_ID')->prepend('Please Select Dss Period ...', '');
         return $this->renderPage('create');
     }
 
@@ -59,18 +61,20 @@ class DssAlternativeController extends AbstractAdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param UpdateDssAlternativeRequest $request Request object parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UpdateDssAlternativeRequest $request)
     {
-        $status = 'success';
-        $message = 'test';
-        $passedData = [
-            'status'  => $status,
-            'message' => $message
-        ];
-        return redirect()->action('Admin\Dss\DssAlternativeController@index')->with($passedData);
+        DssAlternative::create($request->except('_method', '_token'));
+        return redirect()->action('Admin\Dss\DssAlternativeController@index')
+                         ->withInput()
+                         ->with(
+                             [
+                                 'message' => 'test',
+                                 'status'  => 'success',
+                             ]
+                         );
     }
 }

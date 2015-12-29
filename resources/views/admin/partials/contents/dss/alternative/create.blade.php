@@ -10,11 +10,18 @@
 
 @section('data-form')
     <div class="form-group">
-        {!! Form::label('Dal_Name', 'Alternative Name') !!}
-        {!! Form::text('Dal_Name', null, ['class' => 'form-control', 'placeholder' => 'Enter ...']) !!}
+        {!! Form::label('Dal_Name', 'Alternative Name', ['class' => 'required']) !!}
+        {!! Form::text('Dal_Name', null, ['required', 'class' => 'form-control', 'placeholder' => 'Enter Alternative Name']) !!}
     </div>
+
+    <div class="form-group">
+        {!! Form::label('Dal_DssID', 'DSS Period', ['class' => 'required']) !!}
+        {!! Form::select('Dal_DssID', $dssOptions, null, ['class' => 'form-control']) !!}
+    </div>
+
     <div class="checkbox">
         <label for="Dal_Active">
+            {!! Form::hidden('Dal_Active', 'N') !!}
             {!! Form::checkbox('Dal_Active', 'Y') !!}
             Active
         </label>

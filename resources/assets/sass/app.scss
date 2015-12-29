@@ -10,7 +10,7 @@
 
 label.required:after {
   content: " *";
-  color: red;
+  color: #d00;
 }
 
 table tr th {
@@ -26,4 +26,12 @@ table tr th {
   background: #eee;
   border: 1px solid #ddd;
   min-width: 200px;
+}
+
+form {
+  margin-bottom: 10px;
+
+  input.invalid {
+    border-color: #d00;
+  }
 }

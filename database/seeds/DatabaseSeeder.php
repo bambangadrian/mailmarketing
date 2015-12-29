@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $this->call(UserAccountSeeder::class);
         $this->command->info('UserAccount Table Seeded !!');
+        $this->call(TablePrefixSeeder::class);
+        $this->command->info('Prefix Table Seeded !!');
         $this->call(UserRoleSeeder::class);
         $this->command->info('UserRole Table Seeded !!');
         $this->call(UserRoleDetailSeeder::class);
