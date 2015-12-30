@@ -18,8 +18,8 @@ class CreateDssEvAlternativeCriteriaTable extends Migration
                 $table->increments('Deac_ID');
                 $table->integer('Deac_CriteriaID')->unsigned();
                 $table->integer('Deac_AlternativeID')->unsigned();
-                $table->float('Dcr_EigenVector', 10, 8)->nullable();
-                $table->float('Dcr_MatrixTotal', 10, 8)->nullable();
+                $table->float('Deac_EigenVector', 10, 8)->nullable();
+                $table->float('Deac_MatrixTotal', 10, 8)->nullable();
                 # Create all timestamps.
                 $table->timestamp('Deac_CreatedOn');
                 $table->timestamp('Deac_ModifiedOn')->nullable();

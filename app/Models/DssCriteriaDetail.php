@@ -1,31 +1,15 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class DssCriteriaDetail extends Model
+class DssCriteriaDetail extends AbstractBaseModel
 {
 
     /**
-     * Indicates if the model should not be timestamped.
+     * Fillable field using for mass assignment.
      *
-     * @var boolean $timestamps
+     * @var array $fillable
      */
-    public $timestamps = false;
-
-    /**
-     * Table name property.
-     *
-     * @var string $table
-     */
-    protected $table = 'DssCriteriaDetail';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Dcd_ID';
+    protected $fillable = ['Dcd_CriteriaID', 'Dcd_CompareID', 'Dcd_ComparisonMatrixValue'];
 
     /**
      * Dss criteria master relationship.

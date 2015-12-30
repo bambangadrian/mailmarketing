@@ -18,33 +18,19 @@
     @show
 @stop
 
-@section('content-message')
-    @if (session('message'))
-        @if(session('status'))
-            <div class="alert alert-listing alert-{{ session('status') }}">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <i class="icon fa {{ BootstrapHelper::getIconStatus(session('status')) }}"></i> {{ session('message') }}
-            </div>
-
-        @endif
-    @endif
-@stop
-
 @section('content-page')
-    @section('data-control')
+    <div class="data-toolbar" style="margin-bottom:10px;">
         @if((isset($enableInsert) === false or $enableInsert === true))
-            <div class="row btn-group col-sm-12" role="group" aria-label="Toolbox" style="margin-bottom:10px;">
-                <a class="btn btn-flat btn-default" href="{{ action($controller.'@create') }}"><i class="fa fa-plus"></i> Insert New Record</a>
-            </div>
+            <a class="btn btn-default btn-flat  " href="{!! action($controllerName.'@create') !!}"><i class="fa fa-download"></i> New Record</a>
         @endif
-    @show
-
-    @yield('data-listing')
+        {!! $buttons !!}
+    </div>
+    <div class="data-listing">
+        @yield('data-listing')
+    </div>
 
     @section('data-pagination')
-        <div class="pull-right">
+        <div class="text-center">
             {!! $model->render() !!}
         </div>
     @show

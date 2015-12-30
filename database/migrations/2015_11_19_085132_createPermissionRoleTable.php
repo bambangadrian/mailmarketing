@@ -18,7 +18,7 @@ class CreatePermissionRoleTable extends Migration
                 $table->increments('Pmr_ID');
                 $table->integer('Pmr_PermissionID')->unsigned();
                 $table->integer('Pmr_RoleID')->unsigned();
-                $table->char('Pmr_Active', 1)->default('Y');
+                $table->boolean('Pmr_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Pmr_CreatedOn');
                 $table->timestamp('Pmr_ModifiedOn')->nullable();

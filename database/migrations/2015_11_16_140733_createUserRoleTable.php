@@ -18,7 +18,7 @@ class CreateUserRoleTable extends Migration
                 $table->increments('Ur_ID');
                 $table->string('Ur_Name', 50);
                 $table->string('Ur_Slug', 50);
-                $table->char('Ur_Active', 1)->default('Y');
+                $table->boolean('Ur_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Ur_CreatedOn');
                 $table->timestamp('Ur_ModifiedOn')->nullable();

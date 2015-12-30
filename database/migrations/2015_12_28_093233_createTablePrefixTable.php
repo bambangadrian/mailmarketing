@@ -18,7 +18,7 @@ class CreateTablePrefixTable extends Migration
                 $table->increments('Tpx_ID');
                 $table->string('Tpx_TableName', 100);
                 $table->string('Tpx_Prefix', 100);
-                $table->char('Tpx_Active', 1)->default('Y');
+                $table->boolean('Tpx_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Tpx_CreatedOn');
                 $table->timestamp('Tpx_ModifiedOn')->nullable();
@@ -32,9 +32,6 @@ class CreateTablePrefixTable extends Migration
                 # Add all the table constraint.
                 $table->unique('Tpx_TableName', 'Idx_TablePrefix_Tpx_TableName_Unique');
                 $table->unique('Tpx_Prefix', 'Idx_TablePrefix_Tpx_Prefix_Unique');
-                $table->foreign('Tpx_CreatedBy', 'Idx_TablePrefix_Tpx_CreatedBy_Dss_Dss_ID')
-                      ->references('Usr_ID')
-                      ->on('UserAccount');
             }
         );
     }

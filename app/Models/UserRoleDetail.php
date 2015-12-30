@@ -1,31 +1,19 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use MailMarketing\Contracts\Model\ActiveScopeModel;
 
-class UserRoleDetail extends Model
+class UserRoleDetail extends AbstractBaseModel
 {
 
-    /**
-     * Indicates if the model should not be timestamped.
-     *
-     * @var boolean $timestamps
-     */
-    public $timestamps = false;
+    use ActiveScopeModel;
 
     /**
-     * Table name property.
+     * Fillable field using for mass assignment.
      *
-     * @var string $table
+     * @var array $fillable
      */
-    protected $table = 'UserRoleDetail';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Urd_ID';
+    protected $fillable = ['Urd_UserID', 'Urd_RoleID'];
 
     /**
      * User relationship.

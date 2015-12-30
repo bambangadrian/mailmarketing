@@ -18,7 +18,7 @@ class CreateDssRandomIndexTable extends Migration
                 $table->increments('Dri_ID');
                 $table->integer('Dri_NumberColumn');
                 $table->float('Dri_RandomIndex', 4, 2);
-                $table->char('Dri_Active', 1)->default('Y');
+                $table->boolean('Dri_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Dri_CreatedOn');
                 $table->timestamp('Dri_ModifiedOn')->nullable();

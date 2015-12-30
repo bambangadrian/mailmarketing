@@ -18,7 +18,7 @@ class CreateSentMailTable extends Migration
                 $table->increments('Sm_ID');
                 $table->integer('Sm_MailScheduleID')->unsigned();
                 $table->integer('Sm_SubscriberListID')->unsigned();
-                $table->char('Sm_Active', 1)->default('Y');
+                $table->boolean('Sm_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Sm_CreatedOn');
                 $table->timestamp('Sm_ModifiedOn')->nullable();

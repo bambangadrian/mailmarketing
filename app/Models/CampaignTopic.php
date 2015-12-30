@@ -1,31 +1,19 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use MailMarketing\Contracts\Model\ActiveScopeModel;
 
-class CampaignTopic extends Model
+class CampaignTopic extends AbstractBaseModel
 {
 
-    /**
-     * Indicates if the model should not be timestamped.
-     *
-     * @var boolean $timestamps
-     */
-    public $timestamps = false;
+    use ActiveScopeModel;
 
     /**
-     * Table name property.
+     * Fillable field using for mass assignment.
      *
-     * @var string $table
+     * @var array $fillable
      */
-    protected $table = 'CampaignTopic';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Cto_ID';
+    protected $fillable = ['Cto_Name'];
 
     /**
      * Campaign relationship.

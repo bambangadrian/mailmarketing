@@ -4,7 +4,7 @@
     <ol class="breadcrumb">
         <li><a href="{{ action('Admin\DashboardController@index') }}"><i class="fa fa-home"></i> Home</a></li>
         <li><i class="fa fa-database"></i> DSS</li>
-        <li><a href="{{ action('Admin\RandomIndexController@index') }}"><i class="fa fa-object-ungroup"></i> RandomIndex</a></li>
+        <li><a href="{{ action('Admin\RandomIndexController@index') }}"><i class="fa fa-rss"></i> RandomIndex</a></li>
     </ol>
 @stop
 

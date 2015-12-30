@@ -22,6 +22,20 @@ class BasicModelObserver extends AbstractModelObserver
     }
 
     /**
+     * Observe created action.
+     *
+     * @param AbstractBaseModel $model Model object parameter.
+     *
+     * @return void
+     */
+    public function created(AbstractBaseModel $model)
+    {
+        // Store a piece of data in the session...
+        session()->flash('status', 'success');
+        session()->flash('message', 'Data successfully created');
+    }
+
+    /**
      * Observe updating action.
      *
      * @param AbstractBaseModel $model Model object parameter.
@@ -36,6 +50,20 @@ class BasicModelObserver extends AbstractModelObserver
     }
 
     /**
+     * Observe updated action.
+     *
+     * @param AbstractBaseModel $model Model object parameter.
+     *
+     * @return void
+     */
+    public function updated(AbstractBaseModel $model)
+    {
+        // Store a piece of data in the session...
+        session()->flash('status', 'success');
+        session()->flash('message', 'Data successfully updated');
+    }
+
+    /**
      * Observe deleting action.
      *
      * @param AbstractBaseModel $model Model object parameter.
@@ -47,6 +75,20 @@ class BasicModelObserver extends AbstractModelObserver
         $model->{$model->getColumnPrefix() . '_' . 'DeletedOn'} = \Carbon\Carbon::now();
         $model->{$model->getColumnPrefix() . '_' . 'DeletedBy'} = $this->userId;
         $model->{$model->getColumnPrefix() . '_' . 'GUID'} = $this->generateGuid();
+    }
+
+    /**
+     * Observe deleted action.
+     *
+     * @param AbstractBaseModel $model Model object parameter.
+     *
+     * @return void
+     */
+    public function deleted(AbstractBaseModel $model)
+    {
+        // Store a piece of data in the session...
+        session()->flash('status', 'success');
+        session()->flash('message', 'Data successfully deleted (softly)');
     }
 
     /**

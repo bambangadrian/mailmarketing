@@ -1,7 +1,6 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -9,18 +8,19 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use MailMarketing\Contracts\Auth\UserAcl;
+use MailMarketing\Contracts\Model\ActiveScopeModel;
 
 class UserAccount extends AbstractBaseModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
 
-    use Authenticatable, Authorizable, CanResetPassword, UserAcl;
+    use Authenticatable, Authorizable, CanResetPassword, UserAcl, ActiveScopeModel;
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array $hidden
      */
-    protected $hidden = ['Usr_Password', 'Usr_Token', 'Usr_GUID'];
+    protected $hidden = ['Usr_Password', 'Usr_Token'];
 
     /**
      * The attributes that are mass assignable.

@@ -27,7 +27,7 @@ class CreateMailListTable extends Migration
                 $table->string('Mls_Country', 25)->nullable();
                 $table->char('Mls_Phone', 15)->nullable();
                 $table->char('Mls_NotifType', 1)->nullable();
-                $table->char('Mls_Active', 1)->default('Y');
+                $table->boolean('Mls_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Mls_CreatedOn');
                 $table->timestamp('Mls_ModifiedOn')->nullable();

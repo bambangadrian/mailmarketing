@@ -1,7 +1,6 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin\Dss;
 
-use Illuminate\Database\DatabaseServiceProvider;
 use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Http\Requests\UpdateDssAlternativeRequest;
 use MailMarketing\Models\DssAlternative;
@@ -30,7 +29,7 @@ class DssAlternativeController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = DssAlternative::paginate(10);
+        $this->data['model'] = DssAlternative::notDeleted()->paginate(10);
         return $this->renderPage();
     }
 
@@ -42,7 +41,8 @@ class DssAlternativeController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new decision support alternative item';
-        $this->data['dssOptions'] = Dss::active()->lists('Dss_Name', 'Dss_ID')->prepend('Please Select Dss Period ...', '');
+        $this->data['formAction'] = action($this->controllerName . '@store');
+        $this->data['dssOptions'] = Dss::active()->notDeleted()->lists('Dss_Name', 'Dss_ID')->prepend('Please Select Dss Period ...', '');
         return $this->renderPage('create');
     }
 
@@ -55,7 +55,11 @@ class DssAlternativeController extends AbstractAdminController
      */
     public function edit($id)
     {
-        return '';
+        $this->data['pageDescription'] = 'Create new decision support alternative item';
+        $this->data['model'] = DssAlternative::find($id);
+        $this->data['formAction'] = action($this->controllerName . '@update', $id);
+        $this->data['dssOptions'] = Dss::active()->notDeleted()->lists('Dss_Name', 'Dss_ID')->prepend('Please Select Dss Period ...', '');
+        return $this->renderPage('edit');
     }
 
     /**
@@ -67,14 +71,37 @@ class DssAlternativeController extends AbstractAdminController
      */
     public function store(UpdateDssAlternativeRequest $request)
     {
-        DssAlternative::create($request->except('_method', '_token'));
-        return redirect()->action('Admin\Dss\DssAlternativeController@index')
-                         ->withInput()
-                         ->with(
-                             [
-                                 'message' => 'test',
-                                 'status'  => 'success',
-                             ]
-                         );
+        try {
+            \DB::beginTransaction();
+            $record = DssAlternative::create($request->except('_method', '_token'));
+            \DB::commit();
+            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  UpdateDssAlternativeRequest $request Request object parameter.
+     * @param  integer                     $id      Model ID parameter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateDssAlternativeRequest $request, $id)
+    {
+        try {
+            $record = DssAlternative::find($id);
+            \DB::beginTransaction();
+            $record->fill($request->except('_method', '_token'));
+            $record->save();
+            \DB::commit();
+            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect()->action($this->controllerName . '@edit', $record->getKey())->withErrors($e->getMessage())->withInput();
+        }
     }
 }

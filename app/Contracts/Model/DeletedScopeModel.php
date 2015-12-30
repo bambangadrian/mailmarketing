@@ -20,7 +20,7 @@ trait DeletedScopeModel
      */
     public function scopeDeleted($query)
     {
-        return $query->whereNull($this->deleteField);
+        return $query->whereNotNull($this->deleteField);
     }
 
     /**
@@ -30,6 +30,16 @@ trait DeletedScopeModel
      */
     public function scopeNotDeleted($query)
     {
-        return $query->whereNotNull($this->deleteField);
+        return $query->whereNull($this->deleteField);
+    }
+
+    /**
+     * Check model if has been deleted or not.
+     *
+     * @return boolean
+     */
+    public function isDeleted()
+    {
+        return (boolean)$this->deleteField;
     }
 }

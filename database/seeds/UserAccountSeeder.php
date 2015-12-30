@@ -20,6 +20,7 @@ class UserAccountSeeder extends Seeder
                 'Usr_Name'      => 'Administrator',
                 'Usr_Email'     => 'bambang.adrian@gmail.com',
                 'Usr_Password'  => bcrypt('optilog2014'),
+                'Usr_Active'    => 1,
                 'Usr_CreatedOn' => Carbon\Carbon::now(),
                 'Usr_CreatedBy' => 1,
                 'Usr_GUID'      => (string)Uuid::generate(4)
@@ -28,6 +29,7 @@ class UserAccountSeeder extends Seeder
                 'Usr_Name'      => 'Bambang Adrian',
                 'Usr_Email'     => 'bambang.adrian@yahoo.co.id',
                 'Usr_Password'  => bcrypt('content2015'),
+                'Usr_Active'    => 1,
                 'Usr_CreatedOn' => Carbon\Carbon::now(),
                 'Usr_CreatedBy' => 1,
                 'Usr_GUID'      => (string)Uuid::generate(4)
@@ -36,6 +38,7 @@ class UserAccountSeeder extends Seeder
                 'Usr_Name'      => 'Faber Banjarnahor',
                 'Usr_Email'     => 'faber.banjarnahor@gmail.com',
                 'Usr_Password'  => bcrypt('supervisor2015'),
+                'Usr_Active'    => 1,
                 'Usr_CreatedOn' => Carbon\Carbon::now(),
                 'Usr_CreatedBy' => 1,
                 'Usr_GUID'      => (string)Uuid::generate(4)

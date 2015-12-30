@@ -25,6 +25,7 @@ class MailListSeeder extends Seeder
                 'Mls_Address1'         => 'Jl. Sriwijaya Kavling 5-7',
                 'Mls_Address2'         => 'Lippo Cikarang',
                 'Mls_City'             => 'Kab. Bekasi',
+                'Mls_Active'           => 1,
                 'Mls_Country'          => 'Indonesia',
                 'Mls_Phone'            => '0218888888',
                 'Mls_NotifType'        => 'All',

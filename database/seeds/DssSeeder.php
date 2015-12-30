@@ -19,6 +19,7 @@ class DssSeeder extends Seeder
             [
                 'Dss_Name'        => 'Intense Topic',
                 'Dss_Description' => 'Choose the campaign topic that must be more strengthen',
+                'Dss_Active'      => 1,
                 'Dss_CreatedOn'   => Carbon\Carbon::now(),
                 'Dss_CreatedBy'   => 1,
                 'Dss_GUID'        => (string)Uuid::generate(4)

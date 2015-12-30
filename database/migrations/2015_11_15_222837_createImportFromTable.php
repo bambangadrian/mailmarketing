@@ -18,7 +18,7 @@ class CreateImportFromTable extends Migration
                 $table->increments('Imf_ID');
                 $table->string('Imf_Name', 50);
                 $table->string('Imf_Description', 255)->nullable();
-                $table->char('Imf_Active', 1)->default('Y');
+                $table->boolean('Imf_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Imf_CreatedOn');
                 $table->timestamp('Imf_ModifiedOn')->nullable();

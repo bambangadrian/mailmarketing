@@ -3,7 +3,7 @@
 @section('content-layout')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @yield('content-message')
+        @include('admin.template.lte.message')
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -29,7 +29,7 @@
             @section('content')
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="box box-primary">
+                        <div class="box box-solid box-primary">
                             <div class="box-header with-border">
                                 @yield('content-title')
                             </div>
@@ -48,6 +48,27 @@
             @show
         </section>
         <!-- /.content -->
+        @if(\DB::logging() === true)
+            <section class="content-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="box box-default box-solid collapsed-box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-exchange"></i> Database Query Log</h3>
+                                <div class="box-tools pull-right">
+                                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                {{ \BootstrapHelper::dump(\DB::getQueryLog()) }}
+                            </div>
+                            <div class="box-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        @endif
     </div><!-- /.content-wrapper -->
 @stop
 
@@ -67,7 +88,7 @@
     @endif
     <script>
         $(function () {
-            $('div.alert').not('.alert-important').delay(3000).slideUp(300);
+            $('div.alert').not('.alert-important').delay(5000).slideUp(300);
         });
     </script>
 @stop

@@ -18,42 +18,49 @@ class MailTrackingStatusSeeder extends Seeder
         $mailTrackingStatuses = [
             [
                 'Mts_Name'      => 'open',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
                 'Mts_Name'      => 'read',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
                 'Mts_Name'      => 'click',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
                 'Mts_Name'      => 'subscribe',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
                 'Mts_Name'      => 'unsubscribe',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
                 'Mts_Name'      => 'bounce',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
                 'Mts_Name'      => 'fail',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)

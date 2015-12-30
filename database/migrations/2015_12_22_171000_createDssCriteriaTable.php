@@ -21,7 +21,7 @@ class CreateDssCriteriaTable extends Migration
                 $table->string('Dcr_Description', 255)->nullable();
                 $table->float('Dcr_EigenVector', 10, 8)->nullable();
                 $table->float('Dcr_MatrixTotal', 10, 8)->nullable();
-                $table->char('Dcr_Active', 1)->default('Y');
+                $table->boolean('Dcr_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Dcr_CreatedOn');
                 $table->timestamp('Dcr_ModifiedOn')->nullable();

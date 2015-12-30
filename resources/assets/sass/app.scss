@@ -1,13 +1,4 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
-.box {
-  padding: 5px;
-}
-
-.box-header, .box-body, .box-footer {
-  padding: 10px 15px !important;
-}
-
 label.required:after {
   content: " *";
   color: #d00;
@@ -18,7 +9,20 @@ table tr th {
   color: #fff;
 }
 
+.box-body {
+  .data-listing {
+    table {
+      tbody tr {
+        &:hover td {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
 .alert-listing {
+  z-index: 9999;
   position: absolute;
   bottom: 51px;
   right: 5px;
@@ -30,8 +34,24 @@ table tr th {
 
 form {
   margin-bottom: 10px;
-
   input.invalid {
     border-color: #d00;
   }
+}
+
+.content-footer {
+  margin: auto;
+  padding: 15px;
+  .box-header {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .box-body {
+    max-height: 400px;
+    overflow: auto;
+  }
+}
+
+.btn-app {
+  margin: 0 !important;
 }

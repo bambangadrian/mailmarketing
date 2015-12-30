@@ -2,15 +2,13 @@
 
 @section('content-title')
     <h3 class="box-title">
-        <i class="fa fa-file"></i>
+        <i class="fa fa-file-text"></i>
         {{ isset($contentTitle) ? $contentTitle : 'Detail Data' }}
     </h3>
 @stop
 
 @section('content-page')
-    {!! Form::open(['action' => $controller.'@store']) !!}
-        @yield('data-form')
-    {!! Form::close() !!}
+    @yield('data-form')
     @if ($errors->any())
         <div class="alert alert-danger alert-important">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -24,7 +22,6 @@
             </ul>
         </div>
     @endif
-
 @stop
 
 @section('content-status')

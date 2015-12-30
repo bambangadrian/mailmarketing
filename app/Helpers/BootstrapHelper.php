@@ -1,6 +1,8 @@
 <?php
 namespace MailMarketing\Helpers;
 
+use Illuminate\Support\Debug\Dumper;
+
 class BootstrapHelper extends Helper
 {
 
@@ -21,5 +23,22 @@ class BootstrapHelper extends Helper
             $icon = $iconArr[$status];
         }
         return $icon;
+    }
+
+    /**
+     * Dump the passed variables and end the script.
+     *
+     * @param  mixed
+     *
+     * @return void
+     */
+    public static function dump()
+    {
+        array_map(
+            function ($x) {
+                (new Dumper)->dump($x);
+            },
+            func_get_args()
+        );
     }
 }

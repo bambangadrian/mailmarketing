@@ -18,7 +18,7 @@ class CreateUserRoleDetailTable extends Migration
                 $table->increments('Urd_ID');
                 $table->integer('Urd_UserID')->unsigned();
                 $table->integer('Urd_RoleID')->unsigned();
-                $table->char('Urd_Active', 1)->default('Y');
+                $table->boolean('Urd_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Urd_CreatedOn');
                 $table->timestamp('Urd_ModifiedOn')->nullable();

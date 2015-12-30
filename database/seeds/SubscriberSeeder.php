@@ -24,6 +24,7 @@ class SubscriberSeeder extends Seeder
                 'Sbr_Address1'     => 'Perumahan Bagasasi Blok F3 No.1',
                 'Sbr_Address2'     => 'Cibarusah',
                 'Sbr_Address3'     => 'Cikarang Selatan',
+                'Sbr_Active'       => 1,
                 'Sbr_CreatedOn'    => Carbon\Carbon::now(),
                 'Sbr_CreatedBy'    => 1,
                 'Sbr_GUID'         => (string)Uuid::generate(4)

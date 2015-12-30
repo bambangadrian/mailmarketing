@@ -17,7 +17,7 @@ class CreateSegmentCriteriaTable extends Migration
             function (Blueprint $table) {
                 $table->increments('Sc_ID');
                 $table->string('Sc_Name', 50);
-                $table->char('Sc_Active', 1)->default('Y');
+                $table->boolean('Sc_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Sc_CreatedOn');
                 $table->timestamp('Sc_ModifiedOn')->nullable();

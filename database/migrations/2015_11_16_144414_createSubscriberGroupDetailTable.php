@@ -18,7 +18,7 @@ class CreateSubscriberGroupDetailTable extends Migration
                 $table->increments('Sgd_ID');
                 $table->integer('Sgd_GroupID')->unsigned();
                 $table->integer('Sgd_SubscriberID')->unsigned();
-                $table->char('Sgd_Active', 1)->default('Y');
+                $table->boolean('Sgd_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Sgd_CreatedOn');
                 $table->timestamp('Sgd_ModifiedOn')->nullable();

@@ -83,7 +83,7 @@
                     <li @if($activeSubMenu === 'dssConsistency') class="active" @endif><a href="{{ action('Admin\Dss\DssConsistencyController@index') }}"><i class="fa fa-arrows-alt"></i> Consistency</a></li>
                     <li @if($activeSubMenu === 'dssPriority') class="active" @endif><a href="{{ action('Admin\Dss\DssPriorityController@index') }}"><i class="fa fa-sort-amount-asc"></i> Priority</a></li>
                     <li @if($activeSubMenu === 'dssResult') class="active" @endif><a href="{{ action('Admin\Dss\DssResultController@index') }}"><i class="fa fa-th-list"></i> Result</a></li>
-                    <li @if($activeSubMenu === 'randomIndex') class="active" @endif><a href="{{ action('Admin\RandomIndexController@index') }}"><i class="fa fa-object-ungroup"></i> RandomIndex</a></li>
+                    <li @if($activeSubMenu === 'randomIndex') class="active" @endif><a href="{{ action('Admin\RandomIndexController@index') }}"><i class="fa fa-rss"></i> RandomIndex</a></li>
                 </ul>
             </li>
             <li @if($activeMenu === 'company')  class="active" @endif><a href="{{ action('Admin\CompanyController@index') }}"><i class="fa fa-laptop"></i> Company</a></li>

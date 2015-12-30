@@ -1,31 +1,15 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class DssAlternativeDetail extends Model
+class DssAlternativeDetail extends AbstractBaseModel
 {
 
     /**
-     * Indicates if the model should not be timestamped.
+     * Fillable field using for mass assignment.
      *
-     * @var boolean $timestamps
+     * @var array $fillable
      */
-    public $timestamps = false;
-
-    /**
-     * Table name property.
-     *
-     * @var string $table
-     */
-    protected $table = 'DssAlternativeDetail';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Dad_ID';
+    protected $fillable = ['Dad_EigenID', 'Dad_CompareID', 'Dad_ComparisonMatrixValue'];
 
     /**
      * Dss eigen value table per alternative per criteria relationship.

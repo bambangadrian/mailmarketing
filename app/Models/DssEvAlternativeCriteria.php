@@ -1,31 +1,15 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class DssEvAlternativeCriteria extends Model
+class DssEvAlternativeCriteria extends AbstractBaseModel
 {
 
     /**
-     * Indicates if the model should not be timestamped.
+     * Fillable field using for mass assignment.
      *
-     * @var boolean $timestamps
+     * @var array $fillable
      */
-    public $timestamps = false;
-
-    /**
-     * Table name property.
-     *
-     * @var string $table
-     */
-    protected $table = 'DssEvAlternativeCriteria';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Deac_ID';
+    protected $fillable = ['Deac_CriteriaID', 'Deac_AlternativeID', 'Deac_EigenVector', 'Deac_MatrixTotal'];
 
     /**
      * Dss criteria master relationship.

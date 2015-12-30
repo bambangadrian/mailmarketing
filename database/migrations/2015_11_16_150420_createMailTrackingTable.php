@@ -21,7 +21,6 @@ class CreateMailTrackingTable extends Migration
                 $table->string('Mtr_UserAgent', 255)->nullable();
                 $table->string('Mtr_Location', 100)->nullable();
                 $table->char('Mtr_IpAddress', 15)->nullable();
-                $table->char('Mtr_Active', 1)->default('Y');
                 # Create all timestamps.
                 $table->timestamp('Mtr_CreatedOn');
                 $table->timestamp('Mtr_ModifiedOn')->nullable();

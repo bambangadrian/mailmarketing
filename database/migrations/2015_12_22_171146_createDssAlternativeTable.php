@@ -18,7 +18,7 @@ class CreateDssAlternativeTable extends Migration
                 $table->increments('Dal_ID');
                 $table->integer('Dal_DssID')->unsigned();
                 $table->string('Dal_Name', 100);
-                $table->char('Dal_Active', 1)->default('Y');
+                $table->boolean('Dal_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Dal_CreatedOn');
                 $table->timestamp('Dal_ModifiedOn')->nullable();
@@ -30,6 +30,7 @@ class CreateDssAlternativeTable extends Migration
                 # Add the uuid column field.
                 $table->char('Dal_GUID', 36);
                 # Add all the table constraint.
+                $table->unique(['Dal_DssID', 'Dal_Name'], 'Idx_DssAlternative_Dal_DssID_Dal_Name_Unique');
                 $table->foreign('Dal_DssID', 'Idx_DssAlternative_Dal_DssID_Dss_Dss_ID')
                       ->references('Dss_ID')
                       ->on('Dss');

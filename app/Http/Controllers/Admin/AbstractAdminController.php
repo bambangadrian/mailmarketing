@@ -1,6 +1,7 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
+use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -10,7 +11,7 @@ abstract class AbstractAdminController extends BaseController
 {
 
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    use \Illuminate\Console\AppNamespaceDetectorTrait;
+    use AppNamespaceDetectorTrait;
 
     /**
      * Blade extension.
@@ -54,13 +55,24 @@ abstract class AbstractAdminController extends BaseController
      */
     protected $defaultPage = 'default';
 
+    /**
+     * Controller name.
+     *
+     * @var string $controllerName
+     */
+    protected $controllerName;
+
     public function __construct()
     {
+        # Enable the log query for database.
+        \DB::enableQueryLog();
         # Set the default active menu and sub menu.
         $this->data['activeMenu'] = 'dashboard';
         $this->data['activeSubMenu'] = '';
         $reflectionClass = new \ReflectionClass($this);
-        $this->data['controller'] = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
+        $this->data['controllerName'] = $this->controllerName = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
+        $this->data['model'] = null;
+        $this->data['buttons'] = null;
     }
 
     /**
@@ -140,7 +152,7 @@ abstract class AbstractAdminController extends BaseController
      */
     protected function renderPage($contentSegment = 'index', $contentName = null)
     {
-        $bladeFile = $this->viewDir . '.' . $this->defaultPage;
+        $contentBlade = $this->viewDir . '.' . $this->defaultPage;
         if (empty($contentName) === true) {
             $contentName = $this->contentDir;
         }
@@ -148,8 +160,8 @@ abstract class AbstractAdminController extends BaseController
             'resources/views/' . $this->viewDir . '/' . $this->pageDir . '/' . $contentName . '/' . $contentSegment . self::$bladeExt
         );
         if (file_exists($checkBladeFile) === true) {
-            $bladeFile = $this->viewDir . '.' . $this->pageDir . '.' . $contentName . '.' . $contentSegment;
+            $contentBlade = $this->viewDir . '.' . $this->pageDir . '.' . $contentName . '.' . $contentSegment;
         }
-        return view($bladeFile, $this->data);
+        return view($contentBlade, $this->data);
     }
 }

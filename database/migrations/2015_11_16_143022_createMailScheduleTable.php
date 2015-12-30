@@ -19,7 +19,7 @@ class CreateMailScheduleTable extends Migration
                 $table->integer('Msd_CampaignID')->unsigned();
                 $table->dateTime('Msd_ExecutedDate');
                 $table->char('Msd_IsExecuted', 1)->default('N');
-                $table->char('Msd_Active', 1)->default('Y');
+                $table->boolean('Msd_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Msd_CreatedOn');
                 $table->timestamp('Msd_ModifiedOn')->nullable();

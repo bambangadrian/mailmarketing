@@ -1,7 +1,7 @@
 <?php
 namespace MailMarketing\Models;
 
-use DB;
+use \DB;
 use Illuminate\Database\Eloquent\Model;
 use MailMarketing\Contracts\Model\DeletedScopeModel;
 use MailMarketing\Contracts\Model\ActiveScopeModel;
@@ -31,13 +31,14 @@ abstract class AbstractBaseModel extends Model
         if ($this->table === 'TablePrefix') {
             $columnPrefix = 'Tpx';
         } else {
-            $prefix = DB::table('TablePrefix')->where('Tpx_TableName', DB::getTablePrefix() . $this->table)->first();
+            $prefix = \DB::table('TablePrefix')->where('Tpx_TableName', \DB::getTablePrefix() . $this->table)->first();
             if ($prefix !== null or $prefix !== '') {
                 $columnPrefix = $prefix->Tpx_Prefix;
             }
         }
         $this->columnPrefix = $columnPrefix;
         $this->primaryKey = $this->columnPrefix . '_ID';
+        $this->deleteField = $this->columnPrefix . '_DeletedOn';
         $this->timestamps = false;
         if (in_array(ActiveScopeModel::class, class_uses($this), false) === true) {
             $this->createProperty('activeField', $this->columnPrefix . '_Active');

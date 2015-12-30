@@ -23,7 +23,7 @@ class CreateDssTable extends Migration
                 $table->float('Dss_CriteriaEigenValue', 10, 8)->nullable();
                 $table->float('Dss_CriteriaConsistencyIndex', 10, 8)->nullable();
                 $table->float('Dss_CriteriaConsistencyRatio', 10, 8)->nullable();
-                $table->char('Dss_Active', 1)->default('Y');
+                $table->boolean('Dss_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Dss_RunOn')->nullable();
                 $table->timestamp('Dss_CreatedOn');

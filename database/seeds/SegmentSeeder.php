@@ -18,12 +18,14 @@ class SegmentSeeder extends Seeder
         $segments = [
             [
                 'Seg_Name'      => 'Age',
+                'Seg_Active'    => 1,
                 'Seg_CreatedOn' => Carbon\Carbon::now(),
                 'Seg_CreatedBy' => 1,
                 'Seg_GUID'      => (string)Uuid::generate(4)
             ],
             [
                 'Seg_Name'      => 'Location',
+                'Seg_Active'    => 1,
                 'Seg_CreatedOn' => Carbon\Carbon::now(),
                 'Seg_CreatedBy' => 1,
                 'Seg_GUID'      => (string)Uuid::generate(4)

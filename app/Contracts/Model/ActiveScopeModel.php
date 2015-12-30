@@ -25,4 +25,14 @@ trait ActiveScopeModel
     {
         return $query->where($this->activeField, '=', 'N');
     }
+
+    /**
+     * Get model activation status.
+     *
+     * @return boolean
+     */
+    public function isActivated()
+    {
+        return (boolean)$this->activeField;
+    }
 }

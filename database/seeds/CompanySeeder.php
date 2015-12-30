@@ -26,6 +26,7 @@ class CompanySeeder extends Seeder
                 'Cpy_PostCode'   => '17550',
                 'Cpy_Country'    => 'Indonesia',
                 'Cpy_TimeZone'   => 'Asia/Jakarta',
+                'Cpy_Active'     => 1,
                 'Cpy_CreatedOn'  => Carbon\Carbon::now(),
                 'Cpy_CreatedBy'  => 1,
                 'Cpy_GUID'       => (string)Uuid::generate(4)

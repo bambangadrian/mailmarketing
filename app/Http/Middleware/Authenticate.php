@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Http\Middleware;
 
 use Closure;
@@ -41,8 +40,11 @@ class Authenticate
             } else {
                 return redirect()->guest('admin/login');
             }
+        } else {
+            if ($this->auth->user()->isActivated() === false) {
+                return redirect('admin/login')->withErrors(['email' => 'Your account still not activated']);
+            }
         }
-
         return $next($request);
     }
 }
