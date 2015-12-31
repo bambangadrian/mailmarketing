@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Seeder;
 use MailMarketing\Models\TablePrefix as TablePrefix;
 
@@ -14,10 +15,11 @@ class TablePrefixSeeder extends Seeder
     {
         # Clear the table.
         TablePrefix::truncate();
+        $dbTablePrefix = DB::getTablePrefix();
         # Seed the table.
         $tablePrefixes = [
             [
-                'Tpx_TableName' => 'tbl_Campaign',
+                'Tpx_TableName' => $dbTablePrefix . 'Campaign',
                 'Tpx_Prefix'    => 'Cpg',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -25,7 +27,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_CampaignCategory',
+                'Tpx_TableName' => $dbTablePrefix . 'CampaignCategory',
                 'Tpx_Prefix'    => 'Cc',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -33,7 +35,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_CampaignTopic',
+                'Tpx_TableName' => $dbTablePrefix . 'CampaignTopic',
                 'Tpx_Prefix'    => 'Cto',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -41,7 +43,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_CampaignType',
+                'Tpx_TableName' => $dbTablePrefix . 'CampaignType',
                 'Tpx_Prefix'    => 'Cgt',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -49,7 +51,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_Company',
+                'Tpx_TableName' => $dbTablePrefix . 'Company',
                 'Tpx_Prefix'    => 'Cpy',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -57,7 +59,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_Dss',
+                'Tpx_TableName' => $dbTablePrefix . 'Dss',
                 'Tpx_Prefix'    => 'Dss',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -65,7 +67,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_DssAlternative',
+                'Tpx_TableName' => $dbTablePrefix . 'DssAlternative',
                 'Tpx_Prefix'    => 'Dal',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -73,7 +75,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_DssAlternativeDetail',
+                'Tpx_TableName' => $dbTablePrefix . 'DssAlternativeDetail',
                 'Tpx_Prefix'    => 'Dad',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -81,7 +83,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_DssCriteria',
+                'Tpx_TableName' => $dbTablePrefix . 'DssCriteria',
                 'Tpx_Prefix'    => 'Dcr',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -89,7 +91,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_DssCriteriaDetail',
+                'Tpx_TableName' => $dbTablePrefix . 'DssCriteriaDetail',
                 'Tpx_Prefix'    => 'Dcd',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -97,7 +99,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_DssEvAlternativeCriteria',
+                'Tpx_TableName' => $dbTablePrefix . 'DssEvAlternativeCriteria',
                 'Tpx_Prefix'    => 'Deac',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -105,7 +107,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_DssRandomIndex',
+                'Tpx_TableName' => $dbTablePrefix . 'DssRandomIndex',
                 'Tpx_Prefix'    => 'Dri',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -113,7 +115,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_DssResult',
+                'Tpx_TableName' => $dbTablePrefix . 'DssResult',
                 'Tpx_Prefix'    => 'Dsr',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -121,7 +123,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_ImportFrom',
+                'Tpx_TableName' => $dbTablePrefix . 'ImportFrom',
                 'Tpx_Prefix'    => 'Imf',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -129,7 +131,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_MailList',
+                'Tpx_TableName' => $dbTablePrefix . 'MailList',
                 'Tpx_Prefix'    => 'Mls',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -137,7 +139,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_MailSchedule',
+                'Tpx_TableName' => $dbTablePrefix . 'MailSchedule',
                 'Tpx_Prefix'    => 'Msd',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -145,7 +147,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_MailTracking',
+                'Tpx_TableName' => $dbTablePrefix . 'MailTracking',
                 'Tpx_Prefix'    => 'Mtr',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -153,7 +155,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_MailTrackingStatus',
+                'Tpx_TableName' => $dbTablePrefix . 'MailTrackingStatus',
                 'Tpx_Prefix'    => 'Mts',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -161,7 +163,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_Permission',
+                'Tpx_TableName' => $dbTablePrefix . 'Permission',
                 'Tpx_Prefix'    => 'Pm',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -169,7 +171,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_PermissionRole',
+                'Tpx_TableName' => $dbTablePrefix . 'PermissionRole',
                 'Tpx_Prefix'    => 'Pmr',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -177,7 +179,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_Segment',
+                'Tpx_TableName' => $dbTablePrefix . 'Segment',
                 'Tpx_Prefix'    => 'Seg',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -185,7 +187,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_SegmentCriteria',
+                'Tpx_TableName' => $dbTablePrefix . 'SegmentCriteria',
                 'Tpx_Prefix'    => 'Sc',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -193,7 +195,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_SegmentDetail',
+                'Tpx_TableName' => $dbTablePrefix . 'SegmentDetail',
                 'Tpx_Prefix'    => 'Sed',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -201,7 +203,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_SentMail',
+                'Tpx_TableName' => $dbTablePrefix . 'SentMail',
                 'Tpx_Prefix'    => 'Sm',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -209,7 +211,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_Subscriber',
+                'Tpx_TableName' => $dbTablePrefix . 'Subscriber',
                 'Tpx_Prefix'    => 'Sbr',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -217,7 +219,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_SubscriberGroup',
+                'Tpx_TableName' => $dbTablePrefix . 'SubscriberGroup',
                 'Tpx_Prefix'    => 'Sbg',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -225,7 +227,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_SubscriberGroupDetail',
+                'Tpx_TableName' => $dbTablePrefix . 'SubscriberGroupDetail',
                 'Tpx_Prefix'    => 'Sgd',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -233,7 +235,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_TablePrefix',
+                'Tpx_TableName' => $dbTablePrefix . 'TablePrefix',
                 'Tpx_Prefix'    => 'Tpx',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -241,7 +243,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_Template',
+                'Tpx_TableName' => $dbTablePrefix . 'Template',
                 'Tpx_Prefix'    => 'Tpl',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -249,7 +251,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_UserAccount',
+                'Tpx_TableName' => $dbTablePrefix . 'UserAccount',
                 'Tpx_Prefix'    => 'Usr',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -257,7 +259,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_UserRole',
+                'Tpx_TableName' => $dbTablePrefix . 'UserRole',
                 'Tpx_Prefix'    => 'Ur',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),
@@ -265,7 +267,7 @@ class TablePrefixSeeder extends Seeder
                 'Tpx_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Tpx_TableName' => 'tbl_UserRoleDetail',
+                'Tpx_TableName' => $dbTablePrefix . 'UserRoleDetail',
                 'Tpx_Prefix'    => 'Urd',
                 'Tpx_Active'    => 1,
                 'Tpx_CreatedOn' => Carbon\Carbon::now(),

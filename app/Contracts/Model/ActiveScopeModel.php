@@ -13,7 +13,7 @@ trait ActiveScopeModel
      */
     public function scopeActive($query)
     {
-        return $query->where($this->activeField, '=', 'Y');
+        return $query->where($this->activeField, '=', 1);
     }
 
     /**
@@ -23,7 +23,7 @@ trait ActiveScopeModel
      */
     public function scopeNotActive($query)
     {
-        return $query->where($this->activeField, '=', 'N');
+        return $query->where($this->activeField, '=', 0);
     }
 
     /**
