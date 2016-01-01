@@ -3,15 +3,16 @@ namespace MailMarketing\Http\Controllers\Admin;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use MailMarketing\Contracts\Crud;
 
 abstract class AbstractAdminController extends BaseController
 {
 
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    use AppNamespaceDetectorTrait;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, AppNamespaceDetectorTrait, Crud;
 
     /**
      * Blade extension.
@@ -19,13 +20,6 @@ abstract class AbstractAdminController extends BaseController
      * @var string $bladeExt
      */
     static protected $bladeExt = '.blade.php';
-
-    /**
-     * The data collection that will passed into view.
-     *
-     * @var array $data
-     */
-    protected $data = [];
 
     /**
      * Content Layout directory property.
@@ -62,17 +56,85 @@ abstract class AbstractAdminController extends BaseController
      */
     protected $controllerName;
 
+    /**
+     * Breadcrumb file name property.
+     *
+     * @var string $breadCrumbFileName
+     */
+    protected $breadCrumbFileName = 'breadcrumb';
+
+    /**
+     * Has breadcrumb flag property.
+     *
+     * @var string $hasBreadCrumb
+     */
+    protected $hasBreadCrumb;
+
+    /**
+     * Class constructor.
+     */
     public function __construct()
     {
         # Enable the log query for database.
         \DB::enableQueryLog();
+        # Get the controller name for action route purpose.
+        $reflectionClass = new \ReflectionClass($this);
+        $this->data['controllerName'] = $this->controllerName = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
         # Set the default active menu and sub menu.
         $this->data['activeMenu'] = 'dashboard';
         $this->data['activeSubMenu'] = '';
-        $reflectionClass = new \ReflectionClass($this);
-        $this->data['controllerName'] = $this->controllerName = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
         $this->data['model'] = null;
         $this->data['buttons'] = null;
+        $this->data['breadCrumb'] = null;
+        $this->initCrud();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function index()
+    {
+        $this->setRead(true);
+        return $this->renderPage('index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function create()
+    {
+        $this->data['formAction'] = action($this->controllerName . '@store');
+        $this->setCreate(true);
+        return $this->renderPage('detail');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  integer $id Row ID of model that want to edit.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function edit($id)
+    {
+        $this->data['formAction'] = action($this->controllerName . '@update', $id);
+        $this->setReferenceKey($id);
+        $this->setUpdate(true);
+        return $this->renderPage('detail');
+    }
+
+    /**
+     * Initiation CRUD of class.
+     *
+     * @return void
+     */
+    protected function initCrud()
+    {
+        $this->setEnableDelete(false);
     }
 
     /**
@@ -145,22 +207,31 @@ abstract class AbstractAdminController extends BaseController
     /**
      * Set page content blade view.
      *
-     * @param string $contentSegment The content segment name.
-     * @param string $contentName    The content name that will be set.
+     * @param string  $contentSegment The content segment name.
+     * @param string  $contentName    The content name that will be set.
+     * @param boolean $render         Render out the response string.
      *
      * @return \Illuminate\Http\Response
      */
-    protected function renderPage($contentSegment = 'index', $contentName = null)
+    protected function renderPage($contentSegment = 'index', $contentName = null, $render = true)
     {
         $contentBlade = $this->viewDir . '.' . $this->defaultPage;
         if (empty($contentName) === true) {
             $contentName = $this->contentDir;
         }
-        $checkBladeFile = base_path(
-            'resources/views/' . $this->viewDir . '/' . $this->pageDir . '/' . $contentName . '/' . $contentSegment . self::$bladeExt
-        );
-        if (file_exists($checkBladeFile) === true) {
+        $contentPath = 'resources/views/' . $this->viewDir . '/' . $this->pageDir . '/' . $contentName . '/';
+        if (file_exists(base_path($contentPath . $contentSegment . self::$bladeExt)) === true) {
             $contentBlade = $this->viewDir . '.' . $this->pageDir . '.' . $contentName . '.' . $contentSegment;
+        }
+        # Check if has breadcrumb file.
+        if (file_exists(base_path($contentPath . $this->breadCrumbFileName . self::$bladeExt)) === true) {
+            $this->hasBreadCrumb = true;
+            $breadCrumbBlade = $this->viewDir . '.' . $this->pageDir . '.' . $contentName . '.' . $this->breadCrumbFileName;
+            $this->data['breadCrumb'] = view($breadCrumbBlade, $this->data);
+        }
+        if (request()->isMethod('post') === true and request()->ajax() === true) {
+            # @todo ajax response handle.
+            return null;
         }
         return view($contentBlade, $this->data);
     }

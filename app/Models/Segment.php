@@ -13,7 +13,7 @@ class Segment extends AbstractBaseModel
      *
      * @var array $fillable
      */
-    protected $fillable = ['Seg_Nam'];
+    protected $fillable = ['Seg_Name'];
 
     /**
      * Segment criteria relationship.

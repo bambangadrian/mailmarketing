@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Providers;
 
 use Illuminate\Routing\Router;
@@ -27,7 +26,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         //
-
         parent::boot($router);
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Console;
 
 use Illuminate\Console\Scheduling\Schedule;

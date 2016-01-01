@@ -1,8 +1,7 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use MailMarketing\Http\Requests;
+use MailMarketing\Http\Requests\UpdateTrackingStatusRequest;
 use MailMarketing\Models\MailTrackingStatus;
 
 class TrackingStatusController extends AbstractAdminController
@@ -14,7 +13,9 @@ class TrackingStatusController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
+        # Set content directory.
         $this->contentDir = 'master/trackingStatus';
+        # Set page attributes.
         $this->data['pageHeader'] = 'Tracking Status';
         $this->data['pageDescription'] = 'Manage tracking status data';
         $this->data['activeMenu'] = 'master';
@@ -28,8 +29,8 @@ class TrackingStatusController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = MailTrackingStatus::paginate(10);
-        return $this->renderPage();
+        $this->data['model'] = MailTrackingStatus::notDeleted()->paginate(10);
+        return parent::index();
     }
 
     /**
@@ -39,67 +40,65 @@ class TrackingStatusController extends AbstractAdminController
      */
     public function create()
     {
-        return $this->renderPage('create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $this->data['pageDescription'] = 'Create new decision support alternative item';
+        return parent::create();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  integer $id Row ID of model that want to edit.
      *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $this->data['pageDescription'] = 'Update decision support alternative item';
+        $this->data['model'] = MailTrackingStatus::find($id);
+        return parent::edit($id);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param UpdateTrackingStatusRequest $request Request object parameter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UpdateTrackingStatusRequest $request)
+    {
+        try {
+            \DB::beginTransaction();
+            $record = MailTrackingStatus::create($request->except('_method', '_token'));
+            \DB::commit();
+            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  UpdateTrackingStatusRequest $request Request object parameter.
+     * @param  integer                     $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTrackingStatusRequest $request, $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $redirectPath = action($this->controllerName . '@edit', $id);
+        try {
+            $record = MailTrackingStatus::find($id);
+            \DB::beginTransaction();
+            $record->fill($request->except('_method', '_token'));
+            $record->save();
+            \DB::commit();
+            return redirect($redirectPath);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
     }
 }

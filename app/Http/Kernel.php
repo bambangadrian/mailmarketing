@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;

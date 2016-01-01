@@ -11,7 +11,7 @@
 @section('data-listing')
     <table class="table table-bordered table-hover">
         <tr>
-            <th style="width: 20px">#</th>
+            <th>#</th>
             <th>Email</th>
             <th>Full Name</th>
             <th>Address</th>

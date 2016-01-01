@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;

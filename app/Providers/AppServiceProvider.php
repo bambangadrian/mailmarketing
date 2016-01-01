@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Providers;
 
 use Illuminate\Support\ServiceProvider;

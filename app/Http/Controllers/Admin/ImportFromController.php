@@ -1,8 +1,7 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use MailMarketing\Http\Requests;
+use MailMarketing\Http\Requests\UpdateImportFromRequest;
 use MailMarketing\Models\ImportFrom;
 
 class ImportFromController extends AbstractAdminController
@@ -16,7 +15,7 @@ class ImportFromController extends AbstractAdminController
         parent::__construct();
         $this->contentDir = 'master/import';
         $this->data['pageHeader'] = 'Import From';
-        $this->data['pageDescription'] = 'Manage your import list for subscribers';
+        $this->data['pageDescription'] = 'Manage your import from list for subscribers';
         $this->data['activeMenu'] = 'master';
         $this->data['activeSubMenu'] = 'import';
     }
@@ -28,8 +27,8 @@ class ImportFromController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = ImportFrom::paginate(10);
-        return $this->renderPage();
+        $this->data['model'] = ImportFrom::notDeleted()->paginate(10);
+        return parent::index();
     }
 
     /**
@@ -39,66 +38,65 @@ class ImportFromController extends AbstractAdminController
      */
     public function create()
     {
-        return $this->renderPage('create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return $this->renderPage('edit');
+        $this->data['pageDescription'] = 'Create new import from item';
+        return parent::create();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  integer $id Row ID of model that want to edit.
      *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        return $this->renderPage('edit');
+        $this->data['pageDescription'] = 'Update import from item';
+        $this->data['model'] = ImportFrom::find($id);
+        return parent::edit($id);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param UpdateImportFromRequest $request Request object parameter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UpdateImportFromRequest $request)
+    {
+        try {
+            \DB::beginTransaction();
+            $record = ImportFrom::create($request->except('_method', '_token'));
+            \DB::commit();
+            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  UpdateImportFromRequest $request Request object parameter.
+     * @param  integer                 $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateImportFromRequest $request, $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $redirectPath = action($this->controllerName . '@edit', $id);
+        try {
+            $record = ImportFrom::find($id);
+            \DB::beginTransaction();
+            $record->fill($request->except('_method', '_token'));
+            $record->save();
+            \DB::commit();
+            return redirect($redirectPath);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
     }
 }

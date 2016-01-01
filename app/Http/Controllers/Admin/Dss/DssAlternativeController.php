@@ -15,7 +15,9 @@ class DssAlternativeController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
+        # Set content directory.
         $this->contentDir = 'dss/alternative';
+        # Set page attributes.
         $this->data['pageHeader'] = 'DSS Alternative';
         $this->data['pageDescription'] = 'Manage your list of all alternative that will be used for decision support system';
         $this->data['activeMenu'] = 'dss';
@@ -30,7 +32,7 @@ class DssAlternativeController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = DssAlternative::notDeleted()->paginate(10);
-        return $this->renderPage();
+        return parent::index();
     }
 
     /**
@@ -41,25 +43,23 @@ class DssAlternativeController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new decision support alternative item';
-        $this->data['formAction'] = action($this->controllerName . '@store');
         $this->data['dssOptions'] = Dss::active()->notDeleted()->lists('Dss_Name', 'Dss_ID')->prepend('Please Select Dss Period ...', '');
-        return $this->renderPage('create');
+        return parent::create();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  integer $id Row ID of model that want to edit.
      *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $this->data['pageDescription'] = 'Create new decision support alternative item';
+        $this->data['pageDescription'] = 'Update decision support alternative item';
         $this->data['model'] = DssAlternative::find($id);
-        $this->data['formAction'] = action($this->controllerName . '@update', $id);
         $this->data['dssOptions'] = Dss::active()->notDeleted()->lists('Dss_Name', 'Dss_ID')->prepend('Please Select Dss Period ...', '');
-        return $this->renderPage('edit');
+        return parent::edit($id);
     }
 
     /**
@@ -92,16 +92,17 @@ class DssAlternativeController extends AbstractAdminController
      */
     public function update(UpdateDssAlternativeRequest $request, $id)
     {
+        $redirectPath = action($this->controllerName . '@edit', $id);
         try {
             $record = DssAlternative::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+            return redirect($redirectPath);
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey())->withErrors($e->getMessage())->withInput();
+            return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
     }
 }

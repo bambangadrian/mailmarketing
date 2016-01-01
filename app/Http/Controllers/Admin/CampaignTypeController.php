@@ -1,8 +1,7 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use MailMarketing\Http\Requests;
+use MailMarketing\Http\Requests\UpdateCampaignTypeRequest;
 use MailMarketing\Models\CampaignType;
 
 class CampaignTypeController extends AbstractAdminController
@@ -14,7 +13,9 @@ class CampaignTypeController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
+        # Set content directory.
         $this->contentDir = 'master/campaign/type';
+        # Set page attributes.
         $this->data['pageHeader'] = 'Campaign Type';
         $this->data['pageDescription'] = 'Manage your campaign type';
         $this->data['activeMenu'] = 'master';
@@ -28,8 +29,8 @@ class CampaignTypeController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = CampaignType::paginate(10);
-        return $this->renderPage();
+        $this->data['model'] = CampaignType::notDeleted()->paginate(10);
+        return parent::index();
     }
 
     /**
@@ -39,6 +40,65 @@ class CampaignTypeController extends AbstractAdminController
      */
     public function create()
     {
-        return $this->renderPage('create');
+        $this->data['pageDescription'] = 'Create new campaign type item';
+        return parent::create();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  integer $id Row ID of model that want to edit.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $this->data['pageDescription'] = 'Update campaign type item';
+        $this->data['model'] = CampaignType::find($id);
+        return parent::edit($id);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param UpdateCampaignTypeRequest $request Request object parameter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UpdateCampaignTypeRequest $request)
+    {
+        try {
+            \DB::beginTransaction();
+            $record = CampaignType::create($request->except('_method', '_token'));
+            \DB::commit();
+            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  UpdateCampaignTypeRequest $request Request object parameter.
+     * @param  integer                   $id      Model ID parameter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateCampaignTypeRequest $request, $id)
+    {
+        $redirectPath = action($this->controllerName . '@edit', $id);
+        try {
+            $record = CampaignType::find($id);
+            \DB::beginTransaction();
+            $record->fill($request->except('_method', '_token'));
+            $record->save();
+            \DB::commit();
+            return redirect($redirectPath);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
     }
 }

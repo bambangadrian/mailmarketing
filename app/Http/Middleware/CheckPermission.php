@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Http\Middleware;
 
 use Closure;
@@ -24,6 +23,4 @@ class CheckPermission
     {
         return $next($request);
     }
-
-
 }

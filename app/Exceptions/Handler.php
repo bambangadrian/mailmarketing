@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Exceptions;
 
 use Exception;
@@ -48,7 +47,6 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
-
         return parent::render($request, $e);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Providers;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;

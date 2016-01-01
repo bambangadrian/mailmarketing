@@ -1,23 +1,24 @@
 @extends('admin.template.lte.layout.listing')
-@include('admin.partials.contents.dss.alternative.breadcrumb')
+
+{{ $breadCrumb }}
 
 @section('data-listing')
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th style="width: 20px">#</th>
+                <th class="rowNumber">No</th>
                 <th>Name</th>
-                <th>Active</th>
+                <th class="rowActive">Active</th>
             </tr>
         </thead>
         <tbody>
             <?php $counter = 1; ?>
             @foreach($model as $index => $row)
                 <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
-                <tr ondblclick="window.location.href='{{ action('Admin\Dss\DssAlternativeController@edit', $row->Dal_ID) }}'">
-                    <td>{{ $no }}</td>
+                <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', $row->getKey()) }}'">
+                    <td class="rowNumber">{{ $no }}</td>
                     <td>{{ $row->Dal_Name }}</td>
-                    <td>{{ $row->Dal_Active }}</td>
+                    <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Dal_Active) !!}</td>
                 </tr>
             @endforeach
         </tbody>

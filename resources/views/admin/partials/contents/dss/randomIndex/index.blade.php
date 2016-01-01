@@ -11,7 +11,7 @@
 @section('data-listing')
     <table class="table table-bordered table-hover">
         <tr>
-            <th style="width: 20px">#</th>
+            <th>#</th>
             <th>Column</th>
             <th>Random Index</th>
             <th>Active</th>

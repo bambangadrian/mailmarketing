@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;

@@ -12,10 +12,26 @@ table tr th {
 .box-body {
   .data-listing {
     table {
-      tbody tr {
-        &:hover td {
-          cursor: pointer;
+      thead {
+        tr {
+          th.rowNumber, td.rowNumber {
+            width: 50px !important;
+          }
+          th.rowNumber, th.rowActive, td.rowNumber, td.rowActive {
+            text-align: center;
+          }
         }
+      }
+      tbody {
+        tr {
+          td.rowNumber, td.rowActive {
+            text-align: center;
+          }
+          &:hover td {
+            cursor: pointer;
+          }
+        }
+
       }
     }
   }

@@ -1,8 +1,7 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use MailMarketing\Http\Requests;
+use MailMarketing\Http\Requests\UpdateSegmentRequest;
 use MailMarketing\Models\Segment;
 
 class SegmentController extends AbstractAdminController
@@ -14,7 +13,9 @@ class SegmentController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
+        # Set content directory.
         $this->contentDir = 'master/segment';
+        # Set page attributes.
         $this->data['pageHeader'] = 'Segment';
         $this->data['pageDescription'] = 'Manage your segment for search tools';
         $this->data['activeMenu'] = 'master';
@@ -28,8 +29,8 @@ class SegmentController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = Segment::paginate(10);
-        return $this->renderPage();
+        $this->data['model'] = Segment::notDeleted()->paginate(10);
+        return parent::index();
     }
 
     /**
@@ -39,67 +40,65 @@ class SegmentController extends AbstractAdminController
      */
     public function create()
     {
-        return $this->renderPage('create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $this->data['pageDescription'] = 'Create new segment search item';
+        return parent::create();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  integer $id Row ID of model that want to edit.
      *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $this->data['pageDescription'] = 'Update segment search item';
+        $this->data['model'] = Segment::find($id);
+        return parent::edit($id);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param UpdateSegmentRequest $request Request object parameter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UpdateSegmentRequest $request)
+    {
+        try {
+            \DB::beginTransaction();
+            $record = Segment::create($request->except('_method', '_token'));
+            \DB::commit();
+            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  UpdateSegmentRequest $request Request object parameter.
+     * @param  integer              $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSegmentRequest $request, $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $redirectPath = action($this->controllerName . '@edit', $id);
+        try {
+            $record = Segment::find($id);
+            \DB::beginTransaction();
+            $record->fill($request->except('_method', '_token'));
+            $record->save();
+            \DB::commit();
+            return redirect($redirectPath);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
     }
 }
