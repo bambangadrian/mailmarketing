@@ -13,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        # Load view from storage path.
+        $this->loadViewsFrom(storage_path('app/resources/views'), 'storageView');
     }
 
     /**

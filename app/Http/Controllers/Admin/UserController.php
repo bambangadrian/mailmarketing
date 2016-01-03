@@ -1,8 +1,7 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use MailMarketing\Http\Requests;
+use MailMarketing\Http\Requests\updateUserRequest;
 use MailMarketing\Models\UserAccount;
 
 class UserController extends AbstractAdminController
@@ -28,8 +27,8 @@ class UserController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = UserAccount::paginate(10);
-        return $this->renderPage();
+        $this->data['model'] = UserAccount::notDeleted()->paginate(10);
+        return parent::index();
     }
 
     /**
@@ -39,67 +38,65 @@ class UserController extends AbstractAdminController
      */
     public function create()
     {
-        return $this->renderPage('create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $this->data['pageDescription'] = 'Create new user account item';
+        return parent::create();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  integer $id Row ID of model that want to edit.
      *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $this->data['pageDescription'] = 'Update user account item';
+        $this->data['model'] = UserAccount::find($id);
+        return parent::edit($id);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param UpdateUserRequest $request Request object parameter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UpdateUserRequest $request)
+    {
+        try {
+            \DB::beginTransaction();
+            $record = UserAccount::create($request->except('_method', '_token'));
+            \DB::commit();
+            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  UpdateUserRequest $request Request object parameter.
+     * @param  integer           $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $redirectPath = action($this->controllerName . '@edit', $id);
+        try {
+            $record = UserAccount::find($id);
+            \DB::beginTransaction();
+            $record->fill($request->except('_method', '_token'));
+            $record->save();
+            \DB::commit();
+            return redirect($redirectPath);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
     }
 }

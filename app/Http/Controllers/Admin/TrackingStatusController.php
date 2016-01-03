@@ -40,7 +40,7 @@ class TrackingStatusController extends AbstractAdminController
      */
     public function create()
     {
-        $this->data['pageDescription'] = 'Create new decision support alternative item';
+        $this->data['pageDescription'] = 'Create new mail tracking status item';
         return parent::create();
     }
 
@@ -53,7 +53,7 @@ class TrackingStatusController extends AbstractAdminController
      */
     public function edit($id)
     {
-        $this->data['pageDescription'] = 'Update decision support alternative item';
+        $this->data['pageDescription'] = 'Update mail tracking status item';
         $this->data['model'] = MailTrackingStatus::find($id);
         return parent::edit($id);
     }

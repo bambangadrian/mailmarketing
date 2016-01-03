@@ -87,4 +87,15 @@ abstract class AbstractBaseModel extends Model
     {
         $this->{$propertyName} = $propertyValue;
     }
+
+    /**
+     * Perform the actual delete query on this model instance.
+     *
+     * @return void
+     */
+    protected function performDeleteOnModel()
+    {
+        # Run the save method so the observer can update the delete field column.
+        $this->save();
+    }
 }

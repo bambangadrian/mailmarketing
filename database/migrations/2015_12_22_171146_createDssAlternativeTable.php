@@ -30,7 +30,7 @@ class CreateDssAlternativeTable extends Migration
                 # Add the uuid column field.
                 $table->char('Dal_GUID', 36);
                 # Add all the table constraint.
-                $table->unique(['Dal_DssID', 'Dal_Name'], 'Idx_DssAlternative_Dal_DssID_Dal_Name_Unique');
+                $table->unique(['Dal_DssID', 'Dal_Name'], 'Idx_DssAlternative_Dal_DssID_Dal_Name');
                 $table->foreign('Dal_DssID', 'Idx_DssAlternative_Dal_DssID_Dss_Dss_ID')
                       ->references('Dss_ID')
                       ->on('Dss');

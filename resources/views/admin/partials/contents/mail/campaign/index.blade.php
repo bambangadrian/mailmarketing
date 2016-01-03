@@ -1,33 +1,34 @@
 @extends('admin.template.lte.layout.listing')
 
-@section('breadcrumb')
-    <ol class="breadcrumb">
-        <li><a href="{{ action('Admin\DashboardController@index') }}"><i class="fa fa-home"></i> Home</a></li>
-        <li><i class="fa fa-envelope"></i> Mail</li>
-        <li><a href="{{ action('Admin\CampaignController@index') }}"><i class="fa fa-indent"></i> Campaign</a></li>
-    </ol>
-@stop
+{{ $breadCrumb }}
 
 @section('data-listing')
     <table class="table table-bordered table-hover">
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Topic</th>
-            <th>Subject</th>
-        </tr>
-        <?php $counter = 1; ?>
-        @foreach($model as $index => $row)
-            <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
+        <thead>
             <tr>
-                <td>{{ $no }}</td>
-                <td>{{ $row->Cpg_Name }}</td>
-                <td>{{ $row->campaignType->Cgt_Name }}</td>
-                <td>{{ $row->campaignTopic->Cto_Name }}</td>
-                <td>{{ $row->Cpg_EmailSubject }}</td>
+                <th class="rowNumber">No</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Topic</th>
+                <th>Subject</th>
+                <th class="rowActive">Active</th>
             </tr>
-        @endforeach
+        </thead>
+        <tbody>
+            <?php $counter = 1; ?>
+            @foreach($model as $index => $row)
+                <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
+                <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', $row->getKey()) }}'">
+                    <td class="rowNumber">{{ $no }}</td>
+                    <td>{{ $row->Cpg_Name }}</td>
+                    <td>{{ $row->campaignType->Cgt_Name }}</td>
+                    <td>{{ $row->campaignCategory->Cc_Name }}</td>
+                    <td>{{ $row->campaignTopic->Cto_Name }}</td>
+                    <td>{{ $row->Cpg_EmailSubject }}</td>
+                    <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Cpg_Active) !!}</td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 @stop

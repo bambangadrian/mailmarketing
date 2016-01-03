@@ -30,6 +30,7 @@ class CreateTemplateTable extends Migration
                 # Add the uuid column field.
                 $table->char('Tpl_GUID', 36);
                 # Add all the table constraint.
+                $table->unique('Tpl_Name', 'Idx_Template_Tpl_Name');
             }
         );
     }

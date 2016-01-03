@@ -52,7 +52,7 @@
             <section class="content-footer">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="box box-default box-solid collapsed-box">
+                        <div class="box box-primary box-solid collapsed-box">
                             <div class="box-header with-border">
                                 <h3 class="box-title"><i class="fa fa-exchange"></i> Database Query Log</h3>
                                 <div class="box-tools pull-right">

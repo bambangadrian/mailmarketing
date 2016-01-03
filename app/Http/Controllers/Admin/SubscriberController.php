@@ -1,8 +1,8 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use MailMarketing\Http\Requests;
+use MailMarketing\Http\Requests\updateSubscriberRequest;
+use MailMarketing\Models\ImportFrom;
 use MailMarketing\Models\Subscriber;
 
 class SubscriberController extends AbstractAdminController
@@ -28,8 +28,8 @@ class SubscriberController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = Subscriber::with('importFrom')->paginate(10);
-        return $this->renderPage();
+        $this->data['model'] = Subscriber::with('importFrom')->notDeleted()->paginate(10);
+        return parent::index();
     }
 
     /**
@@ -39,67 +39,67 @@ class SubscriberController extends AbstractAdminController
      */
     public function create()
     {
-        return $this->renderPage('create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $this->data['pageDescription'] = 'Create new mail subscriber item';
+        $this->data['importOptions'] = ImportFrom::active()->notDeleted()->lists('Imf_Name', 'Imf_ID')->prepend('Please Select Import From ...', '');
+        return parent::create();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  integer $id Row ID of model that want to edit.
      *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $this->data['pageDescription'] = 'Update mail subscriber item';
+        $this->data['model'] = Subscriber::find($id);
+        $this->data['importOptions'] = ImportFrom::active()->notDeleted()->lists('Imf_Name', 'Imf_ID')->prepend('Please Select Import From ...', '');
+        return parent::edit($id);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param UpdateSubscriberRequest $request Request object parameter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UpdateSubscriberRequest $request)
+    {
+        try {
+            \DB::beginTransaction();
+            $record = Subscriber::create($request->except('_method', '_token'));
+            \DB::commit();
+            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  UpdateSubscriberRequest $request Request object parameter.
+     * @param  integer                 $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSubscriberRequest $request, $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $redirectPath = action($this->controllerName . '@edit', $id);
+        try {
+            $record = Subscriber::find($id);
+            \DB::beginTransaction();
+            $record->fill($request->except('_method', '_token'));
+            $record->save();
+            \DB::commit();
+            return redirect($redirectPath);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
     }
 }

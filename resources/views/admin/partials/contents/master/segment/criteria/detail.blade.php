@@ -18,4 +18,5 @@
         </div>
         @include('admin.partials.layout.form.button')
     {!! Form::close() !!}
+    @include('admin.partials.layout.form.delete')
 @stop

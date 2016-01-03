@@ -30,8 +30,8 @@ class CreateTablePrefixTable extends Migration
                 # Add the uuid column field.
                 $table->char('Tpx_GUID', 36);
                 # Add all the table constraint.
-                $table->unique('Tpx_TableName', 'Idx_TablePrefix_Tpx_TableName_Unique');
-                $table->unique('Tpx_Prefix', 'Idx_TablePrefix_Tpx_Prefix_Unique');
+                $table->unique('Tpx_TableName', 'Idx_TablePrefix_Tpx_TableName');
+                $table->unique('Tpx_Prefix', 'Idx_TablePrefix_Tpx_Prefix');
             }
         );
     }

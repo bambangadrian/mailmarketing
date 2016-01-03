@@ -51,7 +51,7 @@
                     <li @if($activeSubMenu === 'segment') class="active" @endif><a href="{{ action('Admin\SegmentController@index') }}"><i class="fa fa-filter"></i> Segment</a></li>
                     <li @if($activeSubMenu === 'segmentCriteria') class="active" @endif><a href="{{ action('Admin\SegmentCriteriaController@index') }}"><i class="fa fa-code-fork"></i> Segment Criteria</a></li>
                     <li @if($activeSubMenu === 'trackStatus') class="active" @endif><a href="{{ action('Admin\TrackingStatusController@index') }}"><i class="fa fa-tags"></i> Tracking Status</a></li>
-                    <li @if($activeSubMenu === 'user') class="active" @endif><a href="{{ action('Admin\UserController@index') }}"><i class="fa fa-user"></i> User</a></li>
+                    <li @if($activeSubMenu === 'user') class="active" @endif><a href="{{ action('Admin\UserController@index') }}"><i class="fa fa-user"></i> User Account</a></li>
                     <li @if($activeSubMenu === 'template') class="active" @endif><a href="{{ action('Admin\TemplateController@index') }}"><i class="fa fa-code"></i> Template</a></li>
                 </ul>
             </li>

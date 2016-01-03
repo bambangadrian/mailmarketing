@@ -18,6 +18,7 @@ class SegmentCriteriaController extends AbstractAdminController
         $this->data['pageDescription'] = 'Manage your segment criteria for search tools';
         $this->data['activeMenu'] = 'master';
         $this->data['activeSubMenu'] = 'segmentCriteria';
+        $this->setEnableDelete(true);
     }
 
     /**
@@ -97,6 +98,27 @@ class SegmentCriteriaController extends AbstractAdminController
         } catch (\Exception $e) {
             \DB::rollback();
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  integer $id Row ID of model that want to show.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $record = SegmentCriteria::find($id);
+            \DB::beginTransaction();
+            $record->delete();
+            \DB::commit();
+            return redirect(action($this->controllerName . '@index'));
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect(action($this->controllerName . '@edit', $id))->withErrors($e->getMessage())->withInput();
         }
     }
 }

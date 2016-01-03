@@ -80,13 +80,36 @@ abstract class AbstractAdminController extends BaseController
         # Get the controller name for action route purpose.
         $reflectionClass = new \ReflectionClass($this);
         $this->data['controllerName'] = $this->controllerName = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
+        $this->data['referenceKey'] = camel_case(str_replace('Controller', '', $reflectionClass->getShortName()));
         # Set the default active menu and sub menu.
         $this->data['activeMenu'] = 'dashboard';
         $this->data['activeSubMenu'] = '';
         $this->data['model'] = null;
         $this->data['buttons'] = null;
         $this->data['breadCrumb'] = null;
+        $this->loadJs();
+        $this->loadCss();
         $this->initCrud();
+    }
+
+    /**
+     * Load javascript files.
+     *
+     * @return void
+     */
+    protected function loadJs()
+    {
+        $this->data['js'] = [];
+    }
+
+    /**
+     * Load stylesheets files.
+     *
+     * @return void
+     */
+    protected function loadCss()
+    {
+        $this->data['css'] = [];
     }
 
     /**
@@ -108,6 +131,7 @@ abstract class AbstractAdminController extends BaseController
     protected function create()
     {
         $this->data['formAction'] = action($this->controllerName . '@store');
+        $this->data['css'][] = asset('/assets/css/detail.css');
         $this->setCreate(true);
         return $this->renderPage('detail');
     }
@@ -122,9 +146,36 @@ abstract class AbstractAdminController extends BaseController
     protected function edit($id)
     {
         $this->data['formAction'] = action($this->controllerName . '@update', $id);
+        $this->data['css'][] = asset('/assets/css/detail.css');
         $this->setReferenceKey($id);
         $this->setUpdate(true);
         return $this->renderPage('detail');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  integer $id Row ID of model that want to show.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function show($id)
+    {
+        # @todo parent show method.
+        return 'showed';
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  integer $id Row ID of model that want to show.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function destroy($id)
+    {
+        # @todo parent destroy method
+        return 'deleted';
     }
 
     /**
@@ -134,6 +185,10 @@ abstract class AbstractAdminController extends BaseController
      */
     protected function initCrud()
     {
+        $this->setCreate(false);
+        $this->setUpdate(false);
+        $this->setRead(false);
+        $this->setDelete(false);
         $this->setEnableDelete(false);
     }
 
