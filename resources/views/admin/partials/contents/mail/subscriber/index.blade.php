@@ -25,7 +25,7 @@
                     <td>{{ $row->Sbr_FirstName . ' ' . $row->Sbr_LastName }}</td>
                     <td>{{ $row->Sbr_Address1 . ' ' . $row->Sbr_Address2 }}</td>
                     <td>{{ $row->importFrom->Imf_Name }}</td>
-                    <td class="rowNumber">{{ $row->importFrom->Sbr_MemberRating }}</td>
+                    <td class="rowNumber">{{ $row->Sbr_MemberRating }}</td>
                     <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Sbr_Active) !!}</td>
                 </tr>
             @endforeach
