@@ -4,7 +4,7 @@ namespace MailMarketing\Http\Requests;
 
 use MailMarketing\Http\Requests\Request;
 
-class updateDssRequest extends Request
+class UpdateDssRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

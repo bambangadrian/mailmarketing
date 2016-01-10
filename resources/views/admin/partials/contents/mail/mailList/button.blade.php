@@ -1,0 +1,1 @@
+<button onclick="window.location.href='{!! action('Admin\SubscriberGroupController@index', $model->getKey()) !!}'" type="button" class="btn btn-app bg-green-gradient"><i class="fa fa-object-group"></i> Groups</button>

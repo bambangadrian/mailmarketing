@@ -2,7 +2,9 @@
 
 namespace MailMarketing\Http\Requests;
 
-class UpdateDssCriteriaDetailRequest extends Request
+use MailMarketing\Http\Requests\Request;
+
+class UpdateSubscriberGroupDetailRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

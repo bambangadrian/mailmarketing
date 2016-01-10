@@ -1,9 +1,9 @@
 <?php
-
 namespace MailMarketing\Http\Requests;
 
-class UpdateDssCriteriaDetailRequest extends Request
+class UpdateSubscriberGroupRequest extends Request
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -11,7 +11,7 @@ class UpdateDssCriteriaDetailRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return \Auth::user()->hasRole('admin') or \Auth::user()->hasPermission('manage-subscriber-group');
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateDssCriteriaDetailRequest extends Request
     public function rules()
     {
         return [
-            //
+            'Sbg_MailListID' => 'required',
+            'Sbg_Name'       => 'required|string|max:50|min:3'
         ];
     }
 }

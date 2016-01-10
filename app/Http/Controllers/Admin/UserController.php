@@ -1,7 +1,7 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
-use MailMarketing\Http\Requests\updateUserRequest;
+use MailMarketing\Http\Requests\UpdateUserRequest;
 use MailMarketing\Models\UserAccount;
 
 class UserController extends AbstractAdminController

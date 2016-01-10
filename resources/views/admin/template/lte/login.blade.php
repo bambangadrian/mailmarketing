@@ -68,7 +68,7 @@
 </div>
 
 <div class="text-muted small text-right" id="fixedCopyRight">
-    <div>Copyrights : Splendix Production&reg;</div>
+    <div>Copyrights : Slendix Production&reg;</div>
     <div>Designed by : Yuh7Predators</div>
 </div>
 

@@ -47,3 +47,11 @@
         @include('admin.partials.layout.form.button')
     {!! Form::close() !!}
 @stop
+
+
+@section('add-js')
+    @parent
+    <script>
+        $('#Sbr_ImportFromID').select2({theme: 'classic'});
+    </script>
+@endsection

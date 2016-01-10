@@ -19,14 +19,14 @@ class CreateMailListTable extends Migration
                 $table->string('Mls_Name', 50);
                 $table->string('Mls_EmailAddressFrom', 50);
                 $table->string('Mls_EmailNameFrom', 50);
-                $table->text('Mls_Reminder')->nullable();
+                //$table->text('Mls_Reminder')->nullable();
                 $table->string('Mls_CompanyName', 50);
                 $table->string('Mls_Address1', 100)->nullable();
                 $table->string('Mls_Address2', 100)->nullable();
                 $table->string('Mls_City', 25)->nullable();
                 $table->string('Mls_Country', 25)->nullable();
                 $table->char('Mls_Phone', 15)->nullable();
-                $table->char('Mls_NotifType', 1)->nullable();
+                //$table->char('Mls_NotifType', 1)->nullable();
                 $table->boolean('Mls_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Mls_CreatedOn');

@@ -1,9 +1,7 @@
 <?php
 namespace MailMarketing\Http\Requests;
 
-use MailMarketing\Http\Requests\Request;
-
-class updateCampaignRequest extends Request
+class UpdateCampaignRequest extends Request
 {
 
     /**

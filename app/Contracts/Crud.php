@@ -114,7 +114,6 @@ trait Crud
     {
         $this->create = $create;
         $this->setAction('create');
-        $this->setEnableCreate(true);
     }
 
     /**
@@ -161,7 +160,6 @@ trait Crud
     {
         $this->update = $update;
         $this->setAction('update');
-        $this->setEnableUpdate(true);
     }
 
     /**
@@ -185,7 +183,6 @@ trait Crud
     {
         $this->delete = $delete;
         $this->setAction('delete');
-        $this->setEnableDelete(true);
     }
 
     /**
@@ -310,6 +307,7 @@ trait Crud
     protected function setReferenceKey($referenceKey)
     {
         $this->referenceKey = $referenceKey;
+        $this->data['referenceKey'] = $referenceKey;
     }
 
     /**

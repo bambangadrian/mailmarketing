@@ -64,11 +64,13 @@ abstract class AbstractAdminController extends BaseController
     protected $breadCrumbFileName = 'breadcrumb';
 
     /**
-     * Has breadcrumb flag property.
+     * Use breadcrumb option.
      *
-     * @var string $hasBreadCrumb
+     * @var boolean $useBreadCrumb
      */
-    protected $hasBreadCrumb;
+    protected $useBreadCrumb = true;
+
+    protected $enableCrud = true;
 
     /**
      * Class constructor.
@@ -81,15 +83,45 @@ abstract class AbstractAdminController extends BaseController
         $reflectionClass = new \ReflectionClass($this);
         $this->data['controllerName'] = $this->controllerName = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
         $this->data['referenceKey'] = camel_case(str_replace('Controller', '', $reflectionClass->getShortName()));
+        # Create the link action.
+        $this->data['indexLinkAction'] = action($this->controllerName . '@index');
+        if ($this->enableCrud === true) {
+            $this->data['createLinkAction'] = action($this->controllerName . '@create');
+        }
         # Set the default active menu and sub menu.
         $this->data['activeMenu'] = 'dashboard';
         $this->data['activeSubMenu'] = '';
         $this->data['model'] = null;
         $this->data['buttons'] = null;
         $this->data['breadCrumb'] = null;
+        $this->initCrud();
         $this->loadJs();
         $this->loadCss();
-        $this->initCrud();
+        # Check if has breadcrumb file.
+        $this->setUseBreadCrumb(true);
+    }
+
+    /**
+     * Get use breadcrumb status.
+     *
+     * @return boolean
+     */
+    public function isUseBreadCrumb()
+    {
+        return $this->useBreadCrumb;
+    }
+
+    /**
+     * Set use breadcrumb option property.
+     *
+     * @param boolean $useBreadCrumb Breadcrumb parameter.
+     *
+     * @return void
+     */
+    public function setUseBreadCrumb($useBreadCrumb)
+    {
+        $this->useBreadCrumb = $useBreadCrumb;
+        $this->data['useBreadCrumb'] = $useBreadCrumb;
     }
 
     /**
@@ -130,7 +162,9 @@ abstract class AbstractAdminController extends BaseController
      */
     protected function create()
     {
-        $this->data['formAction'] = action($this->controllerName . '@store');
+        if (array_key_exists('formAction', $this->data) === false) {
+            $this->data['formAction'] = action($this->controllerName . '@store');
+        }
         $this->data['css'][] = asset('/assets/css/detail.css');
         $this->setCreate(true);
         return $this->renderPage('detail');
@@ -145,7 +179,9 @@ abstract class AbstractAdminController extends BaseController
      */
     protected function edit($id)
     {
-        $this->data['formAction'] = action($this->controllerName . '@update', $id);
+        if (array_key_exists('formAction', $this->data) === false) {
+            $this->data['formAction'] = action($this->controllerName . '@update', $id);
+        }
         $this->data['css'][] = asset('/assets/css/detail.css');
         $this->setReferenceKey($id);
         $this->setUpdate(true);
@@ -189,6 +225,8 @@ abstract class AbstractAdminController extends BaseController
         $this->setUpdate(false);
         $this->setRead(false);
         $this->setDelete(false);
+        $this->setEnableCreate(true);
+        $this->setEnableUpdate(true);
         $this->setEnableDelete(false);
     }
 
@@ -262,32 +300,54 @@ abstract class AbstractAdminController extends BaseController
     /**
      * Set page content blade view.
      *
+     * @param string $contentSegment The content segment name.
+     * @param string $contentName    The content name that will be set.
+     *
+     * @return \Illuminate\Http\Response|string
+     */
+    protected function renderPage($contentSegment = 'index', $contentName = null)
+    {
+        $this->data['breadCrumb'] = $this->renderPartialView('breadcrumb', $contentName);
+        if ($this->data['breadCrumb'] === '') {
+            $this->setUseBreadCrumb(false);
+        }
+        if (request()->isMethod('post') === true and request()->ajax() === true) {
+            # @todo ajax response handle.
+            return null;
+        } else {
+            return $this->renderPartialView($contentSegment, $contentName, true);
+        }
+    }
+
+    /**
+     * Render partial view.
+     *
      * @param string  $contentSegment The content segment name.
      * @param string  $contentName    The content name that will be set.
-     * @param boolean $render         Render out the response string.
+     * @param boolean $useDefault     Use default page option parameter.
+     * @param boolean $buffer         The buffer option parameter.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|string
      */
-    protected function renderPage($contentSegment = 'index', $contentName = null, $render = true)
+    protected function renderPartialView($contentSegment = 'index', $contentName = null, $useDefault = false, $buffer = false)
     {
-        $contentBlade = $this->viewDir . '.' . $this->defaultPage;
-        if (empty($contentName) === true) {
+        if ($contentName === null or trim($contentName) === '') {
             $contentName = $this->contentDir;
         }
         $contentPath = 'resources/views/' . $this->viewDir . '/' . $this->pageDir . '/' . $contentName . '/';
         if (file_exists(base_path($contentPath . $contentSegment . self::$bladeExt)) === true) {
             $contentBlade = $this->viewDir . '.' . $this->pageDir . '.' . $contentName . '.' . $contentSegment;
+        } else {
+            if ($useDefault === true) {
+                $contentBlade = $this->viewDir . '.' . $this->defaultPage;
+            } else {
+                return '';
+            }
         }
-        # Check if has breadcrumb file.
-        if (file_exists(base_path($contentPath . $this->breadCrumbFileName . self::$bladeExt)) === true) {
-            $this->hasBreadCrumb = true;
-            $breadCrumbBlade = $this->viewDir . '.' . $this->pageDir . '.' . $contentName . '.' . $this->breadCrumbFileName;
-            $this->data['breadCrumb'] = view($breadCrumbBlade, $this->data);
+        if ($buffer === true) {
+            return view($contentBlade, $this->data)->render();
+        } else {
+            return view($contentBlade, $this->data);
         }
-        if (request()->isMethod('post') === true and request()->ajax() === true) {
-            # @todo ajax response handle.
-            return null;
-        }
-        return view($contentBlade, $this->data);
     }
 }

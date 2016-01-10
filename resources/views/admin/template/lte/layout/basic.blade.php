@@ -16,12 +16,15 @@
                 @show
 
             </h1>
-            @section('breadcrumb')
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-support"></i> Level</a></li>
-                    <li class="active">Here</li>
-                </ol>
-            @show
+
+            @if($useBreadCrumb === true)
+                @section('breadcrumb')
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-support"></i> Level</a></li>
+                        <li class="active">Here</li>
+                    </ol>
+                @show
+            @endif
         </section>
         <!-- Main content -->
         <section class="content">

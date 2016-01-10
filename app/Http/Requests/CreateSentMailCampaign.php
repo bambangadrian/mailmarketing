@@ -1,9 +1,11 @@
 <?php
-
 namespace MailMarketing\Http\Requests;
 
-class UpdateDssCriteriaDetailRequest extends Request
+use MailMarketing\Http\Requests\Request;
+
+class CreateSentMailCampaign extends Request
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -11,7 +13,7 @@ class UpdateDssCriteriaDetailRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return \Auth::user()->hasRole('admin') or \Auth::user()->hasPermission('sent-campaign');
     }
 
     /**
@@ -22,7 +24,8 @@ class UpdateDssCriteriaDetailRequest extends Request
     public function rules()
     {
         return [
-            //
+            'Msd_CampaignID'   => 'required',
+            'Msd_ExecutedDate' => 'required'
         ];
     }
 }

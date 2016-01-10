@@ -28,6 +28,7 @@
 @section('content-status')
     <div class="text-muted small">
         <i style="color:red;">* Required field, you must fill this item.</i>
+        @yield('content-status-item')
     </div>
 @stop
 

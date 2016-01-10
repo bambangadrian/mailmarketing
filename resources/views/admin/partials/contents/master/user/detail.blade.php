@@ -20,7 +20,7 @@
         <div class="checkbox">
             <label for="Usr_Active">
                 {!! Form::hidden('Usr_Active', 0) !!}
-                {!! Form::checkbox('Dal_Active', 1) !!}
+                {!! Form::checkbox('Usr_Active', 1) !!}
                 Active
             </label>
         </div>

@@ -20,10 +20,10 @@
 
 @section('content-page')
     <div class="data-toolbar" style="margin-bottom:10px;">
-        @if((isset($enableInsert) === false or $enableInsert === true))
-            <a class="btn btn-default btn-flat  " href="{!! action($controllerName.'@create') !!}"><i class="fa fa-download"></i> New Record</a>
-        @endif
         {!! $buttons !!}
+        @if((isset($enableInsert) === false or $enableInsert === true))
+            <a class="btn btn-default btn-flat  " href="{!! $createLinkAction !!}"><i class="fa fa-download"></i> New Record</a>
+        @endif
     </div>
     <div class="data-listing">
         @yield('data-listing')

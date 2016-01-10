@@ -1,7 +1,7 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
-use MailMarketing\Http\Requests\updateSubscriberRequest;
+use MailMarketing\Http\Requests\UpdateSubscriberRequest;
 use MailMarketing\Models\ImportFrom;
 use MailMarketing\Models\Subscriber;
 
@@ -41,6 +41,7 @@ class SubscriberController extends AbstractAdminController
     {
         $this->data['pageDescription'] = 'Create new mail subscriber item';
         $this->data['importOptions'] = ImportFrom::active()->notDeleted()->lists('Imf_Name', 'Imf_ID')->prepend('Please Select Import From ...', '');
+        $this->loadResourceForDetailPage();
         return parent::create();
     }
 
@@ -56,6 +57,7 @@ class SubscriberController extends AbstractAdminController
         $this->data['pageDescription'] = 'Update mail subscriber item';
         $this->data['model'] = Subscriber::find($id);
         $this->data['importOptions'] = ImportFrom::active()->notDeleted()->lists('Imf_Name', 'Imf_ID')->prepend('Please Select Import From ...', '');
+        $this->loadResourceForDetailPage();
         return parent::edit($id);
     }
 
@@ -101,5 +103,16 @@ class SubscriberController extends AbstractAdminController
             \DB::rollback();
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
+    }
+
+    /**
+     * Load resources for detail page.
+     *
+     * @return void
+     */
+    private function loadResourceForDetailPage()
+    {
+        $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.css');
+        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.js');
     }
 }

@@ -1,11 +1,9 @@
 <?php
-
 namespace MailMarketing\Http\Requests;
 
-use MailMarketing\Http\Requests\Request;
-
-class updateMailListRequest extends Request
+class UpdateMailListRequest extends Request
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +11,7 @@ class updateMailListRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return \Auth::user()->hasRole('admin') or \Auth::user()->hasPermission('manage-maillist');
     }
 
     /**
@@ -24,7 +22,10 @@ class updateMailListRequest extends Request
     public function rules()
     {
         return [
-            //
+            'Mls_Name'             => 'required|string|max:50|min:3',
+            'Mls_EmailAddressFrom' => 'required|email|string|max:50|min:3',
+            'Mls_EmailNameFrom'    => 'required|string|max:50|min:3',
+            'Mls_CompanyName'      => 'required|string|max:50|min:3',
         ];
     }
 }

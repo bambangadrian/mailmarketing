@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset("/assets/css/app.css") }}">
     <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/dist/css/AdminLTE.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css") }}">
+    @yield('add-css')
     <!--[if lt IE 9]>
     <script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/respond/respond.min.js") }}"></script>
     <![endif]-->
@@ -55,7 +56,6 @@ desired effect
 <!-- Slimscroll -->
 <script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js") }}"></script>
 <script src="{{ asset("/vendor/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
-@yield('add-css')
 @yield('add-js')
 </body>
 </html>

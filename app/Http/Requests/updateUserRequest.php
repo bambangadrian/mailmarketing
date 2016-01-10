@@ -3,7 +3,7 @@ namespace MailMarketing\Http\Requests;
 
 use MailMarketing\Http\Requests\Request;
 
-class updateUserRequest extends Request
+class UpdateUserRequest extends Request
 {
 
     /**
