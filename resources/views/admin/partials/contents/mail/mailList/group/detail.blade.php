@@ -8,7 +8,7 @@
         <input type="hidden" name="Sbg_MailListID" id="Sbg_MailListID" value="{{ $listID }}" />
         <div class="form-group">
             {!! Form::label('Sbg_ParentID', 'Group Parent') !!}
-            {!! Form::select('Sbg_ParentID', $groupParentOptions, null, ['class' => 'form-control', 'rows' => 4]) !!}
+            {!! Form::select('Sbg_ParentID', $groupParentOptions, null, ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('Sbg_Name', 'Group Name',['class' => 'required']) !!}

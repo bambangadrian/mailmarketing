@@ -47,7 +47,10 @@ class SubscriberGroupController extends AbstractAdminController
     public function create($listID = null)
     {
         $this->data['listID'] = $listID;
-        $this->data['groupParentOptions'] = SubscriberGroup::active()->notDeleted()->lists('Sbg_Name', 'Sbg_ID')->prepend('Select Group Parent ...', '');
+        $this->data['groupParentOptions'] = SubscriberGroup::active()
+                                                           ->notDeleted()
+                                                           ->lists('Sbg_Name', 'Sbg_ID')
+                                                           ->prepend('Select Group Parent ...', '');
         $this->data['pageDescription'] = 'Create new subscriber group item for selected mailing list';
         $this->data['formAction'] = action($this->controllerName . '@store', $listID);
         $this->data['indexLinkAction'] = action($this->controllerName . '@index', $listID);
@@ -68,13 +71,22 @@ class SubscriberGroupController extends AbstractAdminController
         $this->data['listID'] = $listID;
         $this->data['groupID'] = $groupID;
         $this->data['pageDescription'] = 'Update subscriber group item for selected mailing list';
+        $this->data['model'] = SubscriberGroup::find($groupID);
         $this->data['groupParentOptions'] = SubscriberGroup::active()
                                                            ->notDeleted()
                                                            ->where('Sbg_ID', '<>', $groupID)
-                                                           ->where('Sbg_ParentID', '<>', $groupID)
+                                                           ->where(
+                                                               function ($query) use ($groupID) {
+                                                                   $query->where('Sbg_ParentID', '<>', $groupID)
+                                                                         ->orWhere(
+                                                                             function ($query) use ($groupID) {
+                                                                                 $query->whereNull('Sbg_ParentID');
+                                                                             }
+                                                                         );
+                                                               }
+                                                           )
                                                            ->lists('Sbg_Name', 'Sbg_ID')
                                                            ->prepend('Select Group Parent ...', '');
-        $this->data['model'] = SubscriberGroup::find($groupID);
         $this->data['indexLinkAction'] = action($this->controllerName . '@index', $listID);
         $this->data['formAction'] = action($this->controllerName . '@update', [$listID, $groupID]);
         $this->data['buttons'] = $this->renderPartialView('button');

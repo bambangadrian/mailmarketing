@@ -17,10 +17,10 @@
         <?php $counter = 1; ?>
         @foreach($model as $index => $row)
             <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
-            <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', [$row->subscriberGroup->Sbg_MailListID, $row->Sbg_ID, $row->getKey()]) }}'">
+            <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', [$row->subscriberGroup->Sbg_MailListID, $row->Sgd_GroupID, $row->getKey()]) }}'">
                 <td class="rowNumber">{{ $no }}</td>
                 <td>{{ $row->subscriber->Sbr_FirstName . ' ' . $row->subscriber->Sbr_LastName }}</td>
-                <td>{{ $row->subscriber->Sbr_EmailAdress }}</td>
+                <td>{{ $row->subscriber->Sbr_EmailAddress }}</td>
                 <td>{{ $row->subscriberGroup->Sbg_Name }}</td>
                 <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Sgd_Active) !!}</td>
             </tr>

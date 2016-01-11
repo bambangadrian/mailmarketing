@@ -1,7 +1,9 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
+use MailMarketing\Http\Requests\UpdateSubscriberGroupDetailRequest;
 use MailMarketing\Models\Subscriber;
+use MailMarketing\Models\SubscriberGroup;
 use MailMarketing\Models\SubscriberGroupDetail;
 
 class SubscriberGroupDetailController extends AbstractAdminController
@@ -32,7 +34,12 @@ class SubscriberGroupDetailController extends AbstractAdminController
     {
         $this->data['listID'] = $listID;
         $this->data['groupID'] = $groupID;
-        $this->data['model'] = SubscriberGroupDetail::notDeleted()->with('subscriber', 'subscriberGroup')->where('Sgd_GroupID', '=', $groupID)->paginate(10);
+        $subGroupList = SubscriberGroup::active()->notDeleted()->where('Sbg_ParentID', $groupID)->lists('Sbg_ID')->prepend($groupID);
+        $this->data['model'] = SubscriberGroupDetail::notDeleted()
+                                                    ->with('subscriber', 'subscriberGroup')
+                                                    ->whereIn('Sgd_GroupID', $subGroupList)
+                                                    ->groupBy('Sgd_SubscriberID')
+                                                    ->paginate(10);
         $this->data['createLinkAction'] = action($this->controllerName . '@create', [$listID, $groupID]);
         $this->data['buttons'] = $this->renderPartialView('navigation');
         return parent::index();
@@ -50,7 +57,17 @@ class SubscriberGroupDetailController extends AbstractAdminController
     {
         $this->data['listID'] = $listID;
         $this->data['groupID'] = $groupID;
-        $this->data['subscriberOptions'] = Subscriber::active()->notDeleted()->lists('Sbr_EmailAddress', 'Sbr_ID')->prepend('Select Subscribers ...');
+        $this->data['subscriberOptions'] = Subscriber::active()
+                                                     ->notDeleted()
+                                                     ->whereNotExists(
+                                                         function ($query) use ($groupID) {
+                                                             $query->select(\DB::raw(1))
+                                                                   ->from('SubscriberGroupDetail')
+                                                                   ->whereRaw('(tbl_Subscriber.Sbr_ID = tbl_SubscriberGroupDetail.Sgd_SubscriberID) and (tbl_SubscriberGroupDetail.Sgd_GroupID = ' . $groupID . ')');
+                                                         }
+                                                     )
+                                                     ->lists('Sbr_EmailAddress', 'Sbr_ID')
+                                                     ->prepend('Select Subscribers ...', '');
         $this->data['pageDescription'] = 'Add your subscriber to this mailing list group';
         $this->data['formAction'] = action($this->controllerName . '@store', [$listID, $groupID]);
         $this->data['indexLinkAction'] = action($this->controllerName . '@index', [$listID, $groupID]);
@@ -61,19 +78,30 @@ class SubscriberGroupDetailController extends AbstractAdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param integer $listID  Mailing list ID parameter.
-     * @param integer $groupID Row ID of model that want to edit.
+     * @param integer $listID   Mailing list ID parameter.
+     * @param integer $groupID  Subscriber group ID parameter.
+     * @param integer $detailID Row ID of model that want to edit.
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($listID, $groupID = null)
+    public function edit($listID, $groupID = null, $detailID = null)
     {
         $this->data['listID'] = $listID;
         $this->data['groupID'] = $groupID;
-        $this->data['pageDescription'] = 'Update subscriber group item for selected mailing list';
-        $this->data['groupParentOptions'] = SubscriberGroup::active()->notDeleted()->where('Sbg_ID', '<>', $groupID)->lists('Sbg_Name', 'Sbg_ID')->prepend('Select Group Parent ...', '');
-        $this->data['model'] = SubscriberGroup::find($groupID);
-        $this->data['indexLinkAction'] = action($this->controllerName . '@index', $listID);
+        $this->data['pageDescription'] = 'Modify the subscriber list on this mailing list group';
+        $this->data['model'] = SubscriberGroupDetail::with('subscriber')->find($groupID);
+        $this->data['subscriberOptions'] = Subscriber::active()
+                                                     ->notDeleted()
+                                                     ->whereNotExists(
+                                                         function ($query) use ($groupID) {
+                                                             $query->select(\DB::raw(1))
+                                                                   ->from('SubscriberGroupDetail')
+                                                                   ->whereRaw('(tbl_Subscriber.Sbr_ID = tbl_SubscriberGroupDetail.Sgd_SubscriberID) and (tbl_SubscriberGroupDetail.Sgd_GroupID = ' . $groupID . ')');
+                                                         }
+                                                     )
+                                                     ->lists('Sbr_EmailAddress', 'Sbr_ID')
+                                                     ->prepend('Select Subscribers ...', '');
+        $this->data['indexLinkAction'] = action($this->controllerName . '@index', [$listID, $groupID]);
         $this->data['formAction'] = action($this->controllerName . '@update', [$listID, $groupID]);
         $this->data['buttons'] = $this->renderPartialView('button');
         $this->loadResourceForDetailPage();
@@ -83,24 +111,28 @@ class SubscriberGroupDetailController extends AbstractAdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param UpdateSubscriberGroupRequest $request Request object parameter.
-     * @param integer                      $listID  Mailing list ID parameter.
+     * @param UpdateSubscriberGroupDetailRequest $request Request object parameter.
+     * @param integer                            $listID  Mailing list ID parameter.
+     * @param integer                            $groupID Subscriber group ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateSubscriberGroupRequest $request, $listID = null)
+    public function store(UpdateSubscriberGroupDetailRequest $request, $listID = null, $groupID = null)
     {
         try {
-            if (trim($request->get('Sbg_ParentID')) === '' or $request->get('Sbg_ParentID') === '0') {
-                $request->merge(['Sbg_ParentID' => null]);
-            }
             \DB::beginTransaction();
-            $record = SubscriberGroup::create($request->except('_method', '_token'));
+            foreach ($request->get('Sgd_SubscriberID') as $subscriber) {
+                $record = new SubscriberGroupDetail();
+                $record->Sgd_GroupID = $request->get('Sgd_GroupID');
+                $record->Sgd_SubscriberID = $subscriber;
+                $record->Sgd_Active = $request->get('Sgd_Active');
+                $record->push();
+            }
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', [$listID, $record->getKey()]);
+            return redirect()->action($this->controllerName . '@index', [$listID, $groupID]);
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@create', $listID)->withErrors($e->getMessage())->withInput();
+            return redirect()->action($this->controllerName . '@create', [$listID, $groupID])->withErrors($e->getMessage())->withInput();
         }
     }
 

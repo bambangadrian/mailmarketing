@@ -1,11 +1,11 @@
 <?php
-
 namespace MailMarketing\Http\Requests;
 
 use MailMarketing\Http\Requests\Request;
 
 class UpdateSubscriberGroupDetailRequest extends Request
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +13,7 @@ class UpdateSubscriberGroupDetailRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return \Auth::user()->hasRole('admin') or \Auth::user()->hasPermission('manage-subscriber-group-detail');
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateSubscriberGroupDetailRequest extends Request
     public function rules()
     {
         return [
-            //
+            'Sgd_GroupID'      => 'required',
+            'Sgd_SubscriberID' => 'required|array'
         ];
     }
 }

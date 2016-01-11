@@ -1,0 +1,1 @@
+<a class="btn btn-default btn-flat  " href="{!! action('Admin\SubscriberGroupController@edit', [$listID, $groupID]) !!}"><i class="fa fa-backward"></i> Subscriber Group</a>
