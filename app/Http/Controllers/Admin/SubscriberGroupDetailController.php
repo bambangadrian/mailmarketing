@@ -66,8 +66,7 @@ class SubscriberGroupDetailController extends AbstractAdminController
                                                                    ->whereRaw('(tbl_Subscriber.Sbr_ID = tbl_SubscriberGroupDetail.Sgd_SubscriberID) and (tbl_SubscriberGroupDetail.Sgd_GroupID = ' . $groupID . ')');
                                                          }
                                                      )
-                                                     ->lists('Sbr_EmailAddress', 'Sbr_ID')
-                                                     ->prepend('Select Subscribers ...', '');
+                                                     ->lists('Sbr_EmailAddress', 'Sbr_ID');
         $this->data['pageDescription'] = 'Add your subscriber to this mailing list group';
         $this->data['formAction'] = action($this->controllerName . '@store', [$listID, $groupID]);
         $this->data['indexLinkAction'] = action($this->controllerName . '@index', [$listID, $groupID]);
@@ -99,8 +98,7 @@ class SubscriberGroupDetailController extends AbstractAdminController
                                                                    ->whereRaw('(tbl_Subscriber.Sbr_ID = tbl_SubscriberGroupDetail.Sgd_SubscriberID) and (tbl_SubscriberGroupDetail.Sgd_GroupID = ' . $groupID . ')');
                                                          }
                                                      )
-                                                     ->lists('Sbr_EmailAddress', 'Sbr_ID')
-                                                     ->prepend('Select Subscribers ...', '');
+                                                     ->lists('Sbr_EmailAddress', 'Sbr_ID');
         $this->data['indexLinkAction'] = action($this->controllerName . '@index', [$listID, $groupID]);
         $this->data['formAction'] = action($this->controllerName . '@update', [$listID, $groupID]);
         $this->data['buttons'] = $this->renderPartialView('button');
