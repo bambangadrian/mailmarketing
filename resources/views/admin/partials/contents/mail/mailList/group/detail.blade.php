@@ -32,6 +32,6 @@
 @section('add-js')
     @parent
     <script>
-        $('#Sbg_ParentID').select2({theme: 'classic'});
+        $('#Sbg_ParentID').select2();
     </script>
 @endsection

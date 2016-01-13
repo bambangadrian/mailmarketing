@@ -57,10 +57,10 @@
                 $.each(data, function(index, element){
                     model.append('<option value="' + element.Sbg_ID + '">' + element.Sbg_Name + '</option>');
                 });
-                model.select2({theme: 'classic'});
+                model.select2();
             })
         });
-        $('#Msd_MailListID, #Msd_SubscriberGroupID').select2({theme: 'classic'});
+        $('#Msd_MailListID, #Msd_SubscriberGroupID').select2();
         $('#Msd_ExecutedDate').daterangepicker(
                 {
                     singleDatePicker: true,

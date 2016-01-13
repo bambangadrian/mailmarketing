@@ -51,6 +51,6 @@
 @section('add-js')
     @parent
     <script>
-        $('#Sbr_ImportFromID').select2({theme: 'classic'});
+        $('#Sbr_ImportFromID').select2();
     </script>
 @endsection

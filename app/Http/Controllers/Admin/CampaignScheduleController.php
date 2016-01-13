@@ -1,6 +1,12 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin;
 
+use MailMarketing\Http\Requests\CreateSentMailCampaign;
+use MailMarketing\Models\Campaign;
+use MailMarketing\Models\MailList;
+use MailMarketing\Models\MailSchedule;
+use MailMarketing\Models\SubscriberGroup;
+
 class CampaignScheduleController extends AbstractAdminController
 {
 
@@ -11,12 +17,12 @@ class CampaignScheduleController extends AbstractAdminController
     {
         parent::__construct();
         # Set content directory.
-        $this->contentDir = 'master/campaign/category';
+        $this->contentDir = 'mail/schedule';
         # Set page attributes.
-        $this->data['pageHeader'] = 'Campaign Category';
-        $this->data['pageDescription'] = 'Manage your campaign category';
-        $this->data['activeMenu'] = 'master';
-        $this->data['activeSubMenu'] = 'campaignCategory';
+        $this->data['pageHeader'] = 'Campaign Schedule';
+        $this->data['pageDescription'] = 'Manage your mail campaign schedule';
+        $this->data['activeMenu'] = 'mail';
+        $this->data['activeSubMenu'] = 'mailSchedule';
     }
 
     /**
@@ -26,7 +32,7 @@ class CampaignScheduleController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = CampaignCategory::notDeleted()->paginate(10);
+        $this->data['model'] = MailSchedule::notDeleted()->with('campaign')->paginate(10);
         return parent::index();
     }
 
@@ -37,7 +43,10 @@ class CampaignScheduleController extends AbstractAdminController
      */
     public function create()
     {
-        $this->data['pageDescription'] = 'Create new campaign category item';
+        $this->data['pageDescription'] = 'Create new mail campaign schedule';
+        $this->data['subscriberGroupOptions'] = ['Select Mail List First ...'];
+        $this->loadOptions();
+        $this->loadResourceForDetailPage();
         return parent::create();
     }
 
@@ -50,23 +59,26 @@ class CampaignScheduleController extends AbstractAdminController
      */
     public function edit($id)
     {
-        $this->data['pageDescription'] = 'Update campaign category item';
-        $this->data['model'] = CampaignCategory::find($id);
+        $this->data['pageDescription'] = 'Update your mail campaign schedule';
+        $this->data['model'] = MailSchedule::find($id);
+        $this->data['subscriberGroupOptions'] = SubscriberGroup::active()->notDeleted()->lists('Sbg_Name', 'Sbg_ID')->prepend('Please Select Subscriber Group ...');
+        $this->loadOptions();
+        $this->loadResourceForDetailPage();
         return parent::edit($id);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param UpdateCampaignCategoryRequest $request Request object parameter.
+     * @param CreateSentMailCampaign $request Request object parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateCampaignCategoryRequest $request)
+    public function store(CreateSentMailCampaign $request)
     {
         try {
             \DB::beginTransaction();
-            $record = CampaignCategory::create($request->except('_method', '_token'));
+            $record = MailSchedule::create($request->except('_method', '_token'));
             \DB::commit();
             return redirect()->action($this->controllerName . '@edit', $record->getKey());
         } catch (\Exception $e) {
@@ -78,16 +90,16 @@ class CampaignScheduleController extends AbstractAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateCampaignCategoryRequest $request Request object parameter.
-     * @param  integer                       $id      Model ID parameter.
+     * @param  CreateSentMailCampaign $request Request object parameter.
+     * @param  integer                $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCampaignCategoryRequest $request, $id)
+    public function update(CreateSentMailCampaign $request, $id)
     {
         $redirectPath = action($this->controllerName . '@edit', $id);
         try {
-            $record = CampaignCategory::find($id);
+            $record = MailSchedule::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
@@ -97,5 +109,29 @@ class CampaignScheduleController extends AbstractAdminController
             \DB::rollback();
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
+    }
+    /**
+     * Load resource for detail page.
+     *
+     * @return void
+     */
+    private function loadResourceForDetailPage()
+    {
+        $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.css');
+        $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css');
+        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.full.min.js');
+        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/moment/moment.min.js');
+        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.js');
+    }
+
+    /**
+     * Load options data that will be used for detail page.
+     *
+     * @return void
+     */
+    private function loadOptions()
+    {
+        $this->data['campaignOptions'] = Campaign::active()->notDeleted()->lists('Cpg_Name', 'Cpg_ID')->prepend('Please Select Campaign ...');
+        $this->data['mailListOptions'] = MailList::active()->notDeleted()->lists('Mls_Name', 'Mls_ID')->prepend('Please Select Mail List ...', '');
     }
 }

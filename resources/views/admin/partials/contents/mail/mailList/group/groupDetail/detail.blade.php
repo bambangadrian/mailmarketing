@@ -32,7 +32,7 @@
     @parent
     @if($isCreate === true)
         <script>
-            $('#Sgd_SubscriberID').select2({theme: 'classic'});
+            $('#Sgd_SubscriberID').select2();
         </script>
     @endif
 @endsection

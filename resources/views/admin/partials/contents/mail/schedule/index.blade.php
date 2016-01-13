@@ -7,11 +7,8 @@
         <thead>
         <tr>
             <th class="rowNumber">No</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Topic</th>
-            <th>Subject</th>
+            <th>Campaign</th>
+            <th>Executed Date</th>
             <th class="rowActive">Active</th>
         </tr>
         </thead>
@@ -21,12 +18,9 @@
             <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
             <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', $row->getKey()) }}'">
                 <td class="rowNumber">{{ $no }}</td>
-                <td>{{ $row->Cpg_Name }}</td>
-                <td>{{ $row->campaignType->Cgt_Name }}</td>
-                <td>{{ $row->campaignCategory->Cc_Name }}</td>
-                <td>{{ $row->campaignTopic->Cto_Name }}</td>
-                <td>{{ $row->Cpg_EmailSubject }}</td>
-                <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Cpg_Active) !!}</td>
+                <td>{{ $row->campaign->Cpg_Name }}</td>
+                <td>{{ $row->Msd_ExecutedDate }}</td>
+                <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Msd_Active) !!}</td>
             </tr>
         @endforeach
         </tbody>

@@ -191,11 +191,11 @@ class CampaignController extends AbstractAdminController
                                                     ->groupBy('Sgd_SubscriberID')
                                                     ->get();
             foreach ($subscriberGroup as $row) {
-                $mailArr['to'][] = $row->subscriber->Sbr_EmailAddress;
-                //$mailArr['to'][] = [
-                //    $row->subscriber->Sbr_EmailAddress,
-                //    $row->subscriber->Sbr_FirstName . ' ' . $row->subscriber->Sbr_LastName
-                //];
+                //$mailArr['to'][] = $row->subscriber->Sbr_EmailAddress;
+                $mailArr['to'][] = [
+                    $row->subscriber->Sbr_EmailAddress,
+                    $row->subscriber->Sbr_FirstName . ' ' . $row->subscriber->Sbr_LastName
+                ];
                 $sentMailRecord = new SentMail();
                 $sentMailRecord->Sm_MailScheduleID = $mailScheduleRecord->getKey();
                 $sentMailRecord->Sm_SubscriberListID = $row->Sgd_ID;
@@ -203,16 +203,17 @@ class CampaignController extends AbstractAdminController
                 $sentMailRecord->push();
             }
             \DB::commit();
-            \Mail::send(
-                $mailArr['view'],
-                $this->data,
-                function ($message) use ($mailArr) {
-                    $message->from($mailArr['from'], $mailArr['fromName'])
-                            ->to('bambang.adrian@gmail.com', 'Bambang Adrian Sitompul')
-                            ->bcc($mailArr['to'])
-                            ->subject($mailArr['subject']);
-                }
-            );
+            foreach ($mailArr['to'] as $mailTo) {
+                \Mail::send(
+                    $mailArr['view'],
+                    $this->data,
+                    function ($message) use ($mailArr, $mailTo) {
+                        $message->from($mailArr['from'], $mailArr['fromName']);
+                        $message->to($mailTo[0], $mailTo[1]);
+                        $message->subject($mailArr['subject']);
+                    }
+                );
+            }
             return redirect()->action('Admin\CampaignScheduleController@index')
                              ->with(
                                  [
@@ -244,7 +245,7 @@ class CampaignController extends AbstractAdminController
     private function loadResourceForDetailPage()
     {
         $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.css');
-        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.js');
+        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.full.min.js');
     }
 
     /**

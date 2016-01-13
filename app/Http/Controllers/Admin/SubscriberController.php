@@ -113,6 +113,6 @@ class SubscriberController extends AbstractAdminController
     private function loadResourceForDetailPage()
     {
         $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.css');
-        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.js');
+        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.full.min.js');
     }
 }

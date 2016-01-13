@@ -8,13 +8,13 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" type="image/x-ico" href="{{ asset('/assets/img/favicon.ico') }}">
+    @yield('add-css')
     <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/plugins/font-awesome-4.5.0/css/font-awesome.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/plugins/ionicons-2.0.1/css/ionicons.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/assets/css/app.css") }}">
     <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/dist/css/AdminLTE.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/vendor/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css") }}">
-    @yield('add-css')
     <!--[if lt IE 9]>
     <script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/respond/respond.min.js") }}"></script>
     <![endif]-->
@@ -53,9 +53,9 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 <script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
 <script src="{{ asset("/vendor/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js") }}"></script>
+@yield('add-js')
 <!-- Slimscroll -->
 <script src="{{ asset("/vendor/bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js") }}"></script>
 <script src="{{ asset("/vendor/bower_components/AdminLTE/dist/js/app.min.js") }}"></script>
-@yield('add-js')
 </body>
 </html>

@@ -1,34 +1,88 @@
-@extends('admin.template.lte.layout.listing')
+@extends('admin.template.lte.layout.detail')
 
 {{ $breadCrumb }}
 
-@section('data-listing')
-    <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-            <th class="rowNumber">No</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Topic</th>
-            <th>Subject</th>
-            <th class="rowActive">Active</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php $counter = 1; ?>
-        @foreach($model as $index => $row)
-            <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
-            <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', $row->getKey()) }}'">
-                <td class="rowNumber">{{ $no }}</td>
-                <td>{{ $row->Cpg_Name }}</td>
-                <td>{{ $row->campaignType->Cgt_Name }}</td>
-                <td>{{ $row->campaignCategory->Cc_Name }}</td>
-                <td>{{ $row->campaignTopic->Cto_Name }}</td>
-                <td>{{ $row->Cpg_EmailSubject }}</td>
-                <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Cpg_Active) !!}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+@section('data-form')
+    {!! Form::model($model, ['url' => $formAction]) !!}
+    {{ $formMethodField }}
+    <div class="form-group">
+        {!! Form::label('Msd_CampaignID', 'Campaign', ['class' => 'required']) !!}
+        {!! Form::select('Msd_CampaignID', $campaignOptions, null, ['class' => 'form-control select2']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('Msd_MailListID', 'Mailing List', ['class' => 'required']) !!}
+        {!! Form::select('Msd_MailListID', $mailListOptions, null, ['class' => 'form-control select2']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('Msd_SubscriberGroupID', 'Subscriber Group', ['class' => 'required']) !!}
+        {!! Form::select('Msd_SubscriberGroupID', $subscriberGroupOptions, null, ['class' => 'form-control select2']) !!}
+    </div>
+    <div class="checkbox">
+        <label for="Msd_Active">
+            {!! Form::hidden('Msd_Active', 0) !!}
+            {!! Form::checkbox('Msd_Active', 1) !!}
+            Active
+        </label>
+    </div>
+    <div class="form-group">
+        {!! Form::label('Msd_ExecutedDate', 'Schedule Date Time', ['class' => 'required']) !!}
+        <div class="checkbox">
+            <label for="RealTime">
+                {!! Form::hidden('RealTime', 0) !!}
+                {!! Form::checkbox('RealTime', 1) !!}
+                Realtime (Set the current time as execution time)
+            </label>
+        </div>
+        <div class="input-group">
+            <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+            </div>
+            {!! Form::text('Msd_ExecutedDate', null, ['required', 'class' => 'form-control pull-right active', 'placeholder' => 'Enter Schedule Date Time']) !!}
+        </div>
+    </div>
+    @include('admin.partials.layout.form.button')
+    {!! Form::close() !!}
 @stop
+
+@section('add-js')
+    @parent
+    <script>
+
+        $('#Msd_MailListID').on('change', function(e){
+            console.log(e);
+            var mailListID = e.target.value;
+            // Call ajax.
+            $.get('/ajax/subscriber-group', {mailListID: mailListID}, function(data){
+                var model = $('#Msd_SubscriberGroupID');
+                model.empty();
+                model.append('<option>Please Select Subscriber Group ...</option>');
+                console.log(data);
+                $.each(data, function(index, element){
+                    model.append('<option value="' + element.Sbg_ID + '">' + element.Sbg_Name + '</option>');
+                });
+                model.select2();
+            })
+        });
+        $('#Msd_CampaignID, #Msd_MailListID, #Msd_SubscriberGroupID').select2();
+        $('#Msd_ExecutedDate').daterangepicker(
+                {
+                    singleDatePicker: true,
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    timePickerIncrement: 10,
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+        );
+        $('input[name="RealTime"]').change(function(){
+            var scheduleDateTimeElement = $('#Msd_ExecutedDate'), realTime = $(this).is(':checked');
+            console.log(realTime);
+            if(realTime === true){
+                scheduleDateTimeElement.val(moment().format('YYYY-MM-DD HH:mm:ss'));
+            }
+        });
+    </script>
+@stop
+
+@section('content-status-item')
+    <div>&rarr; Date time format is : YYYY-MM-DD hh:mm:ss</div>
+@endsection
