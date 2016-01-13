@@ -23,9 +23,18 @@ class UpdateSubscriberGroupDetailRequest extends Request
      */
     public function rules()
     {
-        return [
-            'Sgd_GroupID'      => 'required',
-            'Sgd_SubscriberID' => 'required|array'
-        ];
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'Sgd_GroupID'      => 'required',
+                    'Sgd_SubscriberID' => 'required|array'
+                ];
+            case 'PUT':
+            case 'PATCH':
+                return [
+                    'Sgd_GroupID'      => 'required',
+                    'Sgd_SubscriberID' => 'required'
+                ];
+        }
     }
 }

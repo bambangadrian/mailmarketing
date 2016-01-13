@@ -4,7 +4,7 @@
 
 @section('data-form')
     {!! Form::model($model, ['url' => $formAction]) !!}
-    {{ $formMethodField }}
+        {{ $formMethodField }}
         <div class="form-group">
             {!! Form::label('Sbr_ImportFromID', 'Import From') !!}
             {!! Form::select('Sbr_ImportFromID', $importOptions, null, ['class' => 'form-control']) !!}
@@ -47,7 +47,6 @@
         @include('admin.partials.layout.form.button')
     {!! Form::close() !!}
 @stop
-
 
 @section('add-js')
     @parent

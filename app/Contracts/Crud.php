@@ -26,9 +26,16 @@ trait Crud
     /**
      * Reference key property.
      *
-     * @var integer $referenceKey
+     * @var string $referenceKey
      */
     protected $referenceKey;
+
+    /**
+     * Reference value property
+     *
+     * @var integer $referenceValue
+     */
+    protected $referenceValue;
 
     /**
      * Action property.
@@ -113,7 +120,7 @@ trait Crud
     public function setCreate($create)
     {
         $this->create = $create;
-        $this->setAction('create');
+        $this->setAction('create', $create);
     }
 
     /**
@@ -136,7 +143,7 @@ trait Crud
     public function setRead($read)
     {
         $this->read = $read;
-        $this->setAction('read');
+        $this->setAction('read', $read);
     }
 
     /**
@@ -159,7 +166,7 @@ trait Crud
     public function setUpdate($update)
     {
         $this->update = $update;
-        $this->setAction('update');
+        $this->setAction('update', $update);
     }
 
     /**
@@ -182,7 +189,7 @@ trait Crud
     public function setDelete($delete)
     {
         $this->delete = $delete;
-        $this->setAction('delete');
+        $this->setAction('delete', $delete);
     }
 
     /**
@@ -290,7 +297,7 @@ trait Crud
     /**
      * Get reference key property.
      *
-     * @return integer
+     * @return string
      */
     public function getReferenceKey()
     {
@@ -300,7 +307,7 @@ trait Crud
     /**
      * Set reference key property.
      *
-     * @param integer $referenceKey Reference key parameter.
+     * @param string $referenceKey Reference key parameter.
      *
      * @return void
      */
@@ -311,16 +318,28 @@ trait Crud
     }
 
     /**
+     * Get reference value property.
+     *
+     * @return integer
+     */
+    public function getReferenceValue(){
+        $this->referenceValue = \Route::getCurrentRoute()->getParameter($this->getReferenceKey());
+        return $this->referenceValue;
+    }
+
+    /**
      * Set crud action property.
      *
-     * @param string $action The action parameter.
+     * @param string  $action The action parameter.
+     * @param boolean $state  The action state parameter.
      *
      * @return void
      */
-    protected function setAction($action)
+    protected function setAction($action, $state = false)
     {
         $this->action = $action;
-        $this->doAssignCrudActionData('is' . str_replace(['', '_'], [''], ucwords($action)), true);
+        $this->data['action'] = $action;
+        $this->doAssignCrudActionData('is' . str_replace(['', '_'], [''], ucwords($action)), $state);
     }
 
     /**

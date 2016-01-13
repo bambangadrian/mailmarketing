@@ -24,8 +24,10 @@ class CreateSentMailCampaign extends Request
     public function rules()
     {
         return [
-            'Msd_CampaignID'   => 'required',
-            'Msd_ExecutedDate' => 'required'
+            'Msd_CampaignID'        => 'required',
+            'Msd_MailListID'        => 'required',
+            'Msd_SubscriberGroupID' => 'required',
+            'Msd_ExecutedDate'      => 'required'
         ];
     }
 }

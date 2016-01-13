@@ -102,7 +102,7 @@ class SubscriberGroupController extends AbstractAdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateSubscriberGroupRequest $request, $listID = null)
+    public function store(UpdateSubscriberGroupRequest $request, $listID)
     {
         try {
             if (trim($request->get('Sbg_ParentID')) === '' or $request->get('Sbg_ParentID') === '0') {
@@ -127,7 +127,7 @@ class SubscriberGroupController extends AbstractAdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSubscriberGroupRequest $request, $listID, $groupID = null)
+    public function update(UpdateSubscriberGroupRequest $request, $listID, $groupID)
     {
         $redirectPath = action($this->controllerName . '@edit', [$listID, $groupID]);
         try {

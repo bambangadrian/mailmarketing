@@ -4,26 +4,35 @@
 
 @section('data-form')
     {!! Form::model($model, ['url' => $formAction]) !!}
-    {{ $formMethodField }}
-    <input type="hidden" name="Sgd_GroupID" id="Sgd_GroupID" value="{{ $groupID }}" />
-    <div class="form-group">
-        {!! Form::label('Sgd_SubscriberID', 'Add Subscribers', ['class' => 'required']) !!}
-        {!! Form::select('Sgd_SubscriberID[]', $subscriberOptions, null, ['id' => 'Sgd_SubscriberID',  'class' => 'form-control', 'multiple' => 'multiple']) !!}
-    </div>
-    <div class="checkbox">
-        <label for="Sgd_Active">
-            {!! Form::hidden('Sgd_Active', 0) !!}
-            {!! Form::checkbox('Sgd_Active', 1, true, ['onclick' => 'return false;']) !!}
-            Active
-        </label>
-    </div>
-    @include('admin.partials.layout.form.button')
+        {{ $formMethodField }}
+        {!! Form::hidden('Sgd_GroupID', $groupID) !!}
+        <div class="form-group">
+            {!! Form::label('Sgd_SubscriberID', 'Add Subscribers', ['class' => 'required']) !!}
+            <?php $activeFieldAttributes = null; ?>
+            @if($isCreate === true)
+                <?php $activeFieldAttributes =  ['onclick' => 'return false;'];?>
+                {!! Form::select('Sgd_SubscriberID[]', $subscriberOptions, null, ['id' => 'Sgd_SubscriberID',  'class' => 'form-control', 'multiple' => 'multiple']) !!}
+            @elseif($isUpdate === true)
+                {!! Form::hidden('Sgd_SubscriberID', $model->Sgd_SubscriberID) !!}
+                {!! Form::text('Sbr_EmailAddress', $model->subscriber->Sbr_EmailAddress, ['class' => 'form-control', 'readonly', 'required']) !!}
+            @endif
+        </div>
+        <div class="checkbox">
+            <label for="Sgd_Active">
+                {!! Form::hidden('Sgd_Active', 0) !!}
+                {!! Form::checkbox('Sgd_Active', 1, true, $activeFieldAttributes) !!}
+                Active
+            </label>
+        </div>
+        @include('admin.partials.layout.form.button')
     {!! Form::close() !!}
 @stop
 
 @section('add-js')
     @parent
-    <script>
-        $('#Sgd_SubscriberID').select2({theme: 'classic'});
-    </script>
+    @if($isCreate === true)
+        <script>
+            $('#Sgd_SubscriberID').select2({theme: 'classic'});
+        </script>
+    @endif
 @endsection

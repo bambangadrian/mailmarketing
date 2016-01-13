@@ -82,7 +82,7 @@ abstract class AbstractAdminController extends BaseController
         # Get the controller name for action route purpose.
         $reflectionClass = new \ReflectionClass($this);
         $this->data['controllerName'] = $this->controllerName = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
-        $this->data['referenceKey'] = camel_case(str_replace('Controller', '', $reflectionClass->getShortName()));
+        $this->setReferenceKey(camel_case(str_replace('Controller', '', $reflectionClass->getShortName())));
         # Create the link action.
         $this->data['indexLinkAction'] = action($this->controllerName . '@index');
         if ($this->enableCrud === true) {
@@ -183,8 +183,8 @@ abstract class AbstractAdminController extends BaseController
             $this->data['formAction'] = action($this->controllerName . '@update', $id);
         }
         $this->data['css'][] = asset('/assets/css/detail.css');
-        $this->setReferenceKey($id);
         $this->setUpdate(true);
+        $this->data['referenceValue'] = $this->getReferenceValue();
         return $this->renderPage('detail');
     }
 

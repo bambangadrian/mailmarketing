@@ -38,28 +38,34 @@ Route::group(
                 Route::resource('mail/tracking', 'MailTrackingController', $resourceOption);
                 Route::resource('mail/sentMail', 'SentMailController', $resourceOption);
                 Route::resource('mail/trackingReport', 'TrackingReportController', $resourceOption);
-                Route::group(['namespace' => 'Dss'], function() use ($resourceOption){
-                    Route::resource('dss/period', 'DssPeriodController', $resourceOption);
-                    Route::resource('dss/criteria', 'DssCriteriaController');
-                    Route::resource('dss/alternative', 'DssAlternativeController', $resourceOption);
-                    Route::resource('dss/consistency', 'DssConsistencyController', $resourceOption);
-                    Route::resource('dss/priority', 'DssPriorityController', $resourceOption);
-                    Route::resource('dss/result', 'DssResultController', $resourceOption);
-                });
+                Route::group(
+                    ['namespace' => 'Dss'],
+                    function () use ($resourceOption) {
+                        Route::resource('dss/period', 'DssPeriodController', $resourceOption);
+                        Route::resource('dss/criteria', 'DssCriteriaController');
+                        Route::resource('dss/alternative', 'DssAlternativeController', $resourceOption);
+                        Route::resource('dss/consistency', 'DssConsistencyController', $resourceOption);
+                        Route::resource('dss/priority', 'DssPriorityController', $resourceOption);
+                        Route::resource('dss/result', 'DssResultController', $resourceOption);
+                    }
+                );
                 Route::resource('company', 'CompanyController', $resourceOption);
                 Route::get('dashboard', 'DashboardController@index');
             }
         );
-        Route::group(['namespace' => 'Auth'], function(){
-            Route::get('login', 'AuthController@getLogin');
-            Route::post('login', 'AuthController@doAuth');
-            Route::get('logout', 'AuthController@doLogout');
-            Route::get('resetpwd', 'PasswordController@getResetPassword');
-            Route::post('resetpwd', 'PasswordController@doResetPassword');
-        });
+        Route::group(
+            ['namespace' => 'Auth'],
+            function () {
+                Route::get('login', 'AuthController@getLogin');
+                Route::post('login', 'AuthController@doAuth');
+                Route::get('logout', 'AuthController@doLogout');
+                Route::get('resetpwd', 'PasswordController@getResetPassword');
+                Route::post('resetpwd', 'PasswordController@doResetPassword');
+            }
+        );
     }
 );
-
+Route::controller('ajax', 'AjaxController');
 Route::resource('register', 'RegistrationController');
 Route::get(
     'test/mail',
@@ -78,8 +84,7 @@ Route::get(
     function () {
         $uploadDir = realpath(base_path('storage/app/resources/views'));
         Storage::disk('local')->put('resources/views/test.blade.php', 'Contents');
-
         //Storage::move('resources/views/test.blade.php', 'resources/test.blade.php');
-        return view('storageView::test');
+        return view('storageView::template2.index');
     }
 );

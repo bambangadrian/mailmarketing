@@ -57,19 +57,21 @@ class SubscriberGroupDetailController extends AbstractAdminController
     {
         $this->data['listID'] = $listID;
         $this->data['groupID'] = $groupID;
+        $this->data['pageDescription'] = 'Add your subscriber to this mailing list group';
+        $this->data['indexLinkAction'] = action($this->controllerName . '@index', [$listID, $groupID]);
+        $this->data['formAction'] = action($this->controllerName . '@store', [$listID, $groupID]);
+        $subGroupList = SubscriberGroup::active()->notDeleted()->where('Sbg_ParentID', $groupID)->lists('Sbg_ID')->prepend($groupID);
         $this->data['subscriberOptions'] = Subscriber::active()
                                                      ->notDeleted()
                                                      ->whereNotExists(
-                                                         function ($query) use ($groupID) {
+                                                         function ($query) use ($subGroupList) {
                                                              $query->select(\DB::raw(1))
                                                                    ->from('SubscriberGroupDetail')
-                                                                   ->whereRaw('(tbl_Subscriber.Sbr_ID = tbl_SubscriberGroupDetail.Sgd_SubscriberID) and (tbl_SubscriberGroupDetail.Sgd_GroupID = ' . $groupID . ')');
+                                                                   ->whereRaw('(tbl_Subscriber.Sbr_ID = tbl_SubscriberGroupDetail.Sgd_SubscriberID)')
+                                                                   ->whereIn('Sgd_GroupID', $subGroupList);
                                                          }
                                                      )
                                                      ->lists('Sbr_EmailAddress', 'Sbr_ID');
-        $this->data['pageDescription'] = 'Add your subscriber to this mailing list group';
-        $this->data['formAction'] = action($this->controllerName . '@store', [$listID, $groupID]);
-        $this->data['indexLinkAction'] = action($this->controllerName . '@index', [$listID, $groupID]);
         $this->loadResourceForDetailPage();
         return parent::create();
     }
@@ -88,21 +90,9 @@ class SubscriberGroupDetailController extends AbstractAdminController
         $this->data['listID'] = $listID;
         $this->data['groupID'] = $groupID;
         $this->data['pageDescription'] = 'Modify the subscriber list on this mailing list group';
-        $this->data['model'] = SubscriberGroupDetail::with('subscriber')->find($groupID);
-        $this->data['subscriberOptions'] = Subscriber::active()
-                                                     ->notDeleted()
-                                                     ->whereNotExists(
-                                                         function ($query) use ($groupID) {
-                                                             $query->select(\DB::raw(1))
-                                                                   ->from('SubscriberGroupDetail')
-                                                                   ->whereRaw('(tbl_Subscriber.Sbr_ID = tbl_SubscriberGroupDetail.Sgd_SubscriberID) and (tbl_SubscriberGroupDetail.Sgd_GroupID = ' . $groupID . ')');
-                                                         }
-                                                     )
-                                                     ->lists('Sbr_EmailAddress', 'Sbr_ID');
         $this->data['indexLinkAction'] = action($this->controllerName . '@index', [$listID, $groupID]);
-        $this->data['formAction'] = action($this->controllerName . '@update', [$listID, $groupID]);
-        $this->data['buttons'] = $this->renderPartialView('button');
-        $this->loadResourceForDetailPage();
+        $this->data['formAction'] = action($this->controllerName . '@update', [$listID, $groupID, $detailID]);
+        $this->data['model'] = SubscriberGroupDetail::notDeleted()->with('subscriber')->find($detailID);
         return parent::edit($groupID);
     }
 
@@ -115,7 +105,7 @@ class SubscriberGroupDetailController extends AbstractAdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateSubscriberGroupDetailRequest $request, $listID = null, $groupID = null)
+    public function store(UpdateSubscriberGroupDetailRequest $request, $listID, $groupID)
     {
         try {
             \DB::beginTransaction();
@@ -137,22 +127,20 @@ class SubscriberGroupDetailController extends AbstractAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateSubscriberGroupRequest $request Request object parameter.
-     * @param integer                      $listID  Mailing list ID parameter.
-     * @param integer                      $groupID Row ID of model that want to edit.
+     * @param UpdateSubscriberGroupDetailRequest $request  Request object parameter.
+     * @param integer                            $listID   Mailing list ID parameter.
+     * @param integer                            $groupID  Subscriber group ID parameter.
+     * @param integer                            $detailID Row ID of model that want to edit.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSubscriberGroupRequest $request, $listID, $groupID = null)
+    public function update(UpdateSubscriberGroupDetailRequest $request, $listID, $groupID, $detailID)
     {
-        $redirectPath = action($this->controllerName . '@edit', [$listID, $groupID]);
+        $redirectPath = action($this->controllerName . '@edit', [$listID, $groupID, $detailID]);
         try {
-            $record = SubscriberGroup::find($groupID);
-            if (trim($request->get('Sbg_ParentID')) === '' or $request->get('Sbg_ParentID') === '0') {
-                $request->merge(['Sbg_ParentID' => null]);
-            }
             \DB::beginTransaction();
-            $record->fill($request->except('_method', '_token'));
+            $record = SubscriberGroupDetail::find($detailID);
+            $record->Sgd_Active = $request->get('Sgd_Active');
             $record->save();
             \DB::commit();
             return redirect($redirectPath);
