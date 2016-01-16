@@ -1,10 +1,11 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Master;
 
-use MailMarketing\Http\Requests\UpdateSegmentRequest;
-use MailMarketing\Models\Segment;
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
+use MailMarketing\Http\Requests\UpdateCampaignTypeRequest;
+use MailMarketing\Models\CampaignType;
 
-class SegmentController extends AbstractAdminController
+class CampaignTypeController extends AbstractAdminController
 {
 
     /**
@@ -14,12 +15,13 @@ class SegmentController extends AbstractAdminController
     {
         parent::__construct();
         # Set content directory.
-        $this->contentDir = 'master/segment';
+        $this->contentDir = 'master/campaign/type';
         # Set page attributes.
-        $this->data['pageHeader'] = 'Segment';
-        $this->data['pageDescription'] = 'Manage your segment for search tools';
+        $this->data['pageHeader'] = 'Campaign Type';
+        $this->data['pageDescription'] = 'Manage your campaign type';
         $this->data['activeMenu'] = 'master';
-        $this->data['activeSubMenu'] = 'segment';
+        $this->data['activeSubMenu'] = 'campaignType';
+        $this->setEnableDelete(true);
     }
 
     /**
@@ -29,7 +31,7 @@ class SegmentController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = Segment::notDeleted()->paginate(10);
+        $this->data['model'] = CampaignType::notDeleted()->paginate(10);
         return parent::index();
     }
 
@@ -40,7 +42,7 @@ class SegmentController extends AbstractAdminController
      */
     public function create()
     {
-        $this->data['pageDescription'] = 'Create new segment search item';
+        $this->data['pageDescription'] = 'Create new campaign type item';
         return parent::create();
     }
 
@@ -53,23 +55,23 @@ class SegmentController extends AbstractAdminController
      */
     public function edit($id)
     {
-        $this->data['pageDescription'] = 'Update segment search item';
-        $this->data['model'] = Segment::find($id);
+        $this->data['pageDescription'] = 'Update campaign type item';
+        $this->data['model'] = CampaignType::find($id);
         return parent::edit($id);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param UpdateSegmentRequest $request Request object parameter.
+     * @param UpdateCampaignTypeRequest $request Request object parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateSegmentRequest $request)
+    public function store(UpdateCampaignTypeRequest $request)
     {
         try {
             \DB::beginTransaction();
-            $record = Segment::create($request->except('_method', '_token'));
+            $record = CampaignType::create($request->except('_method', '_token'));
             \DB::commit();
             return redirect()->action($this->controllerName . '@edit', $record->getKey());
         } catch (\Exception $e) {
@@ -81,16 +83,16 @@ class SegmentController extends AbstractAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateSegmentRequest $request Request object parameter.
-     * @param  integer              $id      Model ID parameter.
+     * @param  UpdateCampaignTypeRequest $request Request object parameter.
+     * @param  integer                   $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSegmentRequest $request, $id)
+    public function update(UpdateCampaignTypeRequest $request, $id)
     {
         $redirectPath = action($this->controllerName . '@edit', $id);
         try {
-            $record = Segment::find($id);
+            $record = CampaignType::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
@@ -99,6 +101,27 @@ class SegmentController extends AbstractAdminController
         } catch (\Exception $e) {
             \DB::rollback();
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  integer $id Row ID of model that want to show.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $record = CampaignType::find($id);
+            \DB::beginTransaction();
+            $record->delete();
+            \DB::commit();
+            return redirect(action($this->controllerName . '@index'));
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect(action($this->controllerName . '@edit', $id))->withErrors($e->getMessage())->withInput();
         }
     }
 }

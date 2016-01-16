@@ -1,10 +1,11 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Mail;
 
-use MailMarketing\Http\Requests\UpdateTrackingStatusRequest;
-use MailMarketing\Models\MailTrackingStatus;
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
+use MailMarketing\Http\Requests\UpdateMailListRequest;
+use MailMarketing\Models\MailList;
 
-class TrackingStatusController extends AbstractAdminController
+class MailListController extends AbstractAdminController
 {
 
     /**
@@ -13,13 +14,11 @@ class TrackingStatusController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
-        # Set content directory.
-        $this->contentDir = 'master/trackingStatus';
-        # Set page attributes.
-        $this->data['pageHeader'] = 'Tracking Status';
-        $this->data['pageDescription'] = 'Manage tracking status data';
-        $this->data['activeMenu'] = 'master';
-        $this->data['activeSubMenu'] = 'trackStatus';
+        $this->contentDir = 'mail/mailList';
+        $this->data['pageHeader'] = 'Mailing List';
+        $this->data['pageDescription'] = 'Manage your mailing list for your campaign purpose';
+        $this->data['activeMenu'] = 'mail';
+        $this->data['activeSubMenu'] = 'mailList';
     }
 
     /**
@@ -29,7 +28,7 @@ class TrackingStatusController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = MailTrackingStatus::notDeleted()->paginate(10);
+        $this->data['model'] = MailList::notDeleted()->paginate(10);
         return parent::index();
     }
 
@@ -40,7 +39,7 @@ class TrackingStatusController extends AbstractAdminController
      */
     public function create()
     {
-        $this->data['pageDescription'] = 'Create new mail tracking status item';
+        $this->data['pageDescription'] = 'Create new mailing list item';
         return parent::create();
     }
 
@@ -53,23 +52,24 @@ class TrackingStatusController extends AbstractAdminController
      */
     public function edit($id)
     {
-        $this->data['pageDescription'] = 'Update mail tracking status item';
-        $this->data['model'] = MailTrackingStatus::find($id);
+        $this->data['pageDescription'] = 'Update mailing list item';
+        $this->data['model'] = MailList::find($id);
+        $this->data['buttons'] = $this->renderPartialView('button');
         return parent::edit($id);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param UpdateTrackingStatusRequest $request Request object parameter.
+     * @param UpdateMailListRequest $request Request object parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateTrackingStatusRequest $request)
+    public function store(UpdateMailListRequest $request)
     {
         try {
             \DB::beginTransaction();
-            $record = MailTrackingStatus::create($request->except('_method', '_token'));
+            $record = MailList::create($request->except('_method', '_token'));
             \DB::commit();
             return redirect()->action($this->controllerName . '@edit', $record->getKey());
         } catch (\Exception $e) {
@@ -81,16 +81,16 @@ class TrackingStatusController extends AbstractAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateTrackingStatusRequest $request Request object parameter.
-     * @param  integer                     $id      Model ID parameter.
+     * @param  UpdateMailListRequest $request Request object parameter.
+     * @param  integer               $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTrackingStatusRequest $request, $id)
+    public function update(UpdateMailListRequest $request, $id)
     {
         $redirectPath = action($this->controllerName . '@edit', $id);
         try {
-            $record = MailTrackingStatus::find($id);
+            $record = MailList::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();

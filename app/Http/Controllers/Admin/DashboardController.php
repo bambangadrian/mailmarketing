@@ -9,7 +9,7 @@ class DashboardController extends AbstractAdminController
      */
     public function __construct()
     {
-        $this->enableCrud = false;
+        $this->setEnableCrud(false);
         parent::__construct();
         $this->contentDir = $this->data['activeMenu'] = 'dashboard';
         $this->data['pageHeader'] = 'Dashboard';

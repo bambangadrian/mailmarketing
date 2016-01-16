@@ -60,7 +60,7 @@ class BasicModelObserver extends AbstractModelObserver
     {
         // Store a piece of data in the session...
         session()->flash('status', 'success');
-        session()->flash('message', 'Data successfully updated');
+        session()->flash('message', 'Data #' . $model->getKey() . ' successfully updated');
     }
 
     /**
@@ -88,7 +88,7 @@ class BasicModelObserver extends AbstractModelObserver
     {
         // Store a piece of data in the session...
         session()->flash('status', 'success');
-        session()->flash('message', 'Data successfully deleted (softly)');
+        session()->flash('message', 'Data #' . $model->getKey() . ' successfully deleted (softly)');
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Master;
 
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Http\Requests\UpdateCampaignTopicRequest;
 use MailMarketing\Models\CampaignTopic;
 
@@ -20,6 +21,7 @@ class CampaignTopicController extends AbstractAdminController
         $this->data['pageDescription'] = 'Manage your campaign topic';
         $this->data['activeMenu'] = 'master';
         $this->data['activeSubMenu'] = 'campaignTopic';
+        $this->setEnableDelete(true);
     }
 
     /**
@@ -99,6 +101,27 @@ class CampaignTopicController extends AbstractAdminController
         } catch (\Exception $e) {
             \DB::rollback();
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  integer $id Row ID of model that want to show.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $record = CampaignTopic::find($id);
+            \DB::beginTransaction();
+            $record->delete();
+            \DB::commit();
+            return redirect(action($this->controllerName . '@index'));
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return redirect(action($this->controllerName . '@edit', $id))->withErrors($e->getMessage())->withInput();
         }
     }
 }

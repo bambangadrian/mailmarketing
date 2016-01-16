@@ -3,7 +3,6 @@ namespace MailMarketing\Http\Controllers\Admin;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -70,24 +69,24 @@ abstract class AbstractAdminController extends BaseController
      */
     protected $useBreadCrumb = true;
 
+    /**
+     * Enable crud option.
+     *
+     * @var boolean $enableCrud
+     */
     protected $enableCrud = true;
 
     /**
      * Class constructor.
      */
-    public function __construct()
+    protected function __construct()
     {
         # Enable the log query for database.
         \DB::enableQueryLog();
         # Get the controller name for action route purpose.
         $reflectionClass = new \ReflectionClass($this);
-        $this->data['controllerName'] = $this->controllerName = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
         $this->setReferenceKey(camel_case(str_replace('Controller', '', $reflectionClass->getShortName())));
-        # Create the link action.
-        $this->data['indexLinkAction'] = action($this->controllerName . '@index');
-        if ($this->enableCrud === true) {
-            $this->data['createLinkAction'] = action($this->controllerName . '@create');
-        }
+        $this->data['controllerName'] = $this->controllerName = str_replace($this->getAppNamespace() . 'Http\\Controllers\\', '', $reflectionClass->getNamespaceName()) . '\\' . $reflectionClass->getShortName();
         # Set the default active menu and sub menu.
         $this->data['activeMenu'] = 'dashboard';
         $this->data['activeSubMenu'] = '';
@@ -125,6 +124,28 @@ abstract class AbstractAdminController extends BaseController
     }
 
     /**
+     * Get the enable crud status property.
+     *
+     * @return boolean
+     */
+    protected function isEnableCrud()
+    {
+        return $this->enableCrud;
+    }
+
+    /**
+     * Set option for enable crud option property.
+     *
+     * @param boolean $enableCrud Enable crud flag parameter.
+     *
+     * @return void
+     */
+    protected function setEnableCrud($enableCrud)
+    {
+        $this->enableCrud = $enableCrud;
+    }
+
+    /**
      * Load javascript files.
      *
      * @return void
@@ -151,7 +172,7 @@ abstract class AbstractAdminController extends BaseController
      */
     protected function index()
     {
-        $this->setRead(true);
+        $this->setRead();
         return $this->renderPage('index');
     }
 
@@ -162,11 +183,11 @@ abstract class AbstractAdminController extends BaseController
      */
     protected function create()
     {
+        $this->setCreate();
         if (array_key_exists('formAction', $this->data) === false) {
             $this->data['formAction'] = action($this->controllerName . '@store');
         }
         $this->data['css'][] = asset('/assets/css/detail.css');
-        $this->setCreate(true);
         return $this->renderPage('detail');
     }
 
@@ -179,11 +200,11 @@ abstract class AbstractAdminController extends BaseController
      */
     protected function edit($id)
     {
+        $this->setUpdate();
         if (array_key_exists('formAction', $this->data) === false) {
             $this->data['formAction'] = action($this->controllerName . '@update', $id);
         }
         $this->data['css'][] = asset('/assets/css/detail.css');
-        $this->setUpdate(true);
         $this->data['referenceValue'] = $this->getReferenceValue();
         return $this->renderPage('detail');
     }
@@ -221,13 +242,11 @@ abstract class AbstractAdminController extends BaseController
      */
     protected function initCrud()
     {
-        $this->setCreate(false);
-        $this->setUpdate(false);
-        $this->setRead(false);
-        $this->setDelete(false);
-        $this->setEnableCreate(true);
-        $this->setEnableUpdate(true);
-        $this->setEnableDelete(false);
+        # Create the link action.
+        $this->data['indexLinkAction'] = action($this->controllerName . '@index');
+        if ($this->isEnableCrud() === true and $this->isEnableCreate() === true) {
+            $this->data['createLinkAction'] = action($this->controllerName . '@create');
+        }
     }
 
     /**

@@ -1,11 +1,10 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Dss;
 
-use Illuminate\Http\Request;
-use MailMarketing\Http\Requests;
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Models\DssRandomIndex;
 
-class RandomIndexController extends AbstractAdminController
+class DssRandomIndexController extends AbstractAdminController
 {
 
     /**
@@ -18,7 +17,7 @@ class RandomIndexController extends AbstractAdminController
         $this->data['pageHeader'] = 'Random Index';
         $this->data['pageDescription'] = 'List all random index to check consistency';
         $this->data['activeMenu'] = 'dss';
-        $this->data['activeSubMenu'] = 'randomIndex';
+        $this->data['activeSubMenu'] = 'dssRandomIndex';
     }
 
     /**

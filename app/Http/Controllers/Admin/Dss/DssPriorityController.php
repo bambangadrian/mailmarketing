@@ -1,11 +1,16 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin\Dss;
 
-use Illuminate\Http\Request;
 use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
-use MailMarketing\Http\Requests;
 
 class DssPriorityController extends AbstractAdminController
 {
 
+    /**
+     * Class constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 }

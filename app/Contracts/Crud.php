@@ -91,14 +91,14 @@ trait Crud
      *
      * @var boolean $enableCreate
      */
-    protected $enableCreate;
+    protected $enableCreate = true;
 
     /**
      * Enable delete flag property.
      *
      * @var boolean $enableDelete
      */
-    protected $enableDelete;
+    protected $enableDelete = false;
 
     /**
      * Get if on create status.
@@ -117,7 +117,7 @@ trait Crud
      *
      * @return void
      */
-    public function setCreate($create)
+    public function setCreate($create = true)
     {
         $this->create = $create;
         $this->setAction('create', $create);
@@ -140,7 +140,7 @@ trait Crud
      *
      * @return void
      */
-    public function setRead($read)
+    public function setRead($read = true)
     {
         $this->read = $read;
         $this->setAction('read', $read);
@@ -163,7 +163,7 @@ trait Crud
      *
      * @return void
      */
-    public function setUpdate($update)
+    public function setUpdate($update = true)
     {
         $this->update = $update;
         $this->setAction('update', $update);
@@ -186,7 +186,7 @@ trait Crud
      *
      * @return void
      */
-    public function setDelete($delete)
+    public function setDelete($delete = true)
     {
         $this->delete = $delete;
         $this->setAction('delete', $delete);
@@ -268,9 +268,6 @@ trait Crud
      */
     public function getFormMethod()
     {
-        if ($this->getAction() !== null and array_key_exists($this->getAction(), static::$formMethodSettings) === true) {
-            $this->formMethod = static::$formMethodSettings[$this->getAction()];
-        }
         return $this->formMethod;
     }
 
@@ -305,6 +302,29 @@ trait Crud
     }
 
     /**
+     * Get reference value property.
+     *
+     * @return integer
+     */
+    public function getReferenceValue()
+    {
+        $this->referenceValue = \Route::getCurrentRoute()->getParameter($this->getReferenceKey());
+        return $this->referenceValue;
+    }
+
+    /**
+     * Validate and set form method property.
+     *
+     * @return void
+     */
+    protected function validateFormMethod()
+    {
+        if ($this->getAction() !== null and array_key_exists($this->getAction(), static::$formMethodSettings) === true) {
+            $this->formMethod = $this->data['formMethod'] = static::$formMethodSettings[$this->getAction()];
+        }
+    }
+
+    /**
      * Set reference key property.
      *
      * @param string $referenceKey Reference key parameter.
@@ -318,16 +338,6 @@ trait Crud
     }
 
     /**
-     * Get reference value property.
-     *
-     * @return integer
-     */
-    public function getReferenceValue(){
-        $this->referenceValue = \Route::getCurrentRoute()->getParameter($this->getReferenceKey());
-        return $this->referenceValue;
-    }
-
-    /**
      * Set crud action property.
      *
      * @param string  $action The action parameter.
@@ -337,23 +347,12 @@ trait Crud
      */
     protected function setAction($action, $state = false)
     {
-        $this->action = $action;
-        $this->data['action'] = $action;
-        $this->doAssignCrudActionData('is' . str_replace(['', '_'], [''], ucwords($action)), $state);
-    }
-
-    /**
-     * Do assign crud data.
-     *
-     * @param string $name  Data name parameter.
-     * @param string $value Data value parameter.
-     *
-     * @return void
-     */
-    protected function doAssignCrudActionData($name, $value)
-    {
-        $this->data[$name] = $value;
-        $this->data['formMethodField'] = $this->getMethodField();
-        $this->data['formMethod'] = $this->getFormMethod();
+        $this->data['is' . str_replace(['', '_'], [''], ucwords($action))] = $state;
+        if ($state === true) {
+            $this->action = $action;
+            $this->data['action'] = $action;
+            $this->validateFormMethod();
+            $this->data['formMethodField'] = $this->getMethodField();
+        }
     }
 }

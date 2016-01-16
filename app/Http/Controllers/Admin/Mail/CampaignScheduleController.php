@@ -1,7 +1,8 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Mail;
 
-use MailMarketing\Http\Requests\CreateSentMailCampaign;
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
+use MailMarketing\Http\Requests\CreateSentCampaign;
 use MailMarketing\Models\Campaign;
 use MailMarketing\Models\MailList;
 use MailMarketing\Models\MailSchedule;
@@ -70,11 +71,11 @@ class CampaignScheduleController extends AbstractAdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreateSentMailCampaign $request Request object parameter.
+     * @param CreateSentCampaign $request Request object parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateSentMailCampaign $request)
+    public function store(CreateSentCampaign $request)
     {
         try {
             \DB::beginTransaction();
@@ -90,12 +91,12 @@ class CampaignScheduleController extends AbstractAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  CreateSentMailCampaign $request Request object parameter.
+     * @param  CreateSentCampaign $request Request object parameter.
      * @param  integer                $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateSentMailCampaign $request, $id)
+    public function update(CreateSentCampaign $request, $id)
     {
         $redirectPath = action($this->controllerName . '@edit', $id);
         try {

@@ -1,7 +1,8 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Master;
 
 use MailMarketing\Helpers\Helper;
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Models\Template;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use MailMarketing\Http\Requests\UpdateTemplateRequest;

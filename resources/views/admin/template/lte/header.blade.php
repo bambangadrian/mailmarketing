@@ -156,7 +156,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ action('Admin\ProfileController@index') }}" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{ action('Admin\Master\ProfileController@index') }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ action('Admin\Auth\AuthController@doLogout') }}" class="btn btn-default btn-flat">Sign out</a>

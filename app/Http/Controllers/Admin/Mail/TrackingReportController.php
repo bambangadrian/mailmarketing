@@ -1,9 +1,9 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin\Dss;
+namespace MailMarketing\Http\Controllers\Admin\Mail;
 
 use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 
-class DssConsistencyController extends AbstractAdminController
+class TrackingReportController extends AbstractAdminController
 {
 
     /**

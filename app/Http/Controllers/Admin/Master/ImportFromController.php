@@ -1,10 +1,11 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Master;
 
-use MailMarketing\Http\Requests\UpdateSegmentCriteriaRequest;
-use MailMarketing\Models\SegmentCriteria;
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
+use MailMarketing\Http\Requests\UpdateImportFromRequest;
+use MailMarketing\Models\ImportFrom;
 
-class SegmentCriteriaController extends AbstractAdminController
+class ImportFromController extends AbstractAdminController
 {
 
     /**
@@ -13,11 +14,15 @@ class SegmentCriteriaController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->contentDir = 'master/segment/criteria';
-        $this->data['pageHeader'] = 'Segment Criteria';
-        $this->data['pageDescription'] = 'Manage your segment criteria for search tools';
+        # Set custom reference key.
+        $this->setReferenceKey('import');
+        # Set content directory.
+        $this->contentDir = 'master/import';
+        # Set page attributes.
+        $this->data['pageHeader'] = 'Import From';
+        $this->data['pageDescription'] = 'Manage your import from list for subscribers';
         $this->data['activeMenu'] = 'master';
-        $this->data['activeSubMenu'] = 'segmentCriteria';
+        $this->data['activeSubMenu'] = 'import';
         $this->setEnableDelete(true);
     }
 
@@ -28,7 +33,7 @@ class SegmentCriteriaController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = SegmentCriteria::notDeleted()->paginate(10);
+        $this->data['model'] = ImportFrom::notDeleted()->paginate(10);
         return parent::index();
     }
 
@@ -39,7 +44,7 @@ class SegmentCriteriaController extends AbstractAdminController
      */
     public function create()
     {
-        $this->data['pageDescription'] = 'Create new segment criteria item';
+        $this->data['pageDescription'] = 'Create new import from item';
         return parent::create();
     }
 
@@ -52,23 +57,23 @@ class SegmentCriteriaController extends AbstractAdminController
      */
     public function edit($id)
     {
-        $this->data['pageDescription'] = 'Update segment criteria item';
-        $this->data['model'] = SegmentCriteria::find($id);
+        $this->data['pageDescription'] = 'Update import from item';
+        $this->data['model'] = ImportFrom::find($id);
         return parent::edit($id);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param UpdateSegmentCriteriaRequest $request Request object parameter.
+     * @param UpdateImportFromRequest $request Request object parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateSegmentCriteriaRequest $request)
+    public function store(UpdateImportFromRequest $request)
     {
         try {
             \DB::beginTransaction();
-            $record = SegmentCriteria::create($request->except('_method', '_token'));
+            $record = ImportFrom::create($request->except('_method', '_token'));
             \DB::commit();
             return redirect()->action($this->controllerName . '@edit', $record->getKey());
         } catch (\Exception $e) {
@@ -80,16 +85,16 @@ class SegmentCriteriaController extends AbstractAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateSegmentCriteriaRequest $request Request object parameter.
-     * @param  integer                      $id      Model ID parameter.
+     * @param  UpdateImportFromRequest $request Request object parameter.
+     * @param  integer                 $id      Model ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSegmentCriteriaRequest $request, $id)
+    public function update(UpdateImportFromRequest $request, $id)
     {
         $redirectPath = action($this->controllerName . '@edit', $id);
         try {
-            $record = SegmentCriteria::find($id);
+            $record = ImportFrom::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
@@ -111,7 +116,7 @@ class SegmentCriteriaController extends AbstractAdminController
     public function destroy($id)
     {
         try {
-            $record = SegmentCriteria::find($id);
+            $record = ImportFrom::find($id);
             \DB::beginTransaction();
             $record->delete();
             \DB::commit();

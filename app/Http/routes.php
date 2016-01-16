@@ -15,41 +15,52 @@ Route::group(
         Route::group(
             ['middleware' => ['auth', 'acl']],
             function () {
-                $resourceOption = [];
-                Route::get('mail/campaign-sent/{id}', 'CampaignController@getSent');
-                Route::post('mail/campaign-sent/{id}', 'CampaignController@doSent');
-                Route::resource('master/user', 'UserController', $resourceOption);
-                Route::resource('master/profile', 'ProfileController', $resourceOption);
-                Route::resource('master/import', 'ImportFromController', $resourceOption);
-                Route::resource('master/template', 'TemplateController', $resourceOption);
-                Route::resource('master/trackstatus', 'TrackingStatusController', $resourceOption);
-                Route::resource('master/segment', 'SegmentController', $resourceOption);
-                Route::resource('master/segmentCriteria', 'SegmentCriteriaController', $resourceOption);
-                Route::resource('master/campaignCategory', 'CampaignCategoryController', $resourceOption);
-                Route::resource('master/campaignType', 'CampaignTypeController', $resourceOption);
-                Route::resource('master/campaignTopic', 'CampaignTopicController', $resourceOption);
-                Route::resource('master/randomIndex', 'RandomIndexController', $resourceOption);
-                Route::resource('mail/campaign', 'CampaignController', $resourceOption);
-                Route::resource('mail/subscriber', 'SubscriberController', $resourceOption);
-                Route::resource('mail/maillist', 'MailListController', $resourceOption);
-                Route::resource('mail/maillist/{listID}/groups', 'SubscriberGroupController', $resourceOption);
-                Route::resource('mail/maillist/{listID}/group/{groupID}/detail', 'SubscriberGroupDetailController', $resourceOption);
-                Route::resource('mail/schedule', 'CampaignScheduleController', $resourceOption);
-                Route::resource('mail/tracking', 'MailTrackingController', $resourceOption);
-                Route::resource('mail/sentMail', 'SentMailController', $resourceOption);
-                Route::resource('mail/trackingReport', 'TrackingReportController', $resourceOption);
                 Route::group(
-                    ['namespace' => 'Dss'],
-                    function () use ($resourceOption) {
+                    ['prefix' => 'master', 'namespace' => 'Master'],
+                    function () {
+                        $resourceOption = [];
+                        Route::resource('user', 'UserController', $resourceOption);
+                        Route::resource('profile', 'ProfileController', $resourceOption);
+                        Route::resource('import', 'ImportFromController', $resourceOption);
+                        Route::resource('template', 'TemplateController', $resourceOption);
+                        Route::resource('trackstatus', 'TrackingStatusController', $resourceOption);
+                        Route::resource('segment', 'SegmentController', $resourceOption);
+                        Route::resource('segmentCriteria', 'SegmentCriteriaController', $resourceOption);
+                        Route::resource('campaignCategory', 'CampaignCategoryController', $resourceOption);
+                        Route::resource('campaignType', 'CampaignTypeController', $resourceOption);
+                        Route::resource('campaignTopic', 'CampaignTopicController', $resourceOption);
+                        Route::resource('company', 'CompanyController', $resourceOption);
+                    }
+                );
+                Route::group(
+                    ['prefix' => 'mail', 'namespace' => 'Mail'],
+                    function () {
+                        $resourceOption = [];
+                        Route::resource('campaign', 'CampaignController', $resourceOption);
+                        Route::resource('campaign.sent', 'SentCampaignController', ['only' => ['index', 'store']]);
+                        Route::resource('subscriber', 'SubscriberController', $resourceOption);
+                        Route::resource('maillist', 'MailListController', $resourceOption);
+                        Route::resource('maillist.groups', 'SubscriberGroupController', $resourceOption);
+                        Route::resource('maillist.group.detail', 'SubscriberGroupDetailController', $resourceOption);
+                        Route::resource('schedule', 'CampaignScheduleController', $resourceOption);
+                        Route::resource('tracking', 'MailTrackingController', $resourceOption);
+                        Route::resource('sentMail', 'SentMailController', $resourceOption);
+                        Route::resource('trackingReport', 'TrackingReportController', $resourceOption);
+                    }
+                );
+                Route::group(
+                    ['prefix' => 'dss', 'namespace' => 'Dss'],
+                    function () {
+                        $resourceOption = [];
                         Route::resource('dss/period', 'DssPeriodController', $resourceOption);
                         Route::resource('dss/criteria', 'DssCriteriaController');
                         Route::resource('dss/alternative', 'DssAlternativeController', $resourceOption);
                         Route::resource('dss/consistency', 'DssConsistencyController', $resourceOption);
                         Route::resource('dss/priority', 'DssPriorityController', $resourceOption);
                         Route::resource('dss/result', 'DssResultController', $resourceOption);
+                        Route::resource('randomIndex', 'DssRandomIndexController', $resourceOption);
                     }
                 );
-                Route::resource('company', 'CompanyController', $resourceOption);
                 Route::get('dashboard', 'DashboardController@index');
             }
         );

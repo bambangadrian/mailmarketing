@@ -1,6 +1,7 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Master;
 
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Http\Requests\UpdateUserRequest;
 use MailMarketing\Models\UserAccount;
 
@@ -13,7 +14,9 @@ class UserController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
+        # Set content directory.
         $this->contentDir = 'master/user';
+        # Set page attributes.
         $this->data['pageHeader'] = 'User Account';
         $this->data['pageDescription'] = 'Manage user list that will use this system';
         $this->data['activeMenu'] = 'master';

@@ -1,6 +1,7 @@
 <?php
-namespace MailMarketing\Http\Controllers\Admin;
+namespace MailMarketing\Http\Controllers\Admin\Mail;
 
+use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Http\Requests\UpdateSubscriberRequest;
 use MailMarketing\Models\ImportFrom;
 use MailMarketing\Models\Subscriber;
