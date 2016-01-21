@@ -8,11 +8,11 @@
         <section class="content-header">
             <h1>
                 @section('segment-title')
-                    {{ $pageHeader or 'Page Header' }}
+                    {{ $pageHeader or '' }}
                 @show
 
                 @section('segment-desc')
-                    <small><i>{{ $pageDescription or 'Optional Description' }}</i></small>
+                    <small><i>{{ $pageDescription or '' }}</i></small>
                 @show
 
             </h1>
@@ -76,6 +76,7 @@
 @stop
 
 @section('add-css')
+    @parent
     @if(isset($css) === true)
         @foreach($css as $item)
             <link rel="stylesheet" href="{{ $item }}">
@@ -84,6 +85,7 @@
 @stop
 
 @section('add-js')
+    @parent
     @if(isset($js) === true)
         @foreach($js as $item)
             <script src="{{ $item }}"></script>

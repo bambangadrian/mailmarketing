@@ -8,6 +8,7 @@
             <tr>
                 <th class="rowNumber">No</th>
                 <th>Name</th>
+                <th>Period</th>
                 <th class="rowActive">Active</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
                 <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', $row->getKey()) }}'">
                     <td class="rowNumber">{{ $no }}</td>
                     <td>{{ $row->Dal_Name }}</td>
+                    <td>{{ $row->dss->Dss_Name . ' - (' . $row->dss->Dss_StartPeriod . ' until ' . $row->dss->Dss_EndPeriod . ')' }}</td>
                     <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Dal_Active) !!}</td>
                 </tr>
             @endforeach

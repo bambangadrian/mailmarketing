@@ -15,4 +15,5 @@ elixir(function (mix) {
     mix.sass('app.scss', 'public/assets/css/app.css');
     mix.sass('login.scss', 'public/assets/css/login.css');
     mix.sass('detail.scss', 'public/assets/css/detail.css');
+    mix.sass('consistency.scss', 'public/assets/css/consistency.css');
 });

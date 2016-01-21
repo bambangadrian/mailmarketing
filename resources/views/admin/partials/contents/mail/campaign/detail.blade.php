@@ -69,7 +69,7 @@
 @section('add-js')
     @parent
     <script>
-        CKEDITOR.replace( 'Cpg_Content' );
+        CKEDITOR.replace('Cpg_Content');
         $('#Cpg_TypeID, #Cpg_CategoryID, #Cpg_TopicID, #Cpg_TemplateID').select2();
     </script>
 @stop

@@ -16,7 +16,7 @@
                     {!! Form::label('Msd_SubscriberGroupID', 'Subscriber Group', ['class' => 'required']) !!}
                     {!! Form::select('Msd_SubscriberGroupID', $subscriberGroupOptions, null, ['class' => 'form-control select2', 'style' => 'width: 100%;']) !!}
                 </div>
-                <div class="checkbox">
+                <div class="checkbcaox">
                     <label for="Msd_Active">
                         {!! Form::hidden('Msd_Active', 0) !!}
                         {!! Form::checkbox('Msd_Active', 1) !!}
@@ -36,7 +36,7 @@
                         <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
                         </div>
-                        {!! Form::text('Msd_ExecutedDate', null, ['required', 'class' => 'form-control pull-right active', 'placeholder' => 'Enter Schedule Date Time']) !!}
+                        {!! Form::text('Msd_ExecutedDate', null, ['required', 'class' => 'form-control pull-right', 'placeholder' => 'Enter Schedule Date Time']) !!}
                     </div>
                 </div>
                 @include('admin.partials.layout.form.button')

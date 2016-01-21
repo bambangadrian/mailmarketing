@@ -14,7 +14,9 @@ class MailListController extends AbstractAdminController
     public function __construct()
     {
         parent::__construct();
+        # Set content directory.
         $this->contentDir = 'mail/mailList';
+        # Set page attributes.
         $this->data['pageHeader'] = 'Mailing List';
         $this->data['pageDescription'] = 'Manage your mailing list for your campaign purpose';
         $this->data['activeMenu'] = 'mail';

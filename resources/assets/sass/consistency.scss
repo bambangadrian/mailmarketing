@@ -1,0 +1,30 @@
+div.data-matrix {
+  overflow-x: auto;
+  table {
+    thead, tbody {
+      tr {
+        th, td {
+          text-align: center;
+          &.table-compare, &.table-title{
+            color: white;
+          }
+          &.table-compare {
+            background-color: #55aadd;
+            font-weight: bold;
+          }
+          &.table-title {
+            background-color: #3C8DBC;
+          }
+          input {
+            padding: 3px;
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+            height: auto;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}

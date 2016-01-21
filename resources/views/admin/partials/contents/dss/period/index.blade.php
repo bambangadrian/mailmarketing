@@ -1,32 +1,30 @@
 @extends('admin.template.lte.layout.listing')
 
-@section('breadcrumb')
-    <ol class="breadcrumb">
-        <li><a href="{{ action('Admin\DashboardController@index') }}"><i class="fa fa-home"></i> Home</a></li>
-        <li><i class="fa fa-database"></i> DSS</li>
-        <li><a href="{{ action('Admin\Dss\DssPeriodController@index') }}"><i class="fa fa-cube"></i> Period</a></li>
-    </ol>
-@stop
+{{ $breadCrumb }}
 
 @section('data-listing')
     <table class="table table-bordered table-hover">
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Period</th>
-            <th>RI</th>
-        </tr>
-        <?php $counter = 1; ?>
-        @foreach($model as $index => $row)
-            <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
+        <thead>
             <tr>
-                <td>{{ $no }}</td>
-                <td>{{ $row->Dss_Name }}</td>
-                <td>{{ $row->Dss_Description }}</td>
-                <td>{{ $row->Dss_StartPeriod }}</td>
-                <td>{{ $row->Imf_Description }}</td>
+                <th class="rowNumber">No</th>
+                <th>Name</th>
+                <th>Start Period</th>
+                <th>End Period</th>
+                <th class="rowActive">Active</th>
             </tr>
-        @endforeach
+        </thead>
+        <tbody>
+            <?php $counter = 1; ?>
+            @foreach($model as $index => $row)
+                <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
+                <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', $row->getKey()) }}'">
+                    <td class="rowNumber">{{ $no }}</td>
+                    <td>{{ $row->Dss_Name }}</td>
+                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $row->Dss_StartPeriod)->format('d F Y') }}</td>
+                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $row->Dss_EndPeriod)->format('d F Y') }}</td>
+                    <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Dss_Active) !!}</td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 @stop

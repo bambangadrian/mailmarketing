@@ -3,7 +3,7 @@
 @section('content-title')
     <h3 class="box-title">
         <i class="fa fa-th-list"></i>
-        Listing Data
+        {{ isset($contentTitle) ? $contentTitle : 'Listing Data' }}
     </h3>
 
     @section('content-search')
@@ -21,11 +21,14 @@
 @section('content-page')
     <div class="data-toolbar" style="margin-bottom:10px;">
         {!! $buttons !!}
-        @if((isset($enableInsert) === false or $enableInsert === true))
+        @if((isset($enableCreate) === false or $enableCreate === true))
             <a class="btn btn-default btn-flat  " href="{!! $createLinkAction !!}"><i class="fa fa-download"></i> New Record</a>
         @endif
     </div>
-    <div class="data-listing">
+
+    @include('admin.template.lte.error')
+
+    <div class="data-listing table-responsive">
         @yield('data-listing')
     </div>
 

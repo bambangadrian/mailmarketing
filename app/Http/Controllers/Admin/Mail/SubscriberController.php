@@ -29,7 +29,7 @@ class SubscriberController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = Subscriber::with('importFrom')->notDeleted()->paginate(10);
+        $this->data['model'] = Subscriber::notDeleted()->with('importFrom')->paginate(10);
         return parent::index();
     }
 

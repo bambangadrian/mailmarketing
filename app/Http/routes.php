@@ -42,7 +42,7 @@ Route::group(
                         Route::resource('maillist', 'MailListController', $resourceOption);
                         Route::resource('maillist.groups', 'SubscriberGroupController', $resourceOption);
                         Route::resource('maillist.group.detail', 'SubscriberGroupDetailController', $resourceOption);
-                        Route::resource('schedule', 'CampaignScheduleController', $resourceOption);
+                        Route::resource('schedule', 'MailScheduleController', $resourceOption);
                         Route::resource('tracking', 'MailTrackingController', $resourceOption);
                         Route::resource('sentMail', 'SentMailController', $resourceOption);
                         Route::resource('trackingReport', 'TrackingReportController', $resourceOption);
@@ -62,6 +62,7 @@ Route::group(
                     }
                 );
                 Route::get('dashboard', 'DashboardController@index');
+                Route::get('/', 'DashboardController@index');
             }
         );
         Route::group(

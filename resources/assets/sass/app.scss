@@ -4,27 +4,32 @@ label.required:after {
   color: #d00;
 }
 
-table tr th {
-  background: #3C8DBC;
-  color: #fff;
-}
-
 .box-body {
   .data-listing {
     table {
       thead {
         tr {
+          th {
+            vertical-align: middle;
+            background: #3C8DBC;
+            color: #fff;
+          }
+
+          td {
+            background: #eee;
+          }
+
           th.rowNumber, td.rowNumber {
             width: 50px !important;
           }
-          th.rowNumber, th.rowActive, td.rowNumber, td.rowActive {
+          th.rowNumber, th.rowActive, th.rowFloat, td.rowNumber, td.rowActive, td.rowFloat {
             text-align: center;
           }
         }
       }
       tbody {
         tr {
-          td.rowNumber, td.rowActive {
+          td.rowNumber, td.rowActive, td.rowFloat {
             text-align: center;
           }
           &:hover td {
@@ -37,7 +42,7 @@ table tr th {
   }
 }
 
-.alert-listing {
+.alert-message {
   z-index: 9999;
   position: absolute;
   left: 50%;

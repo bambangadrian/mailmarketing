@@ -2,7 +2,7 @@
 namespace MailMarketing\Http\Controllers\Admin\Mail;
 
 use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
-use MailMarketing\Http\Requests\CreateSentCampaign;
+use MailMarketing\Http\Requests\CreateSentCampaignRequest;
 use MailMarketing\Models\Campaign;
 use MailMarketing\Models\MailList;
 use MailMarketing\Models\MailSchedule;
@@ -63,12 +63,12 @@ class SentCampaignController extends AbstractAdminController
     /**
      * Do sent mail campaign, save to mail schedule, and save to sent mail.
      *
-     * @param  CreateSentCampaign $request    Request object parameter.
+     * @param  CreateSentCampaignRequest $request    Request object parameter.
      * @param integer             $campaignID Campaign ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateSentCampaign $request, $campaignID)
+    public function store(CreateSentCampaignRequest $request, $campaignID)
     {
         try {
             \DB::beginTransaction();
@@ -84,9 +84,9 @@ class SentCampaignController extends AbstractAdminController
             ];
             $this->data['content'] = $mailArr['content'];
             # Create the mail schedule.
-            $request->merge(['Msd_IsExecuted' => 'N']);
+            $request->merge(['Msd_IsExecuted' => 0]);
             if ($request->get('RealTime') === '1') {
-                $request->merge(['Msd_IsExecuted' => 'Y']);
+                $request->merge(['Msd_IsExecuted' => 1]);
             }
             $mailScheduleRecord = MailSchedule::create($request->except('_method', '_token'));
             # Insert into sent mail table.
@@ -109,7 +109,7 @@ class SentCampaignController extends AbstractAdminController
                 $sentMailRecord->Sm_Active = 1;
                 $sentMailRecord->push();
             }
-            \DB::commit();
+
             foreach ($mailArr['to'] as $mailTo) {
                 \Mail::send(
                     $mailArr['view'],
@@ -121,7 +121,9 @@ class SentCampaignController extends AbstractAdminController
                     }
                 );
             }
-            return redirect()->action('Admin\CampaignScheduleController@index')
+            # Commit to database if sent mail has ran
+            \DB::commit();
+            return redirect()->action('Admin\Mail\MailScheduleController@index')
                              ->with(
                                  [
                                      'status'  => 'success',
@@ -130,7 +132,7 @@ class SentCampaignController extends AbstractAdminController
                              );
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action('Admin\Mail\CampaignController@index', $campaignID)->withErrors($e->getMessage())->withInput();;
+            return redirect()->action('Admin\Mail\SentCampaignController@index', $campaignID)->withErrors($e->getMessage())->withInput();;
         }
     }
 
@@ -141,8 +143,8 @@ class SentCampaignController extends AbstractAdminController
      */
     private function loadResourceForDetailPage()
     {
-        $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.css');
         $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css');
+        $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.css');
         $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.full.min.js');
         $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/moment/moment.min.js');
         $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.js');
