@@ -5,7 +5,6 @@
 @section('data-form')
     <div class="row">
         <div class="col-xs-12">
-            {{ var_dump($criteriaDetail) }}
             {!! Form::model($model, ['url' => $formAction]) !!}
                 <div class="data-matrix">
                     <table class="table table-bordered">
@@ -37,12 +36,8 @@
                                                 $defaultMatrixValue = 1;
                                             }
                                         }
-                                        $detail[$criteria->Dcr_ID][$compare->Dcr_ID] = '';
                                     ?>
-                                    <td>
-                                        {!! Form::hidden('Dcd_ID['.$criteria->Dcr_ID.']['.$compare->Dcr_ID.']') !!}
-                                        {!! Form::text('Dcd_ComparisonMatrixValue['.$criteria->Dcr_ID.']['.$compare->Dcr_ID.']', $defaultMatrixValue, ['class' => 'form-control', $fieldAttribute]) !!}
-                                    </td>
+                                    <td>{!! Form::text('Dcd_ComparisonMatrixValue['.$criteria->Dcr_ID.']['.$compare->Dcr_ID.']', $defaultMatrixValue, ['class' => 'form-control', $fieldAttribute]) !!}</td>
                                 @endforeach
                             </tr>
                         @endforeach

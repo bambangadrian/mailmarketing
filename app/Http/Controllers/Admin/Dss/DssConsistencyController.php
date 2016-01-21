@@ -17,6 +17,8 @@ class DssConsistencyController extends AbstractAdminController
 	{
 		$this->setEnableCreate(false);
 		parent::__construct();
+		# Set custom reference key.
+		$this->setReferenceKey('consistency');
 		# Set content directory.
 		$this->contentDir = 'dss/consistency';
 		# Set page attributes.
@@ -49,24 +51,13 @@ class DssConsistencyController extends AbstractAdminController
 	{
 		$this->data['pageDescription'] = 'Calculate criteria consistency for selected DSS Period';
 		$this->data['contentTitle'] = 'Criteria consistency calculation data.';
-		$dataDss = Dss::with(
+		$this->data['model'] = Dss::with(
 			[
-				'criterias'         => function ($query) {
-					$query->notDeleted()->active();
-				},
-				'criterias.details' => function ($query) {
-					$query->notDeleted();
+				'criterias' => function ($query) {
+					$query->active()->notDeleted();
 				}
 			]
 		)->find($id);
-		$dataCriteria = $dataDss->criterias;
-		$dataCriteriaDetail = $dataDss->criterias()->dss();
-		dd($dataCriteriaDetail);
-		if ($dataCriteriaDetail !== null) {
-			foreach ($dataCriteriaDetail as $row) {
-				$this->data['criteriaDetail']['Dcd_CriteriaID']['Dcd_CompareID'] = $row->Dcd_ComparisonMatrixValue;
-			}
-		}
 		$this->loadResourceForDetailPage();
 		return parent::edit($id);
 	}
@@ -84,6 +75,7 @@ class DssConsistencyController extends AbstractAdminController
 		$redirectPath = action($this->controllerName . '@edit', $id);
 		try {
 			foreach ($request->get('Dcd_ComparisonMatrixValue') as $key => $row) {
+				
 			}
 			$record = DssCriteriaDetail::find($id);
 			\DB::beginTransaction();
