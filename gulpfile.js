@@ -17,5 +17,6 @@ elixir(function (mix) {
     mix.sass('detail.scss', 'public/assets/css/detail.css');
     mix.sass('Dss/Consistency/detail.scss', 'public/assets/css/Dss/Consistency/detail.css');
     mix.sass('Dss/Priority/detail.scss', 'public/assets/css/Dss/Priority/detail.css');
-    mix.scripts('Dss/Priority/detail.js', 'public/assets/js/Dss/Priority/detail.js');
+    mix.scripts('Dss/Consistency/detail.js', 'public/assets/js/Dss/Consistency/detail.js')
+        .scripts('Dss/Priority/detail.js', 'public/assets/js/Dss/Priority/detail.js');
 });

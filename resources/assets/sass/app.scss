@@ -4,6 +4,11 @@ label.required:after {
   color: #d00;
 }
 
+// Override main header logo from adminLTE
+.main-header .logo {
+  font-size: 18px;
+}
+
 .box-body {
   .data-listing {
     table {

@@ -36,7 +36,7 @@ class DssConsistencyController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['contentTitle'] = 'Please select period to calculate criteria consistency ...';
+        $this->data['contentTitle'] = 'Please Select Period to Calculate Criteria Consistency';
         $this->data['model'] = Dss::active()->notDeleted()->paginate(10);
 
         return parent::index();
@@ -52,7 +52,7 @@ class DssConsistencyController extends AbstractAdminController
     public function edit($id)
     {
         $this->data['pageDescription'] = 'Calculate criteria consistency for selected DSS Period';
-        $this->data['contentTitle'] = 'Criteria consistency calculation data.';
+        $this->data['contentTitle'] = 'Criteria Consistency Calculation Data';
         $this->data['model'] = Dss::with(
             [
                 'criterias' => function ($query) {

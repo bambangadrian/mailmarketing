@@ -13,7 +13,17 @@ class Dss extends AbstractBaseModel
      *
      * @var array $fillable
      */
-    protected $fillable = ['Dss_Name', 'Dss_Description', 'Dss_RandomIndexID', 'Dss_StartPeriod', 'Dss_EndPeriod', 'Dss_CriteriaEigenValue', 'Dss_CriteriaConsistencyIndex', 'Dss_CriteriaConsistencyRatio', 'Dss_RunOn'];
+    protected $fillable = [
+        'Dss_Name',
+        'Dss_Description',
+        'Dss_RandomIndexID',
+        'Dss_StartPeriod',
+        'Dss_EndPeriod',
+        'Dss_CriteriaEigenValue',
+        'Dss_CriteriaConsistencyIndex',
+        'Dss_CriteriaConsistencyRatio',
+        'Dss_RunOn',
+    ];
 
     /**
      * Dss alternative relationship.

@@ -1,5 +1,11 @@
 div.data-matrix {
   overflow-x: auto; }
+  div.data-matrix h4.data-matrix-title {
+    border-bottom: 1px solid #ddd;
+    padding: 5px;
+    color: #666;
+    margin: 15px 0;
+    font-size: 16px; }
   div.data-matrix table thead tr th, div.data-matrix table thead tr td, div.data-matrix table tbody tr th, div.data-matrix table tbody tr td {
     text-align: center; }
     div.data-matrix table thead tr th.table-compare, div.data-matrix table thead tr th.table-title, div.data-matrix table thead tr td.table-compare, div.data-matrix table thead tr td.table-title, div.data-matrix table tbody tr th.table-compare, div.data-matrix table tbody tr th.table-title, div.data-matrix table tbody tr td.table-compare, div.data-matrix table tbody tr td.table-title {
@@ -15,7 +21,6 @@ div.data-matrix {
       font-size: 12px;
       font-weight: bold;
       height: auto;
-      text-align: center;
       min-width: 50px !important; }
 
 /*# sourceMappingURL=detail.css.map */

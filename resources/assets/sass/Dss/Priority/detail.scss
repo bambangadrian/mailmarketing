@@ -1,5 +1,14 @@
 div.data-matrix {
   overflow-x: auto;
+  h4{
+    &.data-matrix-title{
+      border-bottom: 1px solid #ddd;
+      padding: 5px;
+      color: #666;
+      margin: 15px 0;
+      font-size: 16px;
+    }
+  }
   table {
     thead, tbody {
       tr {
@@ -21,7 +30,6 @@ div.data-matrix {
             font-size: 12px;
             font-weight: bold;
             height: auto;
-            text-align: center;
             min-width: 50px !important;
           }
         }

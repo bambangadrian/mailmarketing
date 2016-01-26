@@ -2,6 +2,9 @@ label.required:after {
   content: " *";
   color: #d00; }
 
+.main-header .logo {
+  font-size: 18px; }
+
 .box-body .data-listing table thead tr th {
   vertical-align: middle;
   background: #3C8DBC;
