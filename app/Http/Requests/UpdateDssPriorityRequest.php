@@ -1,11 +1,9 @@
 <?php
-
 namespace MailMarketing\Http\Requests;
-
-use MailMarketing\Http\Requests\Request;
 
 class UpdateDssPriorityRequest extends Request
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +11,7 @@ class UpdateDssPriorityRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return \Auth::user()->hasRole('admin') or \Auth::user()->hasPermission('manage-dss-priority');
     }
 
     /**
@@ -24,7 +22,10 @@ class UpdateDssPriorityRequest extends Request
     public function rules()
     {
         return [
-            //
+            'Criteria'    => 'required|array',
+            'Alternative' => 'required|array',
+            'LeftValue'   => 'required|array',
+            'RightValue'  => 'required|array',
         ];
     }
 }

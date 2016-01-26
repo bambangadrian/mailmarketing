@@ -173,6 +173,9 @@ abstract class AbstractAdminController extends BaseController
     protected function index()
     {
         $this->setRead();
+        if (array_key_exists('enablePaging', $this->data) === false) {
+            $this->data['enablePaging'] = true;
+        }
 
         return $this->renderPage('index');
     }

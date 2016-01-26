@@ -52,12 +52,12 @@ Route::group(
                     ['prefix' => 'dss', 'namespace' => 'Dss'],
                     function () {
                         $resourceOption = [];
-                        Route::resource('dss/period', 'DssPeriodController', $resourceOption);
-                        Route::resource('dss/criteria', 'DssCriteriaController');
-                        Route::resource('dss/alternative', 'DssAlternativeController', $resourceOption);
-                        Route::resource('dss/consistency', 'DssConsistencyController', $resourceOption);
-                        Route::resource('dss/priority', 'DssPriorityController', $resourceOption);
-                        Route::resource('dss/result', 'DssResultController', $resourceOption);
+                        Route::resource('period', 'DssPeriodController', $resourceOption);
+                        Route::resource('criteria', 'DssCriteriaController');
+                        Route::resource('alternative', 'DssAlternativeController', $resourceOption);
+                        Route::resource('consistency', 'DssConsistencyController', $resourceOption);
+                        Route::resource('priority', 'DssPriorityController', $resourceOption);
+                        Route::resource('priority.result', 'DssResultController', ['only' => ['index']]);
                         Route::resource('randomIndex', 'DssRandomIndexController', $resourceOption);
                     }
                 );

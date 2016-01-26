@@ -67,6 +67,34 @@ class DssPriorityController extends AbstractAdminController
                 },
             ]
         )->find($id);
+        foreach ($this->data['model']->criterias as $criteria) {
+            foreach ($this->data['model']->alternatives as $alternative) {
+                $evAlternativeCriteria = DssEvAlternativeCriteria::with('compares')
+                                                                 ->where('Deac_CriteriaID', $criteria->Dcr_ID)
+                                                                 ->where('Deac_AlternativeID', $alternative->Dal_ID)
+                                                                 ->first();
+                if ($evAlternativeCriteria !== null) {
+                    $this->data['hasCalculated'] = true;
+                    $this->data['eigen'][$criteria->Dcr_ID][$alternative->Dal_ID] = $evAlternativeCriteria->Deac_EigenVector;
+                    $this->data['columnTotal'][$criteria->Dcr_ID][$alternative->Dal_ID] = $evAlternativeCriteria->Deac_MatrixTotal;
+                    foreach ($evAlternativeCriteria->compares as $compare) {
+                        $compareValue = $compare->Dad_ComparisonMatrixValue;
+                        $leftValue = 1;
+                        $rightValue = 1;
+                        if ($compareValue > 1) {
+                            $leftValue = (integer)$compareValue;
+                        } elseif ($compareValue < 1) {
+                            $rightValue = (integer)(1 / $compareValue);
+                        }
+                        $this->data['leftValue'][$criteria->Dcr_ID][$alternative->Dal_ID][$compare->Dad_CompareID] = $leftValue;
+                        $this->data['rightValue'][$criteria->Dcr_ID][$alternative->Dal_ID][$compare->Dad_CompareID] = $rightValue;
+                    }
+                }
+            }
+        }
+        if ($this->data['model']->Dss_RunOn !== null) {
+            $this->data['hasRunOn'] = true;
+        }
         $this->data['buttons'] = $this->renderPartialView('button');
         $this->loadResourceForDetailPage();
 
@@ -86,6 +114,7 @@ class DssPriorityController extends AbstractAdminController
         $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             \DB::beginTransaction();
+            $runOnDate = \Carbon\Carbon::now();
             $dssData = Dss::with(
                 [
                     'criterias'    => function ($query) {
@@ -112,7 +141,7 @@ class DssPriorityController extends AbstractAdminController
                     foreach ($dssData->alternatives as $compare) {
                         $recordAlternativeDetail = DssAlternativeDetail::firstOrNew(
                             [
-                                'Dad_EigenID'   => $recordEvAlternativeCriteria->Deac_ID,
+                                'Dad_EigenID'   => $recordEvAlternativeCriteria->getKey(),
                                 'Dad_CompareID' => $compare->Dal_ID,
                             ]
                         );
@@ -147,9 +176,12 @@ class DssPriorityController extends AbstractAdminController
             # Save the ranking to dss result table.
             foreach ($priorityRanking as $alternativeKey => $value) {
                 $recordPriorityResult = DssResult::firstOrNew(['Dsr_AlternativeID' => $alternativeKey]);
-                $recordPriorityResult->Dsr_Result = $value;
+                $recordPriorityResult->Dsr_Result = number_format($value, 8);
                 $recordPriorityResult->save();
             }
+            # Update dss period table (run on date field)
+            $dssData->Dss_RunOn = $runOnDate;
+            $dssData->save();
             \DB::commit();
 
             return redirect($redirectPath);

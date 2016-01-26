@@ -82,7 +82,6 @@
                     <li @if($activeSubMenu === 'dssAlternative') class="active" @endif><a href="{{ action('Admin\Dss\DssAlternativeController@index') }}"><i class="fa fa-gg"></i> Alternative</a></li>
                     <li @if($activeSubMenu === 'dssConsistency') class="active" @endif><a href="{{ action('Admin\Dss\DssConsistencyController@index') }}"><i class="fa fa-arrows-alt"></i> Consistency</a></li>
                     <li @if($activeSubMenu === 'dssPriority') class="active" @endif><a href="{{ action('Admin\Dss\DssPriorityController@index') }}"><i class="fa fa-sort-amount-asc"></i> Priority</a></li>
-                    <li @if($activeSubMenu === 'dssResult') class="active" @endif><a href="{{ action('Admin\Dss\DssResultController@index') }}"><i class="fa fa-th-list"></i> Result</a></li>
                     <li @if($activeSubMenu === 'dssRandomIndex') class="active" @endif><a href="{{ action('Admin\Dss\DssRandomIndexController@index') }}"><i class="fa fa-rss"></i> RandomIndex</a></li>
                 </ul>
             </li>

@@ -33,18 +33,24 @@
     </div>
 
     @section('data-pagination')
-        <div class="text-center">
-            {!! $model->render() !!}
-        </div>
+        @if(isset($enablePaging) === true and $enablePaging === true)
+            <div class="text-center">
+                {!! $model->render() !!}
+            </div>
+        @endif
     @show
 @stop
 
 @section('content-status')
     <div class="text-muted small">
-        @if($model->total()>0)
-            Showing {{ $model->firstItem() }}-{{ $model->lastItem() }} from {{ $model->total() }} data
+        @if(isset($enablePaging) === true and $enablePaging === true)
+            @if($model->total()>0)
+                Showing {{ $model->firstItem() }}-{{ $model->lastItem() }} from {{ $model->total() }} data
+            @else
+                <span style="color:#a22;">Data not found !!</span>
+            @endif
         @else
-            <span style="color:#a22;">Data not found !!</span>
+            {{ $contentFooterText or 'Showing Data' }}
         @endif
     </div>
 @stop

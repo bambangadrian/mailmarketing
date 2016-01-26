@@ -25,6 +25,7 @@
                         <h4 class="data-matrix-title">
                             <i class="fa fa-folder-open"></i>
                             {{ $criteria->Dcr_Name }}
+                            <i style="color:#e8630c">(EV : {{ $criteria->Dcr_EigenVector }})</i>
                         </h4>
                         <table class="table table-bordered">
                             <thead>
@@ -35,6 +36,11 @@
                                         {{ $alternative->Dal_Name }}
                                     </th>
                                 @endforeach
+                                @if(isset($hasCalculated))
+                                    <th class="table-title">
+                                        EV
+                                    </th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -77,8 +83,28 @@
                                             </div>
                                         </td>
                                     @endforeach
+                                    @if(isset($hasCalculated))
+                                        <td style="background-color: #eee;">
+                                            <strong>{{ $eigen[$criteria->Dcr_ID][$alternative->Dal_ID] }}</strong>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
+                            @if(isset($hasCalculated))
+                                <tr>
+                                    <td class="table-title">
+                                        Total/Column
+                                    </td>
+                                    @foreach($model->alternatives as $alternative)
+                                        <td style="background-color: #ddd;">
+                                            <strong>{{ $columnTotal[$criteria->Dcr_ID][$alternative->Dal_ID] }}</strong>
+                                        </td>
+                                    @endforeach
+                                    <td style="background-color: red">
+                                        <strong style="color:white;">1</strong>
+                                    </td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>
