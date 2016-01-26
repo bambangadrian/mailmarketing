@@ -22,7 +22,7 @@ class UpdateCampaignTypeRequest extends Request
     public function rules()
     {
         return [
-            'Cgt_Name' => 'required|string|max:100|min:3'
+            'Cgt_Name' => 'required|string|max:100|min:3',
         ];
     }
 }

@@ -32,6 +32,7 @@ class CampaignCategoryController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = CampaignCategory::notDeleted()->paginate(10);
+
         return parent::index();
     }
 
@@ -43,6 +44,7 @@ class CampaignCategoryController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new campaign category item';
+
         return parent::create();
     }
 
@@ -57,6 +59,7 @@ class CampaignCategoryController extends AbstractAdminController
     {
         $this->data['pageDescription'] = 'Update campaign category item';
         $this->data['model'] = CampaignCategory::find($id);
+
         return parent::edit($id);
     }
 
@@ -73,10 +76,12 @@ class CampaignCategoryController extends AbstractAdminController
             \DB::beginTransaction();
             $record = CampaignCategory::create($request->except('_method', '_token'));
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+
+            return redirect()->action($this->controllerName.'@edit', $record->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+
+            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
         }
     }
 
@@ -90,16 +95,18 @@ class CampaignCategoryController extends AbstractAdminController
      */
     public function update(UpdateCampaignCategoryRequest $request, $id)
     {
-        $redirectPath = action($this->controllerName . '@edit', $id);
+        $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             $record = CampaignCategory::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
+
             return redirect($redirectPath);
         } catch (\Exception $e) {
             \DB::rollback();
+
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
     }
@@ -118,10 +125,12 @@ class CampaignCategoryController extends AbstractAdminController
             \DB::beginTransaction();
             $record->delete();
             \DB::commit();
-            return redirect(action($this->controllerName . '@index'));
+
+            return redirect(action($this->controllerName.'@index'));
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect(action($this->controllerName . '@edit', $id))->withErrors($e->getMessage())->withInput();
+
+            return redirect(action($this->controllerName.'@edit', $id))->withErrors($e->getMessage())->withInput();
         }
     }
 }

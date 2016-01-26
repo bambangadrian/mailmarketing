@@ -25,7 +25,7 @@ class CreateSentCampaignRequest extends Request
             'Msd_CampaignID'        => 'required',
             'Msd_MailListID'        => 'required',
             'Msd_SubscriberGroupID' => 'required',
-            'Msd_ExecutedDate'      => 'required|date'
+            'Msd_ExecutedDate'      => 'required|date',
         ];
     }
 }

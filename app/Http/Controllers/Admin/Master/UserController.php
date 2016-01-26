@@ -31,6 +31,7 @@ class UserController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = UserAccount::notDeleted()->paginate(10);
+
         return parent::index();
     }
 
@@ -42,6 +43,7 @@ class UserController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new user account item';
+
         return parent::create();
     }
 
@@ -56,6 +58,7 @@ class UserController extends AbstractAdminController
     {
         $this->data['pageDescription'] = 'Update user account item';
         $this->data['model'] = UserAccount::find($id);
+
         return parent::edit($id);
     }
 
@@ -72,10 +75,12 @@ class UserController extends AbstractAdminController
             \DB::beginTransaction();
             $record = UserAccount::create($request->except('_method', '_token'));
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+
+            return redirect()->action($this->controllerName.'@edit', $record->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+
+            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
         }
     }
 
@@ -89,16 +94,18 @@ class UserController extends AbstractAdminController
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $redirectPath = action($this->controllerName . '@edit', $id);
+        $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             $record = UserAccount::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
+
             return redirect($redirectPath);
         } catch (\Exception $e) {
             \DB::rollback();
+
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
     }

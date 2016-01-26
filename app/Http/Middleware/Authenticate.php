@@ -45,6 +45,7 @@ class Authenticate
                 return redirect('admin/login')->withErrors(['email' => 'Your account still not activated']);
             }
         }
+
         return $next($request);
     }
 }

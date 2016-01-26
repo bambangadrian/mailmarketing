@@ -52,11 +52,12 @@ class SentCampaignController extends AbstractAdminController
         $this->data['campaignID'] = $campaignID;
         $this->data['referenceValue'] = $this->getReferenceValue();
         $this->data['buttons'] = $this->renderPartialView('button');
-        $this->data['formAction'] = action($this->controllerName . '@store', $campaignID);
+        $this->data['formAction'] = action($this->controllerName.'@store', $campaignID);
         $this->data['indexLinkAction'] = action('Admin\Mail\CampaignController@edit', $campaignID);
         $this->data['mailListOptions'] = MailList::active()->notDeleted()->lists('Mls_Name', 'Mls_ID')->prepend('Please Select Mail List ...', '');
         $this->data['subscriberGroupOptions'] = ['Select Mail List First ...'];
         $this->loadResourceForDetailPage();
+
         return $this->renderPage('detail');
     }
 
@@ -64,7 +65,7 @@ class SentCampaignController extends AbstractAdminController
      * Do sent mail campaign, save to mail schedule, and save to sent mail.
      *
      * @param  CreateSentCampaignRequest $request    Request object parameter.
-     * @param integer             $campaignID Campaign ID parameter.
+     * @param integer                    $campaignID Campaign ID parameter.
      *
      * @return \Illuminate\Http\Response
      */
@@ -80,7 +81,7 @@ class SentCampaignController extends AbstractAdminController
                 'fromName' => $campaignModel->Cpg_EmailNameFrom,
                 'subject'  => $campaignModel->Cpg_EmailSubject,
                 'content'  => $campaignModel->Cpg_Content,
-                'view'     => 'storageView::' . camel_case($campaignModel->template->Tpl_Name) . '.index'
+                'view'     => 'storageView::'.camel_case($campaignModel->template->Tpl_Name).'.index',
             ];
             $this->data['content'] = $mailArr['content'];
             # Create the mail schedule.
@@ -101,7 +102,7 @@ class SentCampaignController extends AbstractAdminController
                 //$mailArr['to'][] = $row->subscriber->Sbr_EmailAddress;
                 $mailArr['to'][] = [
                     $row->subscriber->Sbr_EmailAddress,
-                    $row->subscriber->Sbr_FirstName . ' ' . $row->subscriber->Sbr_LastName
+                    $row->subscriber->Sbr_FirstName.' '.$row->subscriber->Sbr_LastName,
                 ];
                 $sentMailRecord = new SentMail();
                 $sentMailRecord->Sm_MailScheduleID = $mailScheduleRecord->getKey();
@@ -109,7 +110,6 @@ class SentCampaignController extends AbstractAdminController
                 $sentMailRecord->Sm_Active = 1;
                 $sentMailRecord->push();
             }
-
             foreach ($mailArr['to'] as $mailTo) {
                 \Mail::send(
                     $mailArr['view'],
@@ -123,15 +123,17 @@ class SentCampaignController extends AbstractAdminController
             }
             # Commit to database if sent mail has ran
             \DB::commit();
+
             return redirect()->action('Admin\Mail\MailScheduleController@index')
                              ->with(
                                  [
                                      'status'  => 'success',
-                                     'message' => 'Your campaign schedule has been created'
+                                     'message' => 'Your campaign schedule has been created',
                                  ]
                              );
         } catch (\Exception $e) {
             \DB::rollback();
+
             return redirect()->action('Admin\Mail\SentCampaignController@index', $campaignID)->withErrors($e->getMessage())->withInput();;
         }
     }

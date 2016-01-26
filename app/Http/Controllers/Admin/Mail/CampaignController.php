@@ -35,6 +35,7 @@ class CampaignController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = Campaign::notDeleted()->with('campaignCategory', 'campaignTopic', 'campaignType', 'template')->paginate(10);
+
         return parent::index();
     }
 
@@ -48,6 +49,7 @@ class CampaignController extends AbstractAdminController
         $this->data['pageDescription'] = 'Create new mail campaign item';
         $this->loadOptions();
         $this->loadResourceForDetailPage();
+
         return parent::create();
     }
 
@@ -65,6 +67,7 @@ class CampaignController extends AbstractAdminController
         $this->data['buttons'] = $this->renderPartialView('button');
         $this->loadOptions();
         $this->loadResourceForDetailPage();
+
         return parent::edit($id);
     }
 
@@ -84,10 +87,12 @@ class CampaignController extends AbstractAdminController
             \DB::beginTransaction();
             $record = Campaign::create($request->except('_method', '_token'));
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+
+            return redirect()->action($this->controllerName.'@edit', $record->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+
+            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
         }
     }
 
@@ -101,7 +106,7 @@ class CampaignController extends AbstractAdminController
      */
     public function update(UpdateCampaignRequest $request, $id)
     {
-        $redirectPath = action($this->controllerName . '@edit', $id);
+        $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             if (trim($request->get('Cpg_TemplateID')) === '' or $request->get('Cpg_TemplateID') === '0') {
                 $request->replace(['Cpg_TemplateID' => null]);
@@ -111,9 +116,11 @@ class CampaignController extends AbstractAdminController
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
+
             return redirect($redirectPath);
         } catch (\Exception $e) {
             \DB::rollback();
+
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
     }

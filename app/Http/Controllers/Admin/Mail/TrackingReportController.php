@@ -5,7 +5,7 @@ use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 
 class TrackingReportController extends AbstractAdminController
 {
-
+    
     /**
      * Class constructor.
      */

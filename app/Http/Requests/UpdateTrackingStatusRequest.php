@@ -22,7 +22,7 @@ class UpdateTrackingStatusRequest extends Request
     public function rules()
     {
         return [
-            'Mts_Name' => 'required|string|max:100|min:3'
+            'Mts_Name' => 'required|string|max:100|min:3',
         ];
     }
 }

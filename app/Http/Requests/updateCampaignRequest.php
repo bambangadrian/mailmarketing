@@ -28,7 +28,7 @@ class UpdateCampaignRequest extends Request
             'Cpg_TemplateID'       => 'required',
             'Cpg_Name'             => 'required|string|min:3|max:50',
             'Cpg_EmailSubject'     => 'string|max:255',
-            'Cpg_EmailAddressFrom' => 'email|string|max:50|min:3'
+            'Cpg_EmailAddressFrom' => 'email|string|max:50|min:3',
         ];
     }
 }

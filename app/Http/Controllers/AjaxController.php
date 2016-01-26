@@ -16,6 +16,7 @@ class AjaxController extends Controller
     {
         $mailListID = \Input::get('mailListID');
         $record = SubscriberGroup::active()->notDeleted()->where('Sbg_MailListID', $mailListID)->get();
+
         return \Response::json($record);
     }
 }

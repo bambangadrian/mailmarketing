@@ -30,6 +30,7 @@ class SubscriberController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = Subscriber::notDeleted()->with('importFrom')->paginate(10);
+
         return parent::index();
     }
 
@@ -43,6 +44,7 @@ class SubscriberController extends AbstractAdminController
         $this->data['pageDescription'] = 'Create new mail subscriber item';
         $this->data['importOptions'] = ImportFrom::active()->notDeleted()->lists('Imf_Name', 'Imf_ID')->prepend('Please Select Import From ...', '');
         $this->loadResourceForDetailPage();
+
         return parent::create();
     }
 
@@ -59,6 +61,7 @@ class SubscriberController extends AbstractAdminController
         $this->data['model'] = Subscriber::find($id);
         $this->data['importOptions'] = ImportFrom::active()->notDeleted()->lists('Imf_Name', 'Imf_ID')->prepend('Please Select Import From ...', '');
         $this->loadResourceForDetailPage();
+
         return parent::edit($id);
     }
 
@@ -75,10 +78,12 @@ class SubscriberController extends AbstractAdminController
             \DB::beginTransaction();
             $record = Subscriber::create($request->except('_method', '_token'));
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+
+            return redirect()->action($this->controllerName.'@edit', $record->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+
+            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
         }
     }
 
@@ -92,16 +97,18 @@ class SubscriberController extends AbstractAdminController
      */
     public function update(UpdateSubscriberRequest $request, $id)
     {
-        $redirectPath = action($this->controllerName . '@edit', $id);
+        $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             $record = Subscriber::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
+
             return redirect($redirectPath);
         } catch (\Exception $e) {
             \DB::rollback();
+
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
     }

@@ -16,9 +16,9 @@ class BasicModelObserver extends AbstractModelObserver
      */
     public function creating(AbstractBaseModel $model)
     {
-        $model->{$model->getColumnPrefix() . '_' . 'CreatedOn'} = \Carbon\Carbon::now();
-        $model->{$model->getColumnPrefix() . '_' . 'CreatedBy'} = $this->userId;
-        $model->{$model->getColumnPrefix() . '_' . 'GUID'} = $this->generateGuid();
+        $model->{$model->getColumnPrefix().'_'.'CreatedOn'} = \Carbon\Carbon::now();
+        $model->{$model->getColumnPrefix().'_'.'CreatedBy'} = $this->userId;
+        $model->{$model->getColumnPrefix().'_'.'GUID'} = $this->generateGuid();
     }
 
     /**
@@ -44,9 +44,9 @@ class BasicModelObserver extends AbstractModelObserver
      */
     public function updating(AbstractBaseModel $model)
     {
-        $model->{$model->getColumnPrefix() . '_' . 'ModifiedOn'} = \Carbon\Carbon::now();
-        $model->{$model->getColumnPrefix() . '_' . 'ModifiedBy'} = $this->userId;
-        $model->{$model->getColumnPrefix() . '_' . 'GUID'} = $this->generateGuid();
+        $model->{$model->getColumnPrefix().'_'.'ModifiedOn'} = \Carbon\Carbon::now();
+        $model->{$model->getColumnPrefix().'_'.'ModifiedBy'} = $this->userId;
+        $model->{$model->getColumnPrefix().'_'.'GUID'} = $this->generateGuid();
     }
 
     /**
@@ -60,7 +60,7 @@ class BasicModelObserver extends AbstractModelObserver
     {
         // Store a piece of data in the session...
         session()->flash('status', 'success');
-        session()->flash('message', 'Data #' . $model->getKey() . ' successfully updated');
+        session()->flash('message', 'Data #'.$model->getKey().' successfully updated');
     }
 
     /**
@@ -72,9 +72,9 @@ class BasicModelObserver extends AbstractModelObserver
      */
     public function deleting(AbstractBaseModel $model)
     {
-        $model->{$model->getColumnPrefix() . '_' . 'DeletedOn'} = \Carbon\Carbon::now();
-        $model->{$model->getColumnPrefix() . '_' . 'DeletedBy'} = $this->userId;
-        $model->{$model->getColumnPrefix() . '_' . 'GUID'} = $this->generateGuid();
+        $model->{$model->getColumnPrefix().'_'.'DeletedOn'} = \Carbon\Carbon::now();
+        $model->{$model->getColumnPrefix().'_'.'DeletedBy'} = $this->userId;
+        $model->{$model->getColumnPrefix().'_'.'GUID'} = $this->generateGuid();
     }
 
     /**
@@ -88,7 +88,7 @@ class BasicModelObserver extends AbstractModelObserver
     {
         // Store a piece of data in the session...
         session()->flash('status', 'success');
-        session()->flash('message', 'Data #' . $model->getKey() . ' successfully deleted (softly)');
+        session()->flash('message', 'Data #'.$model->getKey().' successfully deleted (softly)');
     }
 
     /**

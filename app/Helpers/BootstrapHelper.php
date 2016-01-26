@@ -69,6 +69,7 @@ class BootstrapHelper extends Helper
     public static function getRatioIndexToCombo($fieldName, $selected = '1', array $attributes = [])
     {
         $options = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
         return \Form::select(
             $fieldName,
             array_combine($options, $options),

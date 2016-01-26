@@ -19,7 +19,7 @@ abstract class Request extends FormRequest
             'same'     => 'The :attribute and :other must match.',
             'size'     => 'The :attribute must be exactly :size.',
             'between'  => 'The :attribute must be between :min - :max.',
-            'in'       => 'The :attribute must be one of the following types: :values'
+            'in'       => 'The :attribute must be one of the following types: :values',
         ];
     }
 

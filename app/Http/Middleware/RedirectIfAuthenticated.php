@@ -37,6 +37,7 @@ class RedirectIfAuthenticated
         if ($this->auth->check()) {
             return redirect('/admin/dashboard');
         }
+
         return $next($request);
     }
 }

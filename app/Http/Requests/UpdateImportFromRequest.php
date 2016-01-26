@@ -22,7 +22,7 @@ class UpdateImportFromRequest extends Request
     public function rules()
     {
         return [
-            'Imf_Name' => 'required|string|max:100|min:3'
+            'Imf_Name' => 'required|string|max:100|min:3',
         ];
     }
 }

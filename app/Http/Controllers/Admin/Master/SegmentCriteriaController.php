@@ -30,6 +30,7 @@ class SegmentCriteriaController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = SegmentCriteria::notDeleted()->paginate(10);
+
         return parent::index();
     }
 
@@ -41,6 +42,7 @@ class SegmentCriteriaController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new segment criteria item';
+
         return parent::create();
     }
 
@@ -55,6 +57,7 @@ class SegmentCriteriaController extends AbstractAdminController
     {
         $this->data['pageDescription'] = 'Update segment criteria item';
         $this->data['model'] = SegmentCriteria::find($id);
+
         return parent::edit($id);
     }
 
@@ -71,10 +74,12 @@ class SegmentCriteriaController extends AbstractAdminController
             \DB::beginTransaction();
             $record = SegmentCriteria::create($request->except('_method', '_token'));
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+
+            return redirect()->action($this->controllerName.'@edit', $record->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+
+            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
         }
     }
 
@@ -88,16 +93,18 @@ class SegmentCriteriaController extends AbstractAdminController
      */
     public function update(UpdateSegmentCriteriaRequest $request, $id)
     {
-        $redirectPath = action($this->controllerName . '@edit', $id);
+        $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             $record = SegmentCriteria::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
+
             return redirect($redirectPath);
         } catch (\Exception $e) {
             \DB::rollback();
+
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
     }
@@ -116,10 +123,12 @@ class SegmentCriteriaController extends AbstractAdminController
             \DB::beginTransaction();
             $record->delete();
             \DB::commit();
-            return redirect(action($this->controllerName . '@index'));
+
+            return redirect(action($this->controllerName.'@index'));
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect(action($this->controllerName . '@edit', $id))->withErrors($e->getMessage())->withInput();
+
+            return redirect(action($this->controllerName.'@edit', $id))->withErrors($e->getMessage())->withInput();
         }
     }
 }

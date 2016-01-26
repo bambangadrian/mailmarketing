@@ -34,6 +34,7 @@ class ImportFromController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = ImportFrom::notDeleted()->paginate(10);
+
         return parent::index();
     }
 
@@ -45,6 +46,7 @@ class ImportFromController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new import from item';
+
         return parent::create();
     }
 
@@ -59,6 +61,7 @@ class ImportFromController extends AbstractAdminController
     {
         $this->data['pageDescription'] = 'Update import from item';
         $this->data['model'] = ImportFrom::find($id);
+
         return parent::edit($id);
     }
 
@@ -75,10 +78,12 @@ class ImportFromController extends AbstractAdminController
             \DB::beginTransaction();
             $record = ImportFrom::create($request->except('_method', '_token'));
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+
+            return redirect()->action($this->controllerName.'@edit', $record->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+
+            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
         }
     }
 
@@ -92,16 +97,18 @@ class ImportFromController extends AbstractAdminController
      */
     public function update(UpdateImportFromRequest $request, $id)
     {
-        $redirectPath = action($this->controllerName . '@edit', $id);
+        $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             $record = ImportFrom::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
+
             return redirect($redirectPath);
         } catch (\Exception $e) {
             \DB::rollback();
+
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
     }
@@ -120,10 +127,12 @@ class ImportFromController extends AbstractAdminController
             \DB::beginTransaction();
             $record->delete();
             \DB::commit();
-            return redirect(action($this->controllerName . '@index'));
+
+            return redirect(action($this->controllerName.'@index'));
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect(action($this->controllerName . '@edit', $id))->withErrors($e->getMessage())->withInput();
+
+            return redirect(action($this->controllerName.'@edit', $id))->withErrors($e->getMessage())->withInput();
         }
     }
 }

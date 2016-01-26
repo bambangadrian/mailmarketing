@@ -88,6 +88,7 @@ Route::get(
                 $message->to('bambang.adrian@gmail.com');
             }
         );
+
         return 'hi';
     }
 );
@@ -96,6 +97,7 @@ Route::get(
     function () {
         $uploadDir = realpath(base_path('storage/app/resources/views'));
         Storage::disk('local')->put('resources/views/test.blade.php', 'Contents');
+
         //Storage::move('resources/views/test.blade.php', 'resources/test.blade.php');
         return view('storageView::template2.index');
     }

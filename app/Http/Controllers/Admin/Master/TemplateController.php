@@ -31,6 +31,7 @@ class TemplateController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = Template::notDeleted()->paginate(10);
+
         return parent::index();
     }
 
@@ -42,6 +43,7 @@ class TemplateController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create mail template item';
+
         return parent::create();
     }
 
@@ -56,6 +58,7 @@ class TemplateController extends AbstractAdminController
     {
         $this->data['pageDescription'] = 'Update mail template item';
         $this->data['model'] = Template::find($id);
+
         return parent::edit($id);
     }
 
@@ -79,10 +82,12 @@ class TemplateController extends AbstractAdminController
             \DB::beginTransaction();
             $record = Template::create($request->except('_method', '_token'));
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+
+            return redirect()->action($this->controllerName.'@edit', $record->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+
+            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
         }
     }
 
@@ -96,7 +101,7 @@ class TemplateController extends AbstractAdminController
      */
     public function update(UpdateTemplateRequest $request, $id)
     {
-        $redirectPath = action($this->controllerName . '@edit', $id);
+        $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             if ($request->hasFile('Tpl_File') === true and $this->doUploadZipTemplate($request->file('Tpl_File'), $request->get('Tpl_Name')) === false) {
                 throw new \Exception('Failed to upload zip template file');
@@ -106,6 +111,7 @@ class TemplateController extends AbstractAdminController
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
+
             return redirect($redirectPath);
         } catch (\Exception $e) {
             //\DB::saveRecord();
@@ -126,16 +132,18 @@ class TemplateController extends AbstractAdminController
     private function doUploadZipTemplate(UploadedFile $file, $directoryName)
     {
         try {
-            $fileName = $file->getFilename() . '.' . $file->getClientOriginalExtension();
+            $fileName = $file->getFilename().'.'.$file->getClientOriginalExtension();
             $storageViewPath = 'resources/views/';
-            $uploadDir = camel_case($directoryName) . '/';
-            \Storage::disk('local')->put($storageViewPath . $fileName, \File::get($file));
-            $zipSource = storage_path('app/' . $storageViewPath . $fileName);
-            $extractDestination = storage_path('app/' . $storageViewPath . $uploadDir);
+            $uploadDir = camel_case($directoryName).'/';
+            \Storage::disk('local')->put($storageViewPath.$fileName, \File::get($file));
+            $zipSource = storage_path('app/'.$storageViewPath.$fileName);
+            $extractDestination = storage_path('app/'.$storageViewPath.$uploadDir);
             if (Helper::extractZip($zipSource, $extractDestination)) {
-                \Storage::delete($storageViewPath . $fileName);
+                \Storage::delete($storageViewPath.$fileName);
+
                 return true;
             }
+
             return false;
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

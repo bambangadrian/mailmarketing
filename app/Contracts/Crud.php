@@ -13,7 +13,7 @@ trait Crud
         'create' => 'POST',
         'update' => 'PUT',
         'read'   => 'GET',
-        'delete' => 'DELETE'
+        'delete' => 'DELETE',
     ];
 
     /**
@@ -282,6 +282,25 @@ trait Crud
     }
 
     /**
+     * Set crud action property.
+     *
+     * @param string  $action The action parameter.
+     * @param boolean $state  The action state parameter.
+     *
+     * @return void
+     */
+    protected function setAction($action, $state = false)
+    {
+        $this->data['is'.str_replace(['', '_'], [''], ucwords($action))] = $state;
+        if ($state === true) {
+            $this->action = $action;
+            $this->data['action'] = $action;
+            $this->validateFormMethod();
+            $this->data['formMethodField'] = $this->getMethodField();
+        }
+    }
+
+    /**
      * Get method field.
      *
      * @return string
@@ -302,29 +321,6 @@ trait Crud
     }
 
     /**
-     * Get reference value property.
-     *
-     * @return integer
-     */
-    public function getReferenceValue()
-    {
-        $this->referenceValue = \Route::getCurrentRoute()->getParameter($this->getReferenceKey());
-        return $this->referenceValue;
-    }
-
-    /**
-     * Validate and set form method property.
-     *
-     * @return void
-     */
-    protected function validateFormMethod()
-    {
-        if ($this->getAction() !== null and array_key_exists($this->getAction(), static::$formMethodSettings) === true) {
-            $this->formMethod = $this->data['formMethod'] = static::$formMethodSettings[$this->getAction()];
-        }
-    }
-
-    /**
      * Set reference key property.
      *
      * @param string $referenceKey Reference key parameter.
@@ -338,21 +334,26 @@ trait Crud
     }
 
     /**
-     * Set crud action property.
+     * Get reference value property.
      *
-     * @param string  $action The action parameter.
-     * @param boolean $state  The action state parameter.
+     * @return integer
+     */
+    public function getReferenceValue()
+    {
+        $this->referenceValue = \Route::getCurrentRoute()->getParameter($this->getReferenceKey());
+
+        return $this->referenceValue;
+    }
+
+    /**
+     * Validate and set form method property.
      *
      * @return void
      */
-    protected function setAction($action, $state = false)
+    protected function validateFormMethod()
     {
-        $this->data['is' . str_replace(['', '_'], [''], ucwords($action))] = $state;
-        if ($state === true) {
-            $this->action = $action;
-            $this->data['action'] = $action;
-            $this->validateFormMethod();
-            $this->data['formMethodField'] = $this->getMethodField();
+        if ($this->getAction() !== null and array_key_exists($this->getAction(), static::$formMethodSettings) === true) {
+            $this->formMethod = $this->data['formMethod'] = static::$formMethodSettings[$this->getAction()];
         }
     }
 }

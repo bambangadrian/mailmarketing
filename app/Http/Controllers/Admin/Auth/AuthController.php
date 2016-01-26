@@ -64,6 +64,7 @@ class AuthController extends Controller
         if (\Auth::attempt($credentials, $remember)) {
             return redirect()->intended($this->redirectPath());
         }
+
         return redirect($this->loginPath())
             ->withInput($request->only('Usr_Email'))
             ->withErrors(['email' => 'Your credentials data do not match our records']);
@@ -72,6 +73,7 @@ class AuthController extends Controller
     public function doLogout()
     {
         \Auth::logout();
+
         return redirect($this->loginPath())->with('info', 'You have been logout. See Yaa!!...');
     }
 }

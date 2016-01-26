@@ -31,6 +31,7 @@ class MailListController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = MailList::notDeleted()->paginate(10);
+
         return parent::index();
     }
 
@@ -42,6 +43,7 @@ class MailListController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new mailing list item';
+
         return parent::create();
     }
 
@@ -57,6 +59,7 @@ class MailListController extends AbstractAdminController
         $this->data['pageDescription'] = 'Update mailing list item';
         $this->data['model'] = MailList::find($id);
         $this->data['buttons'] = $this->renderPartialView('button');
+
         return parent::edit($id);
     }
 
@@ -73,10 +76,12 @@ class MailListController extends AbstractAdminController
             \DB::beginTransaction();
             $record = MailList::create($request->except('_method', '_token'));
             \DB::commit();
-            return redirect()->action($this->controllerName . '@edit', $record->getKey());
+
+            return redirect()->action($this->controllerName.'@edit', $record->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
-            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
+
+            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
         }
     }
 
@@ -90,16 +95,18 @@ class MailListController extends AbstractAdminController
      */
     public function update(UpdateMailListRequest $request, $id)
     {
-        $redirectPath = action($this->controllerName . '@edit', $id);
+        $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             $record = MailList::find($id);
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
+
             return redirect($redirectPath);
         } catch (\Exception $e) {
             \DB::rollback();
+
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
     }
