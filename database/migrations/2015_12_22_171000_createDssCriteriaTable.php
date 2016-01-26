@@ -36,6 +36,7 @@ class CreateDssCriteriaTable extends Migration
                 $table->foreign('Dcr_DssID', 'Idx_DssCriteria_Dcr_DssID_Dss_Dss_ID')
                       ->references('Dss_ID')
                       ->on('Dss');
+                $table->unique(['Dcr_DssID', 'Dcr_Name'], 'Idx_DssCriteria_Dcr_DssID_Dcr_Name');
             }
         );
     }

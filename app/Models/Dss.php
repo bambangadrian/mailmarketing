@@ -36,9 +36,24 @@ class Dss extends AbstractBaseModel
     }
 
     /**
+     * Dss consistency matrix data relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function consistency()
+    {
+        return $this->hasManyThrough(
+            'MailMarketing\Models\DssCriteriaDetail',
+            'MailMarketing\Models\DssCriteria',
+            'Dcr_DssID',
+            'Dcd_CriteriaID'
+        );
+    }
+
+    /**
      * Dss result relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function results()
     {

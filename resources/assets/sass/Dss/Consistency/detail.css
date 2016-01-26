@@ -9,12 +9,13 @@ div.data-matrix {
       font-weight: bold; }
     div.data-matrix table thead tr th.table-title, div.data-matrix table thead tr td.table-title, div.data-matrix table tbody tr th.table-title, div.data-matrix table tbody tr td.table-title {
       background-color: #3C8DBC; }
-    div.data-matrix table thead tr th input, div.data-matrix table thead tr td input, div.data-matrix table tbody tr th input, div.data-matrix table tbody tr td input {
-      padding: 3px;
+    div.data-matrix table thead tr th select, div.data-matrix table thead tr td select, div.data-matrix table tbody tr th select, div.data-matrix table tbody tr td select {
+      padding: 2px;
       margin: 0;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: bold;
       height: auto;
-      text-align: center; }
+      text-align: center;
+      min-width: 50px !important; }
 
-/*# sourceMappingURL=consistency.css.map */
+/*# sourceMappingURL=detail.css.map */

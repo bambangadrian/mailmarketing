@@ -15,13 +15,14 @@ div.data-matrix {
           &.table-title {
             background-color: #3C8DBC;
           }
-          input {
-            padding: 3px;
+          select {
+            padding: 2px;
             margin: 0;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             height: auto;
             text-align: center;
+            min-width: 50px !important;
           }
         }
       }

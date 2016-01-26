@@ -3,6 +3,12 @@ namespace MailMarketing\Helpers;
 
 use Illuminate\Support\Debug\Dumper;
 
+/**
+ * Class BootstrapHelper
+ *
+ * @package    MailMarketing
+ * @subpackage Helpers
+ */
 class BootstrapHelper extends Helper
 {
 
@@ -19,7 +25,7 @@ class BootstrapHelper extends Helper
     public static function getIconYesNo($status, array $map = [])
     {
         if (count($map) > 0) {
-            # @todo implement the status map to get the yes-no icon.
+            // @todo implement the status map to get the yes-no icon.
         } else {
             $status = (boolean)$status;
         }
@@ -27,7 +33,8 @@ class BootstrapHelper extends Helper
         if ($status === true) {
             $iconProp = ['class' => 'fa-check iconYesNo', 'style' => 'color: green;'];
         }
-        return '<i class="fa ' . $iconProp['class'] . '" style="' . $iconProp['style'] . '"></i>';
+
+        return '<i class="fa '.$iconProp['class'].'" style="'.$iconProp['style'].'"></i>';
     }
 
     /**
@@ -35,7 +42,7 @@ class BootstrapHelper extends Helper
      *
      * @static
      *
-     * @param string $status
+     * @param string $status Status flag parameter.
      *
      * @return string
      */
@@ -46,7 +53,28 @@ class BootstrapHelper extends Helper
         if (array_key_exists($status, $iconArr) === true) {
             $icon = $iconArr[$status];
         }
+
         return $icon;
+    }
+
+    /**
+     * Get ratio index collection into combo box.
+     *
+     * @param string $fieldName  Ratio field name.
+     * @param string $selected   Selected option value parameter.
+     * @param array  $attributes Additional attributes array parameter.
+     *
+     * @return string
+     */
+    public static function getRatioIndexToCombo($fieldName, $selected = '1', array $attributes = [])
+    {
+        $options = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        return \Form::select(
+            $fieldName,
+            array_combine($options, $options),
+            $selected,
+            array_merge(['class' => 'form-control'], $attributes)
+        );
     }
 
     /**
