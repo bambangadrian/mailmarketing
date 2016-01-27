@@ -52,7 +52,7 @@
             console.log(e);
             var mailListID = e.target.value;
             // Call ajax.
-            $.get('/ajax/subscriber-group', {mailListID: mailListID}, function(data){
+            $.get('<?php echo url("ajax/subscriber-group") ?>', {mailListID: mailListID}, function(data){
                 var model = $('#Msd_SubscriberGroupID');
                 model.empty();
                 model.append('<option>Please Select Subscriber Group ...</option>');
