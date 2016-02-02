@@ -13,7 +13,7 @@ trait Crud
         'create' => 'POST',
         'update' => 'PUT',
         'read'   => 'GET',
-        'delete' => 'DELETE',
+        'delete' => 'DELETE'
     ];
 
     /**

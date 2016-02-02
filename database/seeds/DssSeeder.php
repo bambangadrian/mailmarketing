@@ -24,8 +24,8 @@ class DssSeeder extends Seeder
                 'Dss_Active'      => 1,
                 'Dss_CreatedOn'   => Carbon\Carbon::now(),
                 'Dss_CreatedBy'   => 1,
-                'Dss_GUID'        => (string)Uuid::generate(4),
-            ],
+                'Dss_GUID'        => (string)Uuid::generate(4)
+            ]
         ];
         Dss::insert($dss);
     }

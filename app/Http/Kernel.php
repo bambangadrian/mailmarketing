@@ -17,7 +17,7 @@ class Kernel extends HttpKernel
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \MailMarketing\Http\Middleware\VerifyCsrfToken::class,
+        \MailMarketing\Http\Middleware\VerifyCsrfToken::class
     ];
 
     /**
@@ -29,6 +29,6 @@ class Kernel extends HttpKernel
         'auth'       => \MailMarketing\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest'      => \MailMarketing\Http\Middleware\RedirectIfAuthenticated::class,
-        'acl'        => \MailMarketing\Http\Middleware\CheckPermission::class,
+        'acl'        => \MailMarketing\Http\Middleware\CheckPermission::class
     ];
 }

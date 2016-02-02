@@ -125,8 +125,10 @@ return [
         MailMarketing\Providers\EventServiceProvider::class,
         MailMarketing\Providers\RouteServiceProvider::class,
         MailMarketing\Providers\ViewComposerServiceProvider::class,
-        # Add the html service provider
+        # Add the html service provider.
         Illuminate\Html\HtmlServiceProvider::class,
+        # Add country service provider.
+        Webpatser\Countries\CountriesServiceProvider::class
     ],
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +177,7 @@ return [
         'Uuid'            => Webpatser\Uuid\Uuid::class,
         'Html'            => Illuminate\Html\HtmlFacade::class,
         'Form'            => Illuminate\Html\FormFacade::class,
-        'BootstrapHelper' => MailMarketing\Helpers\BootstrapHelper::class
+        'BootstrapHelper' => MailMarketing\Helpers\BootstrapHelper::class,
+        'Countries'       => Webpatser\Countries\CountriesFacade::class
     ]
 ];

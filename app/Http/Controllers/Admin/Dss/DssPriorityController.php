@@ -64,7 +64,7 @@ class DssPriorityController extends AbstractAdminController
                 },
                 'alternatives' => function ($query) {
                     $query->active()->notDeleted();
-                },
+                }
             ]
         )->find($id);
         foreach ($this->data['model']->criterias as $criteria) {
@@ -122,7 +122,7 @@ class DssPriorityController extends AbstractAdminController
                     },
                     'alternatives' => function ($query) {
                         $query->active()->notDeleted();
-                    },
+                    }
                 ]
             )->find($id);
             # Create the temporary array to store the calculation result.
@@ -134,7 +134,7 @@ class DssPriorityController extends AbstractAdminController
                     $recordEvAlternativeCriteria = DssEvAlternativeCriteria::firstOrNew(
                         [
                             'Deac_CriteriaID'    => $criteria->Dcr_ID,
-                            'Deac_AlternativeID' => $alternative->Dal_ID,
+                            'Deac_AlternativeID' => $alternative->Dal_ID
                         ]
                     );
                     $recordEvAlternativeCriteria->save();
@@ -142,7 +142,7 @@ class DssPriorityController extends AbstractAdminController
                         $recordAlternativeDetail = DssAlternativeDetail::firstOrNew(
                             [
                                 'Dad_EigenID'   => $recordEvAlternativeCriteria->getKey(),
-                                'Dad_CompareID' => $compare->Dal_ID,
+                                'Dad_CompareID' => $compare->Dal_ID
                             ]
                         );
                         $compareValue = number_format(
@@ -233,7 +233,7 @@ class DssPriorityController extends AbstractAdminController
             $result[$criteriaKey] = [
                 'columnTotal' => $sumTotalPerColumn,
                 'eigenVector' => $eigenVector,
-                'columnCount' => $rowCount,
+                'columnCount' => $rowCount
             ];
         }
 

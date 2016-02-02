@@ -44,7 +44,7 @@ class DssResultController extends AbstractAdminController
         $this->data['model'] = DssResult::with([
             'alternative' => function ($query) use ($dssID) {
                 $query->where('Dal_DssID', $dssID);
-            },
+            }
         ])->orderBy('Dsr_Result', 'desc')->get();
         $this->data['buttons'] = $this->renderPartialView('navigation');
 

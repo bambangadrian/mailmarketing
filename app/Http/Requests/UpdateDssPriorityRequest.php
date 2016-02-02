@@ -25,7 +25,7 @@ class UpdateDssPriorityRequest extends Request
             'Criteria'    => 'required|array',
             'Alternative' => 'required|array',
             'LeftValue'   => 'required|array',
-            'RightValue'  => 'required|array',
+            'RightValue'  => 'required|array'
         ];
     }
 }

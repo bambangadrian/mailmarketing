@@ -34,7 +34,9 @@ class CampaignController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = Campaign::notDeleted()->with('campaignCategory', 'campaignTopic', 'campaignType', 'template')->paginate(10);
+        $this->data['model'] = Campaign::notDeleted()
+                                       ->with('campaignCategory', 'campaignTopic', 'campaignType', 'template')
+                                       ->paginate(10);
 
         return parent::index();
     }

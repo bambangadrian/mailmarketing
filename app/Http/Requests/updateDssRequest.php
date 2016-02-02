@@ -24,7 +24,7 @@ class UpdateDssRequest extends Request
         return [
             'Dss_Name'        => 'required|string|max:100|min:3',
             'Dss_StartPeriod' => 'required|date',
-            'Dss_EndPeriod'   => 'required|date',
+            'Dss_EndPeriod'   => 'required|date'
         ];
     }
 }

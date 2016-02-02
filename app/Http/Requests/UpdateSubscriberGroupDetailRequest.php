@@ -27,13 +27,13 @@ class UpdateSubscriberGroupDetailRequest extends Request
             case 'POST':
                 return [
                     'Sgd_GroupID'      => 'required',
-                    'Sgd_SubscriberID' => 'required|array',
+                    'Sgd_SubscriberID' => 'required|array'
                 ];
             case 'PUT':
             case 'PATCH':
                 return [
                     'Sgd_GroupID'      => 'required',
-                    'Sgd_SubscriberID' => 'required',
+                    'Sgd_SubscriberID' => 'required'
                 ];
         }
     }

@@ -81,7 +81,9 @@ class CampaignCategoryController extends AbstractAdminController
         } catch (\Exception $e) {
             \DB::rollback();
 
-            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
+            return redirect()->action($this->controllerName.'@create')
+                ->withErrors($e->getMessage())
+                ->withInput();
         }
     }
 
@@ -107,7 +109,9 @@ class CampaignCategoryController extends AbstractAdminController
         } catch (\Exception $e) {
             \DB::rollback();
 
-            return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+            return redirect($redirectPath)
+                ->withErrors($e->getMessage())
+                ->withInput();
         }
     }
 

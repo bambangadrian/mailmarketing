@@ -22,7 +22,7 @@ class UpdateSegmentCriteriaRequest extends Request
     public function rules()
     {
         return [
-            'Sc_Name' => 'required|string|max:100|min:3',
+            'Sc_Name' => 'required|string|max:100|min:3'
         ];
     }
 }

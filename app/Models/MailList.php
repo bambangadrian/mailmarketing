@@ -24,7 +24,7 @@ class MailList extends AbstractBaseModel
         'Mls_City',
         'Mls_Country',
         'Mls_Phone',
-        'Mls_NotifType',
+        'Mls_NotifType'
     ];
 
     /**

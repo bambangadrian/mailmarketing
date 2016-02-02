@@ -24,7 +24,7 @@ class UpdateDssAlternativeRequest extends Request
         return [
             'Dal_Name'        => 'required|string|max:100|min:3',
             'Dal_DssID'       => 'required',
-            'Dal_ReferenceID' => 'required',
+            'Dal_ReferenceID' => 'required'
         ];
     }
 }

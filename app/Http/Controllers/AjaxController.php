@@ -1,7 +1,6 @@
 <?php
 namespace MailMarketing\Http\Controllers;
 
-use Illuminate\Http\Request;
 use MailMarketing\Models\SubscriberGroup;
 
 class AjaxController extends Controller

@@ -23,7 +23,7 @@ class UpdateSubscriberGroupRequest extends Request
     {
         return [
             'Sbg_MailListID' => 'required',
-            'Sbg_Name'       => 'required|string|max:50|min:3',
+            'Sbg_Name'       => 'required|string|max:50|min:3'
         ];
     }
 }

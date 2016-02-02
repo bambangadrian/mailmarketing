@@ -26,7 +26,7 @@ class UpdateUserRequest extends Request
         return [
             'Usr_Name'     => 'required|string|max:50|min:3',
             'Usr_Email'    => 'required|email|max:50',
-            'Usr_Password' => 'required|min:8',
+            'Usr_Password' => 'required|min:8'
         ];
     }
 }

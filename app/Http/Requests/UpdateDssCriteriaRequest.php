@@ -23,7 +23,7 @@ class UpdateDssCriteriaRequest extends Request
     {
         return [
             'Dcr_Name'  => 'required|string|max:100|min:3',
-            'Dcr_DssID' => 'required',
+            'Dcr_DssID' => 'required'
         ];
     }
 }

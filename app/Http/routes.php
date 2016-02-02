@@ -77,10 +77,24 @@ Route::group(
         );
     }
 );
+# To Handle Ajax Request.
 Route::controller('ajax', 'AjaxController');
+# To handle all web hooks.
+Route::group(
+    ['prefix' => 'webhooks', 'namespace' => 'WebHooks'],
+    function () {
+        Route::group(
+            ['prefix' => 'mailgun', 'namespace' => 'Mailgun'],
+            function () {
+                Route::controller('tracking', 'TrackingHooks');
+            }
+        );
+    }
+);
+# Testing Purpose.
 Route::resource('register', 'RegistrationController');
 Route::get(
-    'test/mail',
+    'test / mail',
     function () {
         Mail::raw(
             'Laravel with Mailgun is easy!',
@@ -93,12 +107,12 @@ Route::get(
     }
 );
 Route::get(
-    'test/storage',
+    'test / storage',
     function () {
-        $uploadDir = realpath(base_path('storage/app/resources/views'));
-        Storage::disk('local')->put('resources/views/test.blade.php', 'Contents');
+        $uploadDir = realpath(base_path('storage / app / resources / views'));
+        Storage::disk('local')->put('resources / views / test.blade.php', 'Contents');
 
-        //Storage::move('resources/views/test.blade.php', 'resources/test.blade.php');
+        //Storage::move('resources / views / test.blade.php', 'resources / test.blade.php');
         return view('storageView::template2.index');
     }
 );

@@ -22,7 +22,7 @@ class UpdateCampaignCategoryRequest extends Request
     public function rules()
     {
         return [
-            'Cc_Name' => 'required|string|max:100|min:3',
+            'Cc_Name' => 'required|string|max:100|min:3'
         ];
     }
 }

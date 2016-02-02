@@ -55,7 +55,6 @@
 @section('add-js')
     @parent
     <script>
-
         $('#Msd_MailListID').on('change', function (e) {
             console.log(e);
             var mailListID = e.target.value;

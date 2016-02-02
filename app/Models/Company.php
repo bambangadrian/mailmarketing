@@ -13,5 +13,15 @@ class Company extends AbstractBaseModel
      *
      * @var array $fillable
      */
-    protected $fillable = ['Cpy_Name', 'Cpy_Email', 'Cpy_WebsiteUrl', 'Cpy_Address1', 'Cpy_Address2', 'Cpy_City', 'Cpy_PostCode', 'Cpy_Country', 'Cpy_TimeZone'];
+    protected $fillable = [
+        'Cpy_Name',
+        'Cpy_Email',
+        'Cpy_WebsiteUrl',
+        'Cpy_Address1',
+        'Cpy_Address2',
+        'Cpy_City',
+        'Cpy_PostCode',
+        'Cpy_Country',
+        'Cpy_TimeZone'
+    ];
 }

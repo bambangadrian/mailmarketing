@@ -23,7 +23,7 @@ class UpdateDssRandomIndexRequest extends Request
     {
         return [
             'Dri_NumberColumn' => 'required|numeric|min:0|max:10',
-            'Dri_RandomIndex'  => 'required|numeric|min:0',
+            'Dri_RandomIndex'  => 'required|numeric|min:0'
         ];
     }
 }

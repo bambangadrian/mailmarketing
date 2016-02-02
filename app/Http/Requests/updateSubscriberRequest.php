@@ -26,7 +26,7 @@ class UpdateSubscriberRequest extends Request
         return [
             'Sbr_EmailAddress' => 'required|email|string|max:50|min:3',
             'Sbr_FirstName'    => 'required|max:50|min:3',
-            'Sbr_MemberRating' => 'numeric|max:5|digits:1',
+            'Sbr_MemberRating' => 'numeric|max:5|digits:1'
         ];
     }
 }

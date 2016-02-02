@@ -57,7 +57,7 @@ class DssConsistencyController extends AbstractAdminController
             [
                 'criterias' => function ($query) {
                     $query->active()->notDeleted();
-                },
+                }
             ]
         )->find($id);
         foreach ($this->data['model']->criterias as $criteria) {
@@ -102,7 +102,7 @@ class DssConsistencyController extends AbstractAdminController
                 [
                     'criterias' => function ($query) {
                         $query->active()->notDeleted();
-                    },
+                    }
                 ]
             )->find($id);
             # Create the temporary array to store the calculation result.
@@ -112,7 +112,7 @@ class DssConsistencyController extends AbstractAdminController
                     $recordCriteriaDetail = DssCriteriaDetail::firstOrNew(
                         [
                             'Dcd_CriteriaID' => $criteria->Dcr_ID,
-                            'Dcd_CompareID'  => $compare->Dcr_ID,
+                            'Dcd_CompareID'  => $compare->Dcr_ID
                         ]
                     );
                     $compareValue = number_format(
@@ -192,7 +192,7 @@ class DssConsistencyController extends AbstractAdminController
         $result = [
             'columnTotal' => $sumTotalPerColumn,
             'eigenVector' => $eigenVector,
-            'columnCount' => $rowCount,
+            'columnCount' => $rowCount
         ];
 
         return $result;

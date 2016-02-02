@@ -22,7 +22,7 @@ class UpdateCampaignTopicRequest extends Request
     public function rules()
     {
         return [
-            'Cto_Name' => 'required|string|max:100|min:3',
+            'Cto_Name' => 'required|string|max:100|min:3'
         ];
     }
 }

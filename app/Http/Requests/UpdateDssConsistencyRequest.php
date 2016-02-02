@@ -30,7 +30,7 @@ class UpdateDssConsistencyRequest extends Request
         return [
             'Criteria'   => 'required|array',
             'LeftValue'  => 'required|array',
-            'RightValue' => 'required|array',
+            'RightValue' => 'required|array'
         ];
     }
 }

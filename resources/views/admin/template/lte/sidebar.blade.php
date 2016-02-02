@@ -38,7 +38,7 @@
                     <i class="fa fa-support"></i> <span>Dashboard</span>
                 </a>
             </li>
-            <li @if($activeMenu === 'master')  class="active" @endif class="treeview">
+            <li @if($activeMenu === 'master') class="active" @endif class="treeview">
                 <a href="#">
                     <i class="fa fa-table"></i> <span>Master</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -56,7 +56,7 @@
                 </ul>
             </li>
             </li>
-            <li @if($activeMenu === 'mail')  class="active" @endif class="treeview">
+            <li @if($activeMenu === 'mail') class="active" @endif class="treeview">
                 <a href="#">
                     <i class="fa fa-envelope"></i> <span>Mail</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -71,7 +71,7 @@
                     <li @if($activeSubMenu === 'mailTrackingReport') class="active" @endif><a href="{{ action('Admin\Mail\TrackingReportController@index') }}"><i class="fa fa-bar-chart"></i> Tracking Report</a></li>
                 </ul>
             </li>
-            <li @if($activeMenu === 'dss')  class="active" @endif class="treeview">
+            <li @if($activeMenu === 'dss') class="active" @endif class="treeview">
                 <a href="#">
                     <i class="fa fa-database"></i> <span>DSS</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -85,7 +85,7 @@
                     <li @if($activeSubMenu === 'dssRandomIndex') class="active" @endif><a href="{{ action('Admin\Dss\DssRandomIndexController@index') }}"><i class="fa fa-rss"></i> RandomIndex</a></li>
                 </ul>
             </li>
-            <li @if($activeMenu === 'company')  class="active" @endif><a href="{{ action('Admin\Master\CompanyController@index') }}"><i class="fa fa-laptop"></i> Company</a></li>
+            <li @if($activeMenu === 'company') class="active" @endif><a href="{{ action('Admin\Master\CompanyController@index') }}"><i class="fa fa-laptop"></i> Company</a></li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>

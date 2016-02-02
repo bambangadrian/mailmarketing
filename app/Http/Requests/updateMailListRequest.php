@@ -25,7 +25,7 @@ class UpdateMailListRequest extends Request
             'Mls_Name'             => 'required|string|max:50|min:3',
             'Mls_EmailAddressFrom' => 'required|email|string|max:50|min:3',
             'Mls_EmailNameFrom'    => 'required|string|max:50|min:3',
-            'Mls_CompanyName'      => 'required|string|max:50|min:3',
+            'Mls_CompanyName'      => 'required|string|max:50|min:3'
         ];
     }
 }

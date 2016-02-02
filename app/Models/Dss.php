@@ -22,7 +22,7 @@ class Dss extends AbstractBaseModel
         'Dss_CriteriaEigenValue',
         'Dss_CriteriaConsistencyIndex',
         'Dss_CriteriaConsistencyRatio',
-        'Dss_RunOn',
+        'Dss_RunOn'
     ];
 
     /**

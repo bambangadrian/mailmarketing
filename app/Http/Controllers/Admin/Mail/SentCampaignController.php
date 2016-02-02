@@ -54,7 +54,10 @@ class SentCampaignController extends AbstractAdminController
         $this->data['buttons'] = $this->renderPartialView('button');
         $this->data['formAction'] = action($this->controllerName.'@store', $campaignID);
         $this->data['indexLinkAction'] = action('Admin\Mail\CampaignController@edit', $campaignID);
-        $this->data['mailListOptions'] = MailList::active()->notDeleted()->lists('Mls_Name', 'Mls_ID')->prepend('Please Select Mail List ...', '');
+        $this->data['mailListOptions'] = MailList::active()
+                                                 ->notDeleted()
+                                                 ->lists('Mls_Name', 'Mls_ID')
+                                                 ->prepend('Please Select Mail List ...', '');
         $this->data['subscriberGroupOptions'] = ['Select Mail List First ...'];
         $this->loadResourceForDetailPage();
 
@@ -81,7 +84,7 @@ class SentCampaignController extends AbstractAdminController
                 'fromName' => $campaignModel->Cpg_EmailNameFrom,
                 'subject'  => $campaignModel->Cpg_EmailSubject,
                 'content'  => $campaignModel->Cpg_Content,
-                'view'     => 'storageView::'.camel_case($campaignModel->template->Tpl_Name).'.index',
+                'view'     => 'storageView::'.camel_case($campaignModel->template->Tpl_Name).'.index'
             ];
             $this->data['content'] = $mailArr['content'];
             # Create the mail schedule.
@@ -92,7 +95,9 @@ class SentCampaignController extends AbstractAdminController
             $mailScheduleRecord = MailSchedule::create($request->except('_method', '_token'));
             # Insert into sent mail table.
             $groupID = $request->get('Msd_SubscriberGroupID');
-            $subGroupList = SubscriberGroup::active()->notDeleted()->where('Sbg_ParentID', $groupID)->lists('Sbg_ID')->prepend($groupID);
+            $subGroupList = SubscriberGroup::active()
+                                           ->notDeleted()->where('Sbg_ParentID', $groupID)
+                                           ->lists('Sbg_ID')->prepend($groupID);
             $subscriberGroup = SubscriberGroupDetail::notDeleted()
                                                     ->with('subscriber')
                                                     ->whereIn('Sgd_GroupID', $subGroupList)
@@ -102,7 +107,7 @@ class SentCampaignController extends AbstractAdminController
                 //$mailArr['to'][] = $row->subscriber->Sbr_EmailAddress;
                 $mailArr['to'][] = [
                     $row->subscriber->Sbr_EmailAddress,
-                    $row->subscriber->Sbr_FirstName.' '.$row->subscriber->Sbr_LastName,
+                    $row->subscriber->Sbr_FirstName.' '.$row->subscriber->Sbr_LastName
                 ];
                 $sentMailRecord = new SentMail();
                 $sentMailRecord->Sm_MailScheduleID = $mailScheduleRecord->getKey();
@@ -128,13 +133,16 @@ class SentCampaignController extends AbstractAdminController
                              ->with(
                                  [
                                      'status'  => 'success',
-                                     'message' => 'Your campaign schedule has been created',
+                                     'message' => 'Your campaign schedule has been created'
                                  ]
                              );
         } catch (\Exception $e) {
             \DB::rollback();
 
-            return redirect()->action('Admin\Mail\SentCampaignController@index', $campaignID)->withErrors($e->getMessage())->withInput();;
+            return redirect()
+                ->action('Admin\Mail\SentCampaignController@index', $campaignID)
+                ->withErrors($e->getMessage())
+                ->withInput();
         }
     }
 
@@ -145,10 +153,11 @@ class SentCampaignController extends AbstractAdminController
      */
     private function loadResourceForDetailPage()
     {
-        $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css');
-        $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.css');
-        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.full.min.js');
-        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/moment/moment.min.js');
-        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.js');
+        $adminLtePluginPath = '/vendor/bower_components/AdminLTE/plugins/';
+        $this->data['css'][] = asset($adminLtePluginPath.'daterangepicker/daterangepicker-bs3.css');
+        $this->data['css'][] = asset($adminLtePluginPath.'select2/select2.min.css');
+        $this->data['js'][] = asset($adminLtePluginPath.'select2/select2.full.min.js');
+        $this->data['js'][] = asset($adminLtePluginPath.'moment/moment.min.js');
+        $this->data['js'][] = asset($adminLtePluginPath.'daterangepicker/daterangepicker.js');
     }
 }

@@ -27,12 +27,26 @@ label.required:after {
   padding: 10px;
   background: #eee;
   border: 1px solid #ddd;
-  min-width: 200px; }
+  min-width: 200px;
+  transform: translate(-50%, 0); }
 
 form {
   margin-bottom: 10px; }
   form input.invalid {
     border-color: #d00; }
+  form fieldset {
+    margin-bottom: 20px; }
+    form fieldset legend {
+      background-color: rgba(240, 240, 240, 0.7);
+      padding: 5px 10px;
+      border-top: 1px solid #e5e5e5;
+      border-right: 1px solid #e5e5e5;
+      border-left: 5px solid #e5e5e5; }
+    form fieldset > div.form-group {
+      margin-left: 15px;
+      margin-right: 15px; }
+  form input + input {
+    margin-top: 2px; }
 
 .content-footer {
   margin: auto;
