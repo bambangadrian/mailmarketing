@@ -43,6 +43,7 @@ class MailListController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new mailing list item';
+        $this->loadOptions();
 
         return parent::create();
     }
@@ -59,6 +60,7 @@ class MailListController extends AbstractAdminController
         $this->data['pageDescription'] = 'Update mailing list item';
         $this->data['model'] = MailList::find($id);
         $this->data['buttons'] = $this->renderPartialView('button');
+        $this->loadOptions();
 
         return parent::edit($id);
     }
@@ -75,6 +77,12 @@ class MailListController extends AbstractAdminController
         try {
             \DB::beginTransaction();
             $record = MailList::create($request->except('_method', '_token'));
+            \Mailgun::lists()->create([
+                'address'      => $request->get('Mls_EmailAddressFrom'),
+                'name'         => $request->get('Mls_Name'),
+                'description'  => $request->get('Mls_Description'),
+                'access_level' => $request->get('Mls_AccessLevel')
+            ]);
             \DB::commit();
 
             return redirect()->action($this->controllerName.'@edit', $record->getKey());
@@ -101,6 +109,14 @@ class MailListController extends AbstractAdminController
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
+            \Mailgun::lists()->update(
+                $record->Mls_EmailAddressFrom,
+                [
+                    'name'         => $request->get('Mls_Name'),
+                    'description'  => $request->get('Mls_Description'),
+                    'access_level' => $request->get('Mls_AccessLevel')
+                ]
+            );
             \DB::commit();
 
             return redirect($redirectPath);
@@ -109,5 +125,22 @@ class MailListController extends AbstractAdminController
 
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
         }
+    }
+
+    /**
+     * Load required options.
+     *
+     * @return void
+     */
+    private function loadOptions()
+    {
+        $this->data['accessLevelOptions'] = collect([
+            'readonly' => 'Read Only',
+            'members'  => 'Members',
+            'everyone' => 'Every One'
+        ])->prepend('Please Select Access Level', '');
+        $countryLists = array_column(\Countries::getList(), 'name');
+        $this->data['countryOptions'] = collect(array_combine($countryLists, $countryLists))
+            ->prepend('Please Select Country', '');
     }
 }

@@ -19,6 +19,9 @@ class AlterForMailGunIntegration extends Migration
                 $table->enum('Mls_AccessLevel', ['readonly', 'members', 'everyone'])
                       ->default('readonly')
                       ->after('Mls_Phone');
+                $table->string('Mls_Description', 100)
+                      ->after('Mls_CompanyName')
+                      ->nullable();
             }
         );
         Schema::table(
@@ -77,7 +80,7 @@ class AlterForMailGunIntegration extends Migration
             'MailList',
             function (Blueprint $table) {
                 # Drop access level field column.
-                $table->dropColumn('Mls_AccessLevel');
+                $table->dropColumn(['Mls_AccessLevel', 'Mls_Description']);
             }
         );
         Schema::table(

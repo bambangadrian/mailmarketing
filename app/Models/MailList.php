@@ -19,11 +19,13 @@ class MailList extends AbstractBaseModel
         'Mls_EmailNameFrom',
         'Mls_Reminder',
         'Mls_CompanyName',
+        'Mls_Description',
         'Mls_Address1',
         'Mls_Address2',
         'Mls_City',
         'Mls_Country',
         'Mls_Phone',
+        'Mls_AccessLevel',
         'Mls_NotifType'
     ];
 

@@ -26,8 +26,12 @@
                             {!! Form::text('Mls_CompanyName', null, ['required', 'class' => 'form-control', 'placeholder' => 'Enter Company Name']) !!}
                         </div>
                         <div class="form-group">
+                            {!! Form::label('Mls_Description', 'Description') !!}
+                            {!! Form::text('Mls_Description', null, ['class' => 'form-control', 'placeholder' => 'Enter Description']) !!}
+                        </div>
+                        <div class="form-group">
                             {!! Form::label('Mls_Country', 'Country') !!}
-                            {!! Form::text('Mls_Country', null, ['class' => 'form-control', 'placeholder' => 'Enter Country']) !!}
+                            {!! Form::select('Mls_Country', $countryOptions, null, ['class' => 'form-control select2', 'style' => 'width: 100%;']) !!}
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -46,6 +50,10 @@
                         <div class="form-group">
                             {!! Form::label('Mls_Phone', 'Phone Number') !!}
                             {!! Form::text('Mls_Phone', null, ['class' => 'form-control', 'placeholder' => 'Enter Phone Number']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('Mls_AccessLevel', 'Access Level', ['class' => 'required']) !!}
+                            {!! Form::select('Mls_AccessLevel', $accessLevelOptions, null, ['class' => 'form-control select2', 'style' => 'width: 100%;']) !!}
                         </div>
                         <div class="checkbox">
                             <label for="Mls_Active">

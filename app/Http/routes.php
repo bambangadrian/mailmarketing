@@ -101,9 +101,14 @@ Route::get(
         //    $message->bcc('bambang.adrian@gmail.com', 'Bambang Adrian S');
         //    $message->subject('Welcome!');
         //});
-
-        $result = \Mailgun::lists()->all();
+        $result = \Mailgun::lists()->create([
+            'address'      => 'webmaster@carapikir.com',
+            'name'         => 'Test mailing list',
+            'description'  => 'Just for fun',
+            'access_level' => 'members'
+        ]);
         dd($result);
+
         return 'hi';
     }
 );
