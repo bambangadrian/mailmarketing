@@ -64,7 +64,11 @@ class SubscriberGroupDetailController extends AbstractAdminController
         $this->data['pageDescription'] = 'Add your subscriber to this mailing list group';
         $this->data['indexLinkAction'] = action($this->controllerName.'@index', [$listID, $groupID]);
         $this->data['formAction'] = action($this->controllerName.'@store', [$listID, $groupID]);
-        $subGroupList = SubscriberGroup::active()->notDeleted()->where('Sbg_ParentID', $groupID)->lists('Sbg_ID')->prepend($groupID);
+        $subGroupList = SubscriberGroup::active()
+                                       ->notDeleted()
+                                       ->where('Sbg_ParentID', $groupID)
+                                       ->lists('Sbg_ID')
+                                       ->prepend($groupID);
         $this->data['subscriberOptions'] = Subscriber::active()
                                                      ->notDeleted()
                                                      ->whereNotExists(

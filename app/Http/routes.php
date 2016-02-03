@@ -40,6 +40,7 @@ Route::group(
                         Route::resource('campaign.sent', 'SentCampaignController', ['only' => ['index', 'store']]);
                         Route::resource('subscriber', 'SubscriberController', $resourceOption);
                         Route::resource('maillist', 'MailListController', $resourceOption);
+                        Route::resource('maillist.members', 'MailListMemberController', $resourceOption);
                         Route::resource('maillist.groups', 'SubscriberGroupController', $resourceOption);
                         Route::resource('maillist.group.detail', 'SubscriberGroupDetailController', $resourceOption);
                         Route::resource('schedule', 'MailScheduleController', $resourceOption);

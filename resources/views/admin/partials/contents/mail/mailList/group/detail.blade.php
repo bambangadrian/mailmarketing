@@ -8,10 +8,16 @@
             {!! Form::model($model, ['url' => $formAction]) !!}
                 {{ $formMethodField }}
                 <input type="hidden" name="Sbg_MailListID" id="Sbg_MailListID" value="{{ $listID }}" />
-                <div class="form-group">
-                    {!! Form::label('Sbg_ParentID', 'Group Parent') !!}
-                    {!! Form::select('Sbg_ParentID', $groupParentOptions, null, ['class' => 'form-control']) !!}
-                </div>
+                <?php $showParentField = true;?>
+                @if ($isUpdate === true and (integer)$model->Sbg_DefaultGroup === 1 )
+                    <?php $showParentField = false;?>
+                @endif
+                @if ($showParentField === true)
+                    <div class="form-group">
+                        {!! Form::label('Sbg_ParentID', 'Group Parent') !!}
+                        {!! Form::select('Sbg_ParentID', $groupParentOptions, null, ['class' => 'form-control']) !!}
+                    </div>
+                @endif
                 <div class="form-group">
                     {!! Form::label('Sbg_Name', 'Group Name',['class' => 'required']) !!}
                     {!! Form::text('Sbg_Name', null, ['required', 'class' => 'form-control', 'placeholder' => 'Enter Group Name']) !!}

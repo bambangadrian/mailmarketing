@@ -55,7 +55,13 @@ label.required:after {
   background: #eee;
   border: 1px solid #ddd;
   min-width: 200px;
-  transform: translate(-50%, 0);
+
+}
+
+@media (max-width: 767px) {
+  .alert-message {
+    transform: translate(-50%, 0);
+  }
 }
 
 form {

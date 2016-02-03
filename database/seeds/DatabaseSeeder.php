@@ -35,8 +35,8 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Company Table Seeded !!');
         $this->call(ImportFromSeeder::class);
         $this->command->info('ImportFrom Table Seeded !!');
-        $this->call(MailListSeeder::class);
-        $this->command->info('MailList Table Seeded !!');
+        //$this->call(MailListSeeder::class);
+        //$this->command->info('MailList Table Seeded !!');
         $this->call(SegmentSeeder::class);
         $this->command->info('Segment Table Seeded !!');
         $this->call(SegmentCriteriaSeeder::class);

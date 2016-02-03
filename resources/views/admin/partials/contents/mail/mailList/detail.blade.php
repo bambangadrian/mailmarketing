@@ -73,3 +73,12 @@
         </div>
     </div>
 @stop
+
+@section('add-js')
+    @parent
+
+    <script>
+        $('#Mls_AccessLevel, #Mls_Country').select2();
+    </script>
+
+@stop

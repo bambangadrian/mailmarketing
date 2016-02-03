@@ -27,9 +27,11 @@ label.required:after {
   padding: 10px;
   background: #eee;
   border: 1px solid #ddd;
-  min-width: 200px;
-  transform: translate(-50%, 0); }
+  min-width: 200px; }
 
+@media (max-width: 767px) {
+  .alert-message {
+    transform: translate(-50%, 0); } }
 form {
   margin-bottom: 10px; }
   form input.invalid {

@@ -26,6 +26,7 @@ class MailList extends AbstractBaseModel
         'Mls_Country',
         'Mls_Phone',
         'Mls_AccessLevel',
+        'Mls_DefaultGroupID',
         'Mls_NotifType'
     ];
 

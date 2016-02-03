@@ -4,6 +4,7 @@ namespace MailMarketing\Http\Controllers\Admin\Mail;
 use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Http\Requests\UpdateMailListRequest;
 use MailMarketing\Models\MailList;
+use MailMarketing\Models\SubscriberGroup;
 
 class MailListController extends AbstractAdminController
 {
@@ -44,6 +45,7 @@ class MailListController extends AbstractAdminController
     {
         $this->data['pageDescription'] = 'Create new mailing list item';
         $this->loadOptions();
+        $this->loadResourceForDetailPage();
 
         return parent::create();
     }
@@ -61,6 +63,7 @@ class MailListController extends AbstractAdminController
         $this->data['model'] = MailList::find($id);
         $this->data['buttons'] = $this->renderPartialView('button');
         $this->loadOptions();
+        $this->loadResourceForDetailPage();
 
         return parent::edit($id);
     }
@@ -75,17 +78,28 @@ class MailListController extends AbstractAdminController
     public function store(UpdateMailListRequest $request)
     {
         try {
-            \DB::beginTransaction();
-            $record = MailList::create($request->except('_method', '_token'));
             \Mailgun::lists()->create([
                 'address'      => $request->get('Mls_EmailAddressFrom'),
                 'name'         => $request->get('Mls_Name'),
                 'description'  => $request->get('Mls_Description'),
                 'access_level' => $request->get('Mls_AccessLevel')
             ]);
+            \DB::beginTransaction();
+            $recordMailList = MailList::create($request->except('_method', '_token'));
+            $recordSubscriberGroup = SubscriberGroup::create(
+                [
+                    'Sbg_MailListID'   => $recordMailList->getKey(),
+                    'Sbg_Name'         => 'General',
+                    'Sbg_Description'  => 'Default Group',
+                    'Sbg_Active'       => 1,
+                    'Sbg_DefaultGroup' => 1
+                ]
+            );
+            $recordMailList->Mls_DefaultGroupID = $recordSubscriberGroup->getKey();
+            $recordMailList->save();
             \DB::commit();
 
-            return redirect()->action($this->controllerName.'@edit', $record->getKey());
+            return redirect()->action($this->controllerName.'@edit', $recordMailList->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
 
@@ -106,9 +120,6 @@ class MailListController extends AbstractAdminController
         $redirectPath = action($this->controllerName.'@edit', $id);
         try {
             $record = MailList::find($id);
-            \DB::beginTransaction();
-            $record->fill($request->except('_method', '_token'));
-            $record->save();
             \Mailgun::lists()->update(
                 $record->Mls_EmailAddressFrom,
                 [
@@ -117,6 +128,9 @@ class MailListController extends AbstractAdminController
                     'access_level' => $request->get('Mls_AccessLevel')
                 ]
             );
+            \DB::beginTransaction();
+            $record->fill($request->except('_method', '_token'));
+            $record->save();
             \DB::commit();
 
             return redirect($redirectPath);
@@ -142,5 +156,17 @@ class MailListController extends AbstractAdminController
         $countryLists = array_column(\Countries::getList(), 'name');
         $this->data['countryOptions'] = collect(array_combine($countryLists, $countryLists))
             ->prepend('Please Select Country', '');
+    }
+
+    /**
+     * Load resource for detail page.
+     *
+     * @return void
+     */
+    private function loadResourceForDetailPage()
+    {
+        $adminLtePluginPath = '/vendor/bower_components/AdminLTE/plugins/';
+        $this->data['css'][] = asset($adminLtePluginPath.'select2/select2.min.css');
+        $this->data['js'][] = asset($adminLtePluginPath.'select2/select2.full.min.js');
     }
 }

@@ -22,6 +22,20 @@ class AlterForMailGunIntegration extends Migration
                 $table->string('Mls_Description', 100)
                       ->after('Mls_CompanyName')
                       ->nullable();
+                $table->integer('Mls_DefaultGroupID')
+                      ->unsigned()
+                      ->after('Mls_AccessLevel')
+                      ->nullable();
+                # Add table constraint
+                $table->foreign('Mls_DefaultGroupID', 'Idx_MailList_Mls_DefaultGroupID_SubscriberGroup_Sbg_ID')
+                      ->references('Sbg_ID')
+                      ->on('SubscriberGroup');
+            }
+        );
+        Schema::table(
+            'SubscriberGroup',
+            function (Blueprint $table) {
+                $table->boolean('Sbg_DefaultGroup')->after('Sbg_Description')->default(0);
             }
         );
         Schema::table(
@@ -47,7 +61,7 @@ class AlterForMailGunIntegration extends Migration
             function (Blueprint $table) {
                 $table->dropColumn('Mtr_Location')->nullable();
                 $table->json('Mtr_MessageHeaders')->after('Mtr_IpAddress')->nullable();
-                $table->string('Mtr_MessageId', 50)->after('Mtr_MessageHeaders')->nullable();
+                $table->string('Mtr_MessageID', 50)->after('Mtr_MessageHeaders')->nullable();
                 $table->string('Mtr_Reason', 100)->after('Mtr_MessageId')->nullable();
                 $table->string('Mtr_Code', 50)->after('Mtr_Reason')->nullable();
                 $table->string('Mtr_Error', 50)->after('Mtr_Code')->nullable();
@@ -79,8 +93,15 @@ class AlterForMailGunIntegration extends Migration
         Schema::table(
             'MailList',
             function (Blueprint $table) {
+                $table->dropForeign('Idx_MailList_Mls_DefaultGroupID_SubscriberGroup_Sbg_ID');
                 # Drop access level field column.
-                $table->dropColumn(['Mls_AccessLevel', 'Mls_Description']);
+                $table->dropColumn(['Mls_AccessLevel', 'Mls_Description', 'Mls_DefaultGroupID']);
+            }
+        );
+        Schema::table(
+            'SubscriberGroup',
+            function (Blueprint $table) {
+                $table->dropColumn('Sbg_DefaultGroup');
             }
         );
         Schema::table(
