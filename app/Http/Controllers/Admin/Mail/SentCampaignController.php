@@ -86,6 +86,12 @@ class SentCampaignController extends AbstractAdminController
                 'content'  => $campaignModel->Cpg_Content,
                 'view'     => 'storageView::'.camel_case($campaignModel->template->Tpl_Name).'.index'
             ];
+
+            # Step to assign default mail from address and name :
+            # 1. Check out from the campaign directly
+            # 2. Then check from the mailing list
+            # 3. Then check from company profile
+
             $this->data['content'] = $mailArr['content'];
             # Create the mail schedule.
             $request->merge(['Msd_IsExecuted' => 0]);

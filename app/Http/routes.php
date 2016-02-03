@@ -94,23 +94,24 @@ Route::group(
 # Testing Purpose.
 Route::resource('register', 'RegistrationController');
 Route::get(
-    'test / mail',
+    'test/mail',
     function () {
-        Mail::raw(
-            'Laravel with Mailgun is easy!',
-            function ($message) {
-                $message->to('bambang.adrian@gmail.com');
-            }
-        );
+        //$result = \Mailgun::send(['welcome'], [], function ($message) {
+        //    $message->to('faber.banjarnahor@gmail.com', 'Faber Banjarnahor');
+        //    $message->bcc('bambang.adrian@gmail.com', 'Bambang Adrian S');
+        //    $message->subject('Welcome!');
+        //});
 
+        $result = \Mailgun::lists()->all();
+        dd($result);
         return 'hi';
     }
 );
 Route::get(
-    'test / storage',
+    'test/storage',
     function () {
-        $uploadDir = realpath(base_path('storage / app / resources / views'));
-        Storage::disk('local')->put('resources / views / test.blade.php', 'Contents');
+        $uploadDir = realpath(base_path('storage/app/resources/views'));
+        Storage::disk('local')->put('resources /views/test.blade.php', 'Contents');
 
         //Storage::move('resources / views / test.blade.php', 'resources / test.blade.php');
         return view('storageView::template2.index');

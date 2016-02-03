@@ -128,7 +128,9 @@ return [
         # Add the html service provider.
         Illuminate\Html\HtmlServiceProvider::class,
         # Add country service provider.
-        Webpatser\Countries\CountriesServiceProvider::class
+        Webpatser\Countries\CountriesServiceProvider::class,
+        # Add mailgun service provider.
+        Bogardo\Mailgun\MailgunServiceProvider::class
     ],
     /*
     |--------------------------------------------------------------------------
@@ -178,6 +180,7 @@ return [
         'Html'            => Illuminate\Html\HtmlFacade::class,
         'Form'            => Illuminate\Html\FormFacade::class,
         'BootstrapHelper' => MailMarketing\Helpers\BootstrapHelper::class,
-        'Countries'       => Webpatser\Countries\CountriesFacade::class
+        'Countries'       => Webpatser\Countries\CountriesFacade::class,
+        'Mailgun'         => Bogardo\Mailgun\Facades\Mailgun::class
     ]
 ];
