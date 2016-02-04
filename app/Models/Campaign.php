@@ -13,7 +13,20 @@ class Campaign extends AbstractBaseModel
      *
      * @var array $fillable
      */
-    protected $fillable = ['Cpg_TypeID', 'Cpg_CategoryID', 'Cpg_TopicID', 'Cpg_TemplateID', 'Cpg_Name', 'Cpg_EmailSubject', 'Cpg_EmailAddressFrom', 'Cpg_EmailNameFrom', 'Cpg_Content'];
+    protected $fillable = [
+        'Cpg_TypeID',
+        'Cpg_CategoryID',
+        'Cpg_TopicID',
+        'Cpg_TemplateID',
+        'Cpg_MailgunCampaignID',
+        'Cpg_Name',
+        'Cpg_EmailSubject',
+        'Cpg_EmailAddressFrom',
+        'Cpg_EmailNameFrom',
+        'Cpg_EmailAddressReplyTo',
+        'Cpg_EmailNameReplyTo',
+        'Cpg_Content'
+    ];
 
     /**
      * Campaign type relationship.

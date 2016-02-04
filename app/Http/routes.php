@@ -97,17 +97,13 @@ Route::resource('register', 'RegistrationController');
 Route::get(
     'test/mail',
     function () {
-        //$result = \Mailgun::send(['welcome'], [], function ($message) {
-        //    $message->to('faber.banjarnahor@gmail.com', 'Faber Banjarnahor');
-        //    $message->bcc('bambang.adrian@gmail.com', 'Bambang Adrian S');
-        //    $message->subject('Welcome!');
-        //});
-        $result = \Mailgun::lists()->create([
-            'address'      => 'webmaster@carapikir.com',
-            'name'         => 'Test mailing list',
-            'description'  => 'Just for fun',
-            'access_level' => 'members'
-        ]);
+        $result = \Mailgun::send(['welcome'], [], function ($message) {
+            $message->bcc('faber.banjarnahor@gmail.com', 'Faber Banjarnahor');
+            $message->to('bambang.adrian@gmail.com', 'Bambang Adrian S');
+            $message->subject('Welcome!');
+            $message->campaign('my_campaign_id');
+        });
+
         dd($result);
 
         return 'hi';

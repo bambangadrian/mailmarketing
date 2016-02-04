@@ -22,11 +22,13 @@ class UpdateMailListRequest extends Request
     public function rules()
     {
         return [
-            'Mls_Name'             => 'required|string|max:50|min:3',
-            'Mls_EmailAddressFrom' => 'required|email|string|max:50|min:3',
-            'Mls_EmailNameFrom'    => 'required|string|max:50|min:3',
-            'Mls_CompanyName'      => 'required|string|max:50|min:3',
-            'Mls_AccessLevel'      => 'required'
+            'Mls_Name'                => 'required|string|max:50|min:3',
+            'Mls_EmailAddressFrom'    => 'required|email|string|max:50|min:3',
+            'Mls_EmailAddressReplyTo' => 'required|email|string|max:50|min:3',
+            'Mls_EmailNameFrom'       => 'required|string|max:50|min:3',
+            'Cpg_EmailNameReplyTo'    => 'required|string|max:50|min:3',
+            'Mls_CompanyName'         => 'required|string|max:50|min:3',
+            'Mls_AccessLevel'         => 'required'
         ];
     }
 }

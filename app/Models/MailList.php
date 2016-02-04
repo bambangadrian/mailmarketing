@@ -17,6 +17,8 @@ class MailList extends AbstractBaseModel
         'Mls_Name',
         'Mls_EmailAddressFrom',
         'Mls_EmailNameFrom',
+        'Mls_EmailAddressReplyTo',
+        'Mls_EmailNameReplyTo',
         'Mls_Reminder',
         'Mls_CompanyName',
         'Mls_Description',

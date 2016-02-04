@@ -12,6 +12,11 @@ class AlterForMailGunIntegration extends Migration
      */
     public function up()
     {
+        Schema::table('Campaign', function (Blueprint $table) {
+            $table->string('Cpg_EmailAddressReplyTo', 50)->after('Cpg_EmailNameFrom')->nullable();
+            $table->string('Cpg_EmailNameReplyTo', 50)->after('Cpg_EmailAddressReplyTo')->nullable();
+            $table->string('Cpg_MailgunCampaignID', 50)->after('Cpg_TemplateID');
+        });
         Schema::table(
             'MailList',
             function (Blueprint $table) {
@@ -26,6 +31,8 @@ class AlterForMailGunIntegration extends Migration
                       ->unsigned()
                       ->after('Mls_AccessLevel')
                       ->nullable();
+                $table->string('Mls_EmailAddressReplyTo', 50)->after('Mls_EmailNameFrom');
+                $table->string('Mls_EmailNameReplyTo', 50)->after('Mls_EmailAddressReplyTo');
                 # Add table constraint
                 $table->foreign('Mls_DefaultGroupID', 'Idx_MailList_Mls_DefaultGroupID_SubscriberGroup_Sbg_ID')
                       ->references('Sbg_ID')
@@ -57,6 +64,12 @@ class AlterForMailGunIntegration extends Migration
                       ->default('register')
                       ->after('Sgd_SubscriberID')
                       ->nulable();
+            }
+        );
+        Schema::table(
+            'SentMail',
+            function (Blueprint $table) {
+                $table->string('Sm_MailgunSentMailID', 100)->after('Sm_SubscriberListID')->nullable();
             }
         );
         Schema::table(
@@ -93,12 +106,21 @@ class AlterForMailGunIntegration extends Migration
      */
     public function down()
     {
+        Schemea::table('Campaign', function (Blueprint $table) {
+            $table->dropColumn(['Cpg_MailgunCampaignID', 'Cpg_EmailAddressReplyTo', 'Cpg_EmailNameReplyTo']);
+        });
         Schema::table(
             'MailList',
             function (Blueprint $table) {
                 $table->dropForeign('Idx_MailList_Mls_DefaultGroupID_SubscriberGroup_Sbg_ID');
                 # Drop access level field column.
-                $table->dropColumn(['Mls_AccessLevel', 'Mls_Description', 'Mls_DefaultGroupID']);
+                $table->dropColumn([
+                    'Mls_AccessLevel',
+                    'Mls_Description',
+                    'Mls_DefaultGroupID',
+                    'Mls_EmailAddressReplyTo',
+                    'Mls_EmailNameReplyTo'
+                ]);
             }
         );
         Schema::table(
@@ -117,6 +139,12 @@ class AlterForMailGunIntegration extends Migration
             'SubscriberGroupDetail',
             function (Blueprint $table) {
                 $table->dropColumn(['Sgd_SubscribedOn', 'Sgd_SubscribedVia']);
+            }
+        );
+        Schema::table(
+            'SentMail',
+            function (Blueprint $table) {
+                $table->dropColumn(['Sm_MailgunSentMailID']);
             }
         );
         Schema::table(

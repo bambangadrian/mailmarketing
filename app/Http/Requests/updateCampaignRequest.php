@@ -22,13 +22,15 @@ class UpdateCampaignRequest extends Request
     public function rules()
     {
         return [
-            'Cpg_TypeID'           => 'required',
-            'Cpg_CategoryID'       => 'required',
-            'Cpg_TopicID'          => 'required',
-            'Cpg_TemplateID'       => 'required',
-            'Cpg_Name'             => 'required|string|min:3|max:50',
-            'Cpg_EmailSubject'     => 'string|max:255',
-            'Cpg_EmailAddressFrom' => 'email|string|max:50|min:3'
+            'Cpg_TypeID'              => 'required',
+            'Cpg_CategoryID'          => 'required',
+            'Cpg_TopicID'             => 'required',
+            'Cpg_TemplateID'          => 'required',
+            'Cpg_Name'                => 'required|string|min:3|max:50',
+            'Cpg_MailgunCampaignID'   => 'required|string|min:3|max:50',
+            'Cpg_EmailSubject'        => 'string|max:255',
+            'Cpg_EmailAddressFrom'    => 'email|string|max:50|min:3',
+            'Cpg_EmailAddressReplyTo' => 'email|string|max:50|min:3'
         ];
     }
 }

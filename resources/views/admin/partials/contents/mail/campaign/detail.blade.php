@@ -25,6 +25,10 @@
                         {!! Form::label('Cpg_TemplateID', 'Template') !!}
                         {!! Form::select('Cpg_TemplateID', $templateOptions, null, ['class' => 'form-control select2', 'style' => 'width: 100%;']) !!}
                     </div>
+                    <div class="form-group">
+                        {!! Form::label('Cpg_MailgunCampaignID', 'Mailgun Campaign ID',['class' => 'required']) !!}
+                        {!! Form::text('Cpg_MailgunCampaignID', null, ['required', 'class' => 'form-control', 'placeholder' => 'Enter Mailgun Campaign ID']) !!}
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -37,11 +41,19 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('Cpg_EmailAddressFrom', 'Email Address From') !!}
-                        {!! Form::text('Cpg_EmailAddressFrom', null, ['class' => 'form-control', 'placeholder' => 'Enter Email Address From']) !!}
+                        {!! Form::email('Cpg_EmailAddressFrom', null, ['class' => 'form-control', 'placeholder' => 'Enter Email Address From']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('Cpg_EmailNameFrom', 'Email Name From') !!}
                         {!! Form::text('Cpg_EmailNameFrom', null, ['class' => 'form-control', 'placeholder' => 'Enter Email Name From']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('Cpg_EmailAddressReplyTo', 'Email Address Reply To') !!}
+                        {!! Form::email('Cpg_EmailAddressReplyTo', null, ['class' => 'form-control', 'placeholder' => 'Enter Email Address Reply To']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('Cpg_EmailNameReplyTo', 'Email Name Reply To') !!}
+                        {!! Form::text('Cpg_EmailNameReplyTo', null, ['class' => 'form-control', 'placeholder' => 'Enter Email Name Reply To']) !!}
                     </div>
                     <div class="checkbox">
                         <label for="Mls_Active">

@@ -15,11 +15,19 @@
                         </div>
                         <div class="form-group">
                             {!! Form::label('Mls_EmailAddressFrom', 'Email Address From',['class' => 'required']) !!}
-                            {!! Form::text('Mls_EmailAddressFrom', null, ['required', 'class' => 'form-control', 'placeholder' => 'Enter Email Address From']) !!}
+                            {!! Form::email('Mls_EmailAddressFrom', null, ['required', 'class' => 'form-control', 'placeholder' => 'Enter Email Address From']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('Mls_EmailNameFrom', 'Email Name From',['class' => 'required']) !!}
                             {!! Form::text('Mls_EmailNameFrom', null, ['required', 'class' => 'form-control', 'placeholder' => 'Enter Email Name From']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('Mls_EmailAddressReplyTo', 'Email Address Reply To',['class' => 'required']) !!}
+                            {!! Form::email('Mls_EmailAddressReplyTo', null, ['required', 'class' => 'form-control', 'placeholder' => 'Enter Email Address Reply To']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('Mls_EmailNameReplyTo', 'Email Name From',['class' => 'required']) !!}
+                            {!! Form::text('Mls_EmailNameReplyTo', null, ['required', 'class' => 'form-control', 'placeholder' => 'Enter Email Name Reply To']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('Mls_CompanyName', 'Company Name',['class' => 'required']) !!}

@@ -13,7 +13,11 @@ class SentMail extends AbstractBaseModel
      *
      * @var array $fillable
      */
-    protected $fillable = ['Sm_MailScheduleID', 'Sm_SubscriberListID'];
+    protected $fillable = [
+        'Sm_MailScheduleID',
+        'Sm_SubscriberListID',
+        'Sm_MailgunSentMailID'
+    ];
 
     /**
      * Mail schedule relationship.

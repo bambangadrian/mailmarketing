@@ -75,62 +75,114 @@ class SentCampaignController extends AbstractAdminController
     public function store(CreateSentCampaignRequest $request, $campaignID)
     {
         try {
-            \DB::beginTransaction();
             # Get the campaign model.
-            $campaignModel = Campaign::find($campaignID);
-            $mailArr = [
-                'to'       => [],
-                'from'     => $campaignModel->Cpg_EmailAddressFrom,
-                'fromName' => $campaignModel->Cpg_EmailNameFrom,
-                'subject'  => $campaignModel->Cpg_EmailSubject,
-                'content'  => $campaignModel->Cpg_Content,
-                'view'     => 'storageView::'.camel_case($campaignModel->template->Tpl_Name).'.index'
-            ];
-
+            $recordCampaign = Campaign::with('campaignCategory', 'campaignType', 'campaignTopic')->find($campaignID);
+            $recordCampaignType = $recordCampaign->campaignType;
+            # Get subscriber group detail data.
+            $groupID = $request->get('Msd_SubscriberGroupID');
+            $recordSubscriberGroup = SubscriberGroup::with('mailList')->find($groupID);
+            $recordMailList = $recordSubscriberGroup->mailList;
+            $recordSubGroupList = SubscriberGroup::active()
+                                                 ->notDeleted()
+                                                 ->where('Sbg_ParentID', $groupID)
+                                                 ->lists('Sbg_ID')
+                                                 ->prepend($groupID);
+            # Get the record of subscriber group detail data.
+            $recordSubscriberGroupDetail = SubscriberGroupDetail::active()
+                                                                ->notDeleted()
+                                                                ->with('subscriber')
+                                                                ->whereIn('Sgd_GroupID', $recordSubGroupList)
+                                                                ->groupBy('Sgd_SubscriberID')
+                                                                ->get();
             # Step to assign default mail from address and name :
-            # 1. Check out from the campaign directly
-            # 2. Then check from the mailing list
-            # 3. Then check from company profile
-
-            $this->data['content'] = $mailArr['content'];
+            # Check out from the campaign directly
+            # If empty then check from the mailing list
+            $fromEmail = $recordCampaign->Cpg_EmailAddressFrom;
+            $fromName = $recordCampaign->Cpg_EmailNameFrom;
+            $replyToEmail = $recordCampaign->Cpg_EmailAddressReplyTo;
+            $replyToName = $recordCampaign->Cpg_EmailNameReplyTo;
+            $mailListEmail = $recordMailList->Mls_EmailAddressFrom;
+            $mailListName = $recordMailList->Mls_EmailNameFrom;
+            if (empty($fromEmail) === true) {
+                $fromEmail = $mailListEmail;
+            }
+            if (empty($fromName) === true) {
+                $fromName = $mailListName;
+            }
+            if (empty($replyToEmail) === true) {
+                $replyToEmail = $recordMailList->Mls_EmailAddressReplyTo;
+            }
+            if (empty($replyToName) === true) {
+                $replyToName = $recordMailList->Mls_EmailNameReplyTo;
+            }
+            # Build the mail array data model.
+            $mailArr = [
+                'to'          => [],
+                'mailList'    => ['email' => $mailListEmail, 'name' => $mailListName],
+                'from'        => $fromEmail,
+                'fromName'    => $fromName,
+                'replyTo'     => $replyToEmail,
+                'replyToName' => $replyToName,
+                'subject'     => $recordCampaign->Cpg_EmailSubject,
+                'content'     => $recordCampaign->Cpg_Content,
+                'view'        => 'storageView::'.camel_case($recordCampaign->template->Tpl_Name).'.index',
+                'tag'         => [$recordCampaign->campaignCategory->Cc_Name, $recordCampaign->campaignTopic->Cto_Name],
+                'campaignID'  => $recordCampaign->Cpg_MailgunCampaignID
+            ];
+            # Start database transaction.
+            \DB::beginTransaction();
             # Create the mail schedule.
             $request->merge(['Msd_IsExecuted' => 0]);
             if ($request->get('RealTime') === '1') {
                 $request->merge(['Msd_IsExecuted' => 1]);
             }
-            $mailScheduleRecord = MailSchedule::create($request->except('_method', '_token'));
-            # Insert into sent mail table.
-            $groupID = $request->get('Msd_SubscriberGroupID');
-            $subGroupList = SubscriberGroup::active()
-                                           ->notDeleted()->where('Sbg_ParentID', $groupID)
-                                           ->lists('Sbg_ID')->prepend($groupID);
-            $subscriberGroup = SubscriberGroupDetail::notDeleted()
-                                                    ->with('subscriber')
-                                                    ->whereIn('Sgd_GroupID', $subGroupList)
-                                                    ->groupBy('Sgd_SubscriberID')
-                                                    ->get();
-            foreach ($subscriberGroup as $row) {
-                //$mailArr['to'][] = $row->subscriber->Sbr_EmailAddress;
+            $recordMailSchedule = MailSchedule::create($request->except('_method', '_token'));
+            $massSentMailData = [];
+            # Set the email-to address.
+            foreach ($recordSubscriberGroupDetail as $row) {
                 $mailArr['to'][] = [
-                    $row->subscriber->Sbr_EmailAddress,
-                    $row->subscriber->Sbr_FirstName.' '.$row->subscriber->Sbr_LastName
+                    'email' => $row->subscriber->Sbr_EmailAddress,
+                    'name'  => $row->subscriber->Sbr_FirstName.' '.$row->subscriber->Sbr_LastName
                 ];
-                $sentMailRecord = new SentMail();
-                $sentMailRecord->Sm_MailScheduleID = $mailScheduleRecord->getKey();
-                $sentMailRecord->Sm_SubscriberListID = $row->Sgd_ID;
-                $sentMailRecord->Sm_Active = 1;
-                $sentMailRecord->push();
+                $massSentMailData[] = [
+                    'Sm_MailScheduleID'   => $recordMailSchedule->getKey(),
+                    'Sm_SubscriberListID' => $row->Sgd_ID,
+                    'Sm_Active'           => 1
+                ];
             }
-            foreach ($mailArr['to'] as $mailTo) {
-                \Mail::send(
-                    $mailArr['view'],
-                    $this->data,
-                    function ($message) use ($mailArr, $mailTo) {
-                        $message->from($mailArr['from'], $mailArr['fromName']);
-                        $message->to($mailTo[0], $mailTo[1]);
-                        $message->subject($mailArr['subject']);
+            # Send email using mailgun.
+            # Create the campaign, and enable the tracking.
+            # Set the message view first.
+            $messageView = [];
+            # Set the message data. @todo Custom Email Message Data.
+            $messageData['content'] = $mailArr['content'];
+            if ((integer)$recordCampaignType->Cgt_ID === 1) {
+                $messageView = ['text' => $mailArr['view']];
+            } elseif ((integer)$recordCampaignType->Cgt_ID === 2) {
+                $messageView = [$mailArr['view']];
+            }
+            $sentMailgunResult = \Mailgun::send(
+                $messageView,
+                $messageData,
+                function ($message) use ($mailArr) {
+                    $message->from($mailArr['from'], $mailArr['fromName']);
+                    $message->replyTo($mailArr['replyTo'], $mailArr['replyToName']);
+                    $message->to($mailArr['mailList']['email'], $mailArr['mailList']['name']);
+                    foreach ($mailArr['to'] as $subscriber) {
+                        $message->bcc($subscriber['email'], $subscriber['name']);
                     }
-                );
+                    $message->subject($mailArr['subject']);
+                    $message->tag($mailArr['tag']);
+                    $message->campaign($mailArr['campaignID']);
+                    $message->trackClicks(true);
+                    $message->trackOpens(true);
+                    $message->tracking(true);
+                }
+            );
+            # Insert into sent mail table.
+            foreach ($massSentMailData as $row) {
+                $row = array_merge($row, ['Sm_MailgunSentMailID' => $sentMailgunResult->http_response_body->id]);
+                SentMail::create($row);
             }
             # Commit to database if sent mail has ran
             \DB::commit();
