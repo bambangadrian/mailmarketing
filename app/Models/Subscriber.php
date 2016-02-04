@@ -21,7 +21,11 @@ class Subscriber extends AbstractBaseModel
         'Sbr_Address1',
         'Sbr_Address2',
         'Sbr_Address3',
-        'Sbr_MemberRating'
+        'Sbr_MemberRating',
+        'Sbr_Phone',
+        'Sbr_AltPhone',
+        'Sbr_BirthDay',
+        'Sbr_Gender'
     ];
 
     /**

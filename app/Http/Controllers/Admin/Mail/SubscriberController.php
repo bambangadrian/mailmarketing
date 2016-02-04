@@ -42,7 +42,7 @@ class SubscriberController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create new mail subscriber item';
-        $this->data['importOptions'] = ImportFrom::active()->notDeleted()->lists('Imf_Name', 'Imf_ID')->prepend('Please Select Import From ...', '');
+        $this->loadOptions();
         $this->loadResourceForDetailPage();
 
         return parent::create();
@@ -59,7 +59,7 @@ class SubscriberController extends AbstractAdminController
     {
         $this->data['pageDescription'] = 'Update mail subscriber item';
         $this->data['model'] = Subscriber::find($id);
-        $this->data['importOptions'] = ImportFrom::active()->notDeleted()->lists('Imf_Name', 'Imf_ID')->prepend('Please Select Import From ...', '');
+        $this->loadOptions();
         $this->loadResourceForDetailPage();
 
         return parent::edit($id);
@@ -114,13 +114,31 @@ class SubscriberController extends AbstractAdminController
     }
 
     /**
-     * Load resources for detail page.
+     * Load required options for detail page.
+     *
+     * @return void
+     */
+    private function loadOptions()
+    {
+        $this->data['importOptions'] = ImportFrom::active()
+                                                 ->notDeleted()
+                                                 ->lists('Imf_Name', 'Imf_ID')
+                                                 ->prepend('Please Select Import From ...', '');
+        $this->data['genderOptions'] = collect(['M' => 'Male', 'F' => 'Female'])->prepend('Please Select Gender', '');
+    }
+
+    /**
+     * Load resource for detail page.
      *
      * @return void
      */
     private function loadResourceForDetailPage()
     {
-        $this->data['css'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.min.css');
-        $this->data['js'][] = asset('/vendor/bower_components/AdminLTE/plugins/select2/select2.full.min.js');
+        $adminLtePluginPath = '/vendor/bower_components/AdminLTE/plugins/';
+        $this->data['css'][] = asset($adminLtePluginPath.'daterangepicker/daterangepicker-bs3.css');
+        $this->data['css'][] = asset($adminLtePluginPath.'select2/select2.min.css');
+        $this->data['js'][] = asset($adminLtePluginPath.'select2/select2.full.min.js');
+        $this->data['js'][] = asset($adminLtePluginPath.'moment/moment.min.js');
+        $this->data['js'][] = asset($adminLtePluginPath.'daterangepicker/daterangepicker.js');
     }
 }

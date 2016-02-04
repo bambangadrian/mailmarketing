@@ -8,7 +8,8 @@
             <tr>
                 <th class="rowNumber">No</th>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Email</th>
+                <th>Group</th>
                 <th class="rowActive">Active</th>
             </tr>
         </thead>
@@ -16,11 +17,12 @@
         <?php $counter = 1; ?>
         @foreach($model as $index => $row)
             <?php $no = (($model->currentPage() - 1) * $model->perPage()) + $counter++; ?>
-            <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', [$row->Sbg_MailListID, $row->getKey()]) }}'">
+            <tr ondblclick="window.location.href='{{ action($controllerName . '@edit', [$listID, $row->getKey()]) }}'">
                 <td class="rowNumber">{{ $no }}</td>
-                <td>{{ $row->Sbg_Name }}</td>
-                <td>{{ $row->Sbg_Description }}</td>
-                <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Sbg_Active) !!}</td>
+                <td>{{ $row->subscriber->Sbr_FirstName . ' ' . $row->subscriber->Sbr_LastName }}</td>
+                <td>{{ $row->subscriber->Sbr_EmailAddress }}</td>
+                <td>{{ $row->subscriberGroup->Sbg_Name }}</td>
+                <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Sgd_Active) !!}</td>
             </tr>
         @endforeach
         </tbody>

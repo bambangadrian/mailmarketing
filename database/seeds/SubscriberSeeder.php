@@ -21,6 +21,8 @@ class SubscriberSeeder extends Seeder
                 'Sbr_EmailAddress' => 'maitaelfrida29@gmail.com',
                 'Sbr_FirstName'    => 'Maita',
                 'Sbr_LastName'     => 'Elfrida',
+                'Sbr_Gender'       => 'F',
+                'Sbr_BirthDay'     => '1987-04-24',
                 'Sbr_Address1'     => 'Perumahan Bagasasi Blok F3 No.1',
                 'Sbr_Address2'     => 'Cibarusah',
                 'Sbr_Address3'     => 'Cikarang Selatan',

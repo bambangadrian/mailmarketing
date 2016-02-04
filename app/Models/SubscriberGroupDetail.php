@@ -13,7 +13,12 @@ class SubscriberGroupDetail extends AbstractBaseModel
      *
      * @var array $fillable
      */
-    protected $fillable = ['Sgd_GroupID', 'Sgd_SubscriberID'];
+    protected $fillable = [
+        'Sgd_GroupID',
+        'Sgd_SubscriberID',
+        'Sgd_SubscribedVia',
+        'Sgd_SubscribedOn'
+    ];
 
     /**
      * Subscriber group relationship.

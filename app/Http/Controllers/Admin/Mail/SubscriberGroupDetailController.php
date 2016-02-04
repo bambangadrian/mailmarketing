@@ -1,8 +1,10 @@
 <?php
 namespace MailMarketing\Http\Controllers\Admin\Mail;
 
+use MailMarketing\Helpers\Helper;
 use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
 use MailMarketing\Http\Requests\UpdateSubscriberGroupDetailRequest;
+use MailMarketing\Models\MailList;
 use MailMarketing\Models\Subscriber;
 use MailMarketing\Models\SubscriberGroup;
 use MailMarketing\Models\SubscriberGroupDetail;
@@ -23,6 +25,7 @@ class SubscriberGroupDetailController extends AbstractAdminController
         $this->data['pageDescription'] = 'Manage your subscriber group detail list';
         $this->data['activeMenu'] = 'mail';
         $this->data['activeSubMenu'] = 'mailList';
+        $this->setEnableDelete(true);
     }
 
     /**
@@ -37,7 +40,10 @@ class SubscriberGroupDetailController extends AbstractAdminController
     {
         $this->data['listID'] = $listID;
         $this->data['groupID'] = $groupID;
-        $subGroupList = SubscriberGroup::active()->notDeleted()->where('Sbg_ParentID', $groupID)->lists('Sbg_ID')->prepend($groupID);
+        $subGroupList = SubscriberGroup::active()
+                                       ->notDeleted()->where('Sbg_ParentID', $groupID)
+                                       ->lists('Sbg_ID')
+                                       ->prepend($groupID);
         $this->data['model'] = SubscriberGroupDetail::notDeleted()
                                                     ->with('subscriber', 'subscriberGroup')
                                                     ->whereIn('Sgd_GroupID', $subGroupList)
@@ -76,7 +82,8 @@ class SubscriberGroupDetailController extends AbstractAdminController
                                                              $query->select(\DB::raw(1))
                                                                    ->from('SubscriberGroupDetail')
                                                                    ->whereRaw('(tbl_Subscriber.Sbr_ID = tbl_SubscriberGroupDetail.Sgd_SubscriberID)')
-                                                                   ->whereIn('Sgd_GroupID', $subGroupList);
+                                                                   ->whereIn('Sgd_GroupID', $subGroupList)
+                                                                   ->whereNull('Sgd_DeletedOn');
                                                          }
                                                      )
                                                      ->lists('Sbr_EmailAddress', 'Sbr_ID');
@@ -101,6 +108,7 @@ class SubscriberGroupDetailController extends AbstractAdminController
         $this->data['pageDescription'] = 'Modify the subscriber list on this mailing list group';
         $this->data['indexLinkAction'] = action($this->controllerName.'@index', [$listID, $groupID]);
         $this->data['formAction'] = action($this->controllerName.'@update', [$listID, $groupID, $detailID]);
+        $this->data['formDeleteAction'] = action($this->controllerName.'@destroy', [$listID, $groupID, $detailID]);
         $this->data['model'] = SubscriberGroupDetail::notDeleted()->with('subscriber')->find($detailID);
 
         return parent::edit($groupID);
@@ -118,13 +126,45 @@ class SubscriberGroupDetailController extends AbstractAdminController
     public function store(UpdateSubscriberGroupDetailRequest $request, $listID, $groupID)
     {
         try {
+            $members = [];
+            $dataInputForSubscriberGroupDetail = [];
+            $recordMailList = MailList::find($listID);
+            $recordSubscriberGroup = SubscriberGroup::find($groupID);
+            # Synchronize to mailgun.
+            foreach ($request->get('Sgd_SubscriberID') as $subscriberID) {
+                $recordSubscriber = Subscriber::find($subscriberID);
+                if (empty($recordSubscriber) === false) {
+                    $varsParam = [];
+                    if (empty($recordSubscriber->Sbr_BirthDay) === false) {
+                        $varsParam['age'] = Helper::calculateAge($recordSubscriber->Sbr_BirthDay);
+                    }
+                    if (empty($recordSubscriber->Sbr_Gender) === false) {
+                        $varsParam['gender'] = Helper::translateCode($recordSubscriber->Sbr_Gender, 'gender');
+                    }
+                    $varsParam['subscribedVia'] = 'admin';
+                    $varsParam['group'] = $recordSubscriberGroup->Sbg_Name;
+                    $members[] = [
+                        'address'    => $recordSubscriber->Sbr_EmailAddress,
+                        'name'       => $recordSubscriber->Sbr_FirstName.' '.$recordSubscriber->Sbr_LastName,
+                        'vars'       => json_encode($varsParam),
+                        'subscribed' => true,
+                    ];
+                    $dataInputForSubscriberGroupDetail[] = [
+                        'Sgd_GroupID'       => $request->get('Sgd_GroupID'),
+                        'Sgd_SubscriberID'  => $subscriberID,
+                        'Sgd_Active'        => $request->get('Sgd_Active'),
+                        'Sgd_SubscribedVia' => 'admin',
+                        'Sgd_SubscribedOn'  => date('Y-m-d')
+                    ];
+                }
+            }
+            if (count($members) > 0) {
+                \Mailgun::lists()->addMembers($recordMailList->Mls_EmailAddressFrom, $members, true);
+            }
+            # Start insert into subscriber group detail.
             \DB::beginTransaction();
-            foreach ($request->get('Sgd_SubscriberID') as $subscriber) {
-                $record = new SubscriberGroupDetail();
-                $record->Sgd_GroupID = $request->get('Sgd_GroupID');
-                $record->Sgd_SubscriberID = $subscriber;
-                $record->Sgd_Active = $request->get('Sgd_Active');
-                $record->push();
+            foreach ($dataInputForSubscriberGroupDetail as $row) {
+                SubscriberGroupDetail::create($row);
             }
             \DB::commit();
 
@@ -132,7 +172,9 @@ class SubscriberGroupDetailController extends AbstractAdminController
         } catch (\Exception $e) {
             \DB::rollback();
 
-            return redirect()->action($this->controllerName.'@create', [$listID, $groupID])->withErrors($e->getMessage())->withInput();
+            return redirect()->action($this->controllerName.'@create', [$listID, $groupID])
+                             ->withErrors($e->getMessage())
+                             ->withInput();
         }
     }
 
@@ -150,17 +192,74 @@ class SubscriberGroupDetailController extends AbstractAdminController
     {
         $redirectPath = action($this->controllerName.'@edit', [$listID, $groupID, $detailID]);
         try {
+            $recordMailList = MailList::find($listID);
+            $recordSubscriberGroup = SubscriberGroup::find($groupID);
+            $recordSubscriberGroupDetail = SubscriberGroupDetail::with('subscriber')->find($detailID);
+            $recordSubscriber = $recordSubscriberGroupDetail->subscriber;
+            $varsParam = [];
+            if (empty($recordSubscriber->Sbr_BirthDay) === false) {
+                $varsParam['age'] = Helper::calculateAge($recordSubscriber->Sbr_BirthDay);
+            }
+            if (empty($recordSubscriber->Sbr_Gender) === false) {
+                $varsParam['gender'] = Helper::translateCode($recordSubscriber->Sbr_Gender, 'gender');
+            }
+            $varsParam['subscribedVia'] = 'admin';
+            $varsParam['group'] = $recordSubscriberGroup->Sbg_Name;
+            $subscribed = true;
+            if ((integer)$request->get('Sgd_Active') === 0) {
+                $subscribed = false;
+            }
+            \Mailgun::lists()->updateMember(
+                $recordMailList->Mls_EmailAddressFrom,
+                $recordSubscriberGroupDetail->subscriber->Sbr_EmailAddress,
+                [
+                    'address'    => $recordSubscriber->Sbr_EmailAddress,
+                    'name'       => $recordSubscriber->Sbr_FirstName.' '.$recordSubscriber->Sbr_LastName,
+                    'vars'       => json_encode($varsParam),
+                    'subscribed' => $subscribed
+                ]
+            );
             \DB::beginTransaction();
-            $record = SubscriberGroupDetail::find($detailID);
-            $record->Sgd_Active = $request->get('Sgd_Active');
-            $record->save();
+            $recordSubscriberGroupDetail->Sgd_Active = $request->get('Sgd_Active');
+            $recordSubscriberGroupDetail->save();
             \DB::commit();
-
             return redirect($redirectPath);
         } catch (\Exception $e) {
             \DB::rollback();
 
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param integer $listID   Mailing list ID parameter.
+     * @param integer $groupID  Subscriber group ID parameter.
+     * @param integer $detailID Row ID of model that want to delete..
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($listID, $groupID = null, $detailID = null)
+    {
+        try {
+            $recordMailList = MailList::find($listID);
+            $recordSubscriberGroupDetail = SubscriberGroupDetail::find($detailID);
+            \Mailgun::lists()->deleteMember(
+                $recordMailList->Mls_EmailAddressFrom,
+                $recordSubscriberGroupDetail->subscriber->Sbr_EmailAddress
+            );
+            \DB::beginTransaction();
+            $recordSubscriberGroupDetail->delete();
+            \DB::commit();
+
+            return redirect(action($this->controllerName.'@index', [$listID, $groupID]));
+        } catch (\Exception $e) {
+            \DB::rollback();
+
+            return redirect(action($this->controllerName.'@edit', [$listID, $groupID, $detailID]))
+                ->withErrors($e->getMessage())
+                ->withInput();
         }
     }
 

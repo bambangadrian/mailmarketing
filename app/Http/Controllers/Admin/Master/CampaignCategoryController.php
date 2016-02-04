@@ -118,7 +118,7 @@ class CampaignCategoryController extends AbstractAdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  integer $id Row ID of model that want to show.
+     * @param  integer $id Row ID of model that want to destroy.
      *
      * @return \Illuminate\Http\Response
      */

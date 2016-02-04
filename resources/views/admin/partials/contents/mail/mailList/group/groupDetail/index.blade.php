@@ -5,13 +5,13 @@
 @section('data-listing')
     <table class="table table-bordered table-hover">
         <thead>
-        <tr>
-            <th class="rowNumber">No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Group</th>
-            <th class="rowActive">Active</th>
-        </tr>
+            <tr>
+                <th class="rowNumber">No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Group</th>
+                <th class="rowActive">Active</th>
+            </tr>
         </thead>
         <tbody>
         <?php $counter = 1; ?>

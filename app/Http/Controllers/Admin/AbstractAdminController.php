@@ -209,6 +209,9 @@ abstract class AbstractAdminController extends BaseController
         if (array_key_exists('formAction', $this->data) === false) {
             $this->data['formAction'] = action($this->controllerName.'@update', $id);
         }
+        if ($this->isEnableDelete() === true and array_key_exists('formDeleteAction', $this->data) === false) {
+            $this->data['formDeleteAction'] = action($this->controllerName.'@destroy', $id);
+        }
         $this->data['css'][] = asset('/assets/css/detail.css');
         $this->data['referenceValue'] = $this->getReferenceValue();
 
@@ -231,14 +234,13 @@ abstract class AbstractAdminController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  integer $id Row ID of model that want to show.
+     * @param  integer $id Row ID of model that want to destroy.
      *
      * @return \Illuminate\Http\Response
      */
     protected function destroy($id)
     {
-        # @todo parent destroy method
-        return 'deleted';
+        return 'destroyed';
     }
 
     /**

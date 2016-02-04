@@ -7,7 +7,6 @@
         <div class="col-xs-12">
             {!! Form::model($model, ['url' => $formAction]) !!}
                 {{ $formMethodField }}
-                {!! Form::hidden('Sgd_GroupID', $groupID) !!}
                 <div class="form-group">
                     {!! Form::label('Sgd_SubscriberID', 'Add Subscribers', ['class' => 'required']) !!}
                     <?php $activeFieldAttributes = null; ?>

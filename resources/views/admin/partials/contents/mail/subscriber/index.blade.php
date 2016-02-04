@@ -9,9 +9,8 @@
                 <th class="rowNumber">No</th>
                 <th>Email</th>
                 <th>Full Name</th>
-                <th>Address</th>
-                <th>Import From</th>
-                <th class="rowNumber">Rating</th>
+                <th class="rowNumber">Age</th>
+                <th>Gender</th>
                 <th class="rowActive">Active</th>
             </tr>
         </thead>
@@ -23,9 +22,14 @@
                     <td class="rowNumber">{{ $no }}</td>
                     <td>{{ $row->Sbr_EmailAddress }}</td>
                     <td>{{ $row->Sbr_FirstName . ' ' . $row->Sbr_LastName }}</td>
-                    <td>{{ $row->Sbr_Address1 . ' ' . $row->Sbr_Address2 }}</td>
-                    <td>{{ $row->importFrom->Imf_Name }}</td>
-                    <td class="rowNumber">{{ $row->Sbr_MemberRating }}</td>
+                    <td class="rowNumber">
+                        @if(empty($row->Sbr_BirthDay) === false)
+                            {{ \MailMarketing\Helpers\Helper::calculateAge($row->Sbr_BirthDay) }}
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td>{{ \MailMarketing\Helpers\Helper::translateCode($row->Sbr_Gender, 'gender') }}</td>
                     <td class="rowActive">{!! \BootstrapHelper::getIconYesNo($row->Sbr_Active) !!}</td>
                 </tr>
             @endforeach

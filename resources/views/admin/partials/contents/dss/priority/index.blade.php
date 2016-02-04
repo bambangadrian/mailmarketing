@@ -5,17 +5,17 @@
 @section('data-listing')
     <table class="table table-bordered table-hover">
         <thead>
-        <tr>
-            <th class="rowNumber">No</th>
-            <th>Name</th>
-            <th>Start Period</th>
-            <th>End Period</th>
-            <th class="rowFloat">CI</th>
-            <th class="rowFloat">CR</th>
-            <th class="rowActive">Active</th>
-            <th class="rowActive">Consistent</th>
-            <th class="rowActive">Calculated</th>
-        </tr>
+            <tr>
+                <th class="rowNumber">No</th>
+                <th>Name</th>
+                <th>Start Period</th>
+                <th>End Period</th>
+                <th class="rowFloat">CI</th>
+                <th class="rowFloat">CR</th>
+                <th class="rowActive">Active</th>
+                <th class="rowActive">Consistent</th>
+                <th class="rowActive">Calculated</th>
+            </tr>
         </thead>
         <tbody>
         <?php $counter = 1; ?>

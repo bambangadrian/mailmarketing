@@ -43,6 +43,7 @@ class AlterForMailGunIntegration extends Migration
             function (Blueprint $table) {
                 # Add birthday, phone, and alternative phone fields column.
                 $table->date('Sbr_BirthDay')->after('Sbr_LastName')->nullable();
+                $table->enum('Sbr_Gender', ['M', 'F'])->after('Sbr_BirthDay')->nullable();
                 $table->char('Sbr_Phone', 15)->after('Sbr_Address3')->nullable();
                 $table->char('Sbr_AltPhone', 15)->after('Sbr_Phone')->nullable();
             }
@@ -53,7 +54,9 @@ class AlterForMailGunIntegration extends Migration
                 # Add subscribed via and date field column.
                 $table->date('Sgd_SubscribedOn')->after('Sgd_Active');
                 $table->enum('Sgd_SubscribedVia', ['register', 'admin', 'export'])
-                      ->after('Sgd_SubscriberID');
+                      ->default('register')
+                      ->after('Sgd_SubscriberID')
+                      ->nulable();
             }
         );
         Schema::table(
@@ -107,7 +110,7 @@ class AlterForMailGunIntegration extends Migration
         Schema::table(
             'Subscriber',
             function (Blueprint $table) {
-                $table->dropColumn(['Sbr_BirthDay', 'Sbr_Phone', 'Sbr_AltPhone']);
+                $table->dropColumn(['Sbr_BirthDay', 'Sbr_Gender', 'Sbr_Phone', 'Sbr_AltPhone']);
             }
         );
         Schema::table(

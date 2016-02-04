@@ -5,11 +5,11 @@
 @section('data-listing')
     <table class="table table-bordered table-hover">
         <thead>
-        <tr>
-            <th class="rowNumber">Rank</th>
-            <th>Alternative Name</th>
-            <th class="rowFloat">Result</th>
-        </tr>
+            <tr>
+                <th class="rowNumber">Rank</th>
+                <th>Alternative Name</th>
+                <th class="rowFloat">Result</th>
+            </tr>
         </thead>
         <tbody>
         <?php $counter = 1; ?>
