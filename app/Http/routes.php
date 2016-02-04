@@ -44,8 +44,8 @@ Route::group(
                         Route::resource('maillist.groups', 'SubscriberGroupController', $resourceOption);
                         Route::resource('maillist.group.detail', 'SubscriberGroupDetailController', $resourceOption);
                         Route::resource('schedule', 'MailScheduleController', $resourceOption);
-                        Route::resource('tracking', 'MailTrackingController', $resourceOption);
                         Route::resource('sentMail', 'SentMailController', $resourceOption);
+                        Route::resource('tracking', 'MailTrackingController', $resourceOption);
                         Route::resource('trackingReport', 'TrackingReportController', $resourceOption);
                     }
                 );
@@ -87,7 +87,7 @@ Route::group(
         Route::group(
             ['prefix' => 'mailgun', 'namespace' => 'Mailgun'],
             function () {
-                Route::controller('tracking', 'TrackingHooks');
+                Route::post('events', ['uses' => 'TrackingHooks@storeEvents']);
             }
         );
     }

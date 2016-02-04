@@ -70,12 +70,15 @@ class AlterForMailGunIntegration extends Migration
             'SentMail',
             function (Blueprint $table) {
                 $table->string('Sm_MailgunSentMailID', 100)->after('Sm_SubscriberListID')->nullable();
+                $table->index('Sm_MailgunSentMailID', 'Idx_SentMail_Sm_MailgunSentMailID');
             }
         );
         Schema::table(
             'MailTracking',
             function (Blueprint $table) {
                 $table->dropColumn('Mtr_Location')->nullable();
+                $table->string('Mtr_EventName', 25)->after('Mtr_StatusID')->nullable();
+                $table->string('Mtr_Recipient', 50)->after('Mtr_EventName')->nullable();
                 $table->json('Mtr_MessageHeaders')->after('Mtr_IpAddress')->nullable();
                 $table->string('Mtr_MessageID', 50)->after('Mtr_MessageHeaders')->nullable();
                 $table->string('Mtr_Reason', 100)->after('Mtr_MessageId')->nullable();
@@ -87,11 +90,15 @@ class AlterForMailGunIntegration extends Migration
                 $table->string('Mtr_Region', 50)->after('Mtr_Country')->nullable();
                 $table->string('Mtr_City', 50)->after('Mtr_Region')->nullable();
                 $table->string('Mtr_ClickedUrl', 255)->after('Mtr_City')->nullable();
-                $table->string('Mtr_DeviceType', 50)->after('Mtr_ClickedUrl')->nullable();
+                $table->string('Mtr_MailingList', 50)->after('Mtr_ClickedUrl')->nullable();
+                $table->string('Mtr_DeviceType', 50)->after('Mtr_MailingList')->nullable();
                 $table->string('Mtr_ClientType', 50)->after('Mtr_DeviceType')->nullable();
                 $table->string('Mtr_ClientName', 50)->after('Mtr_ClientType')->nullable();
                 $table->string('Mtr_ClientOs', 50)->after('Mtr_ClientName')->nullable();
-                $table->string('Mtr_Token', 50)->after('Mtr_ClientOs')->nullable();
+                $table->string('Mtr_CampaignID', 50)->after('Mtr_ClientOs')->nullable();
+                $table->string('Mtr_CampaignName', 100)->after('Mtr_CampaignID')->nullable();
+                $table->string('Mtr_Tag', 50)->after('Mtr_CampaignName')->nullable();
+                $table->string('Mtr_Token', 50)->after('Mtr_Tag')->nullable();
                 $table->string('Mtr_Signature', 50)->after('Mtr_Token')->nullable();
                 $table->string('Mtr_CustomVariable', 255)->after('Mtr_Signature')->nullable();
                 $table->timestamp('Mtr_TimeStamp')->after('Mtr_CustomVariable')->nullable();
@@ -145,6 +152,7 @@ class AlterForMailGunIntegration extends Migration
             'SentMail',
             function (Blueprint $table) {
                 $table->dropColumn(['Sm_MailgunSentMailID']);
+                $table->dropIndex('Idx_SentMail_Sm_MailgunSentMailID');
             }
         );
         Schema::table(
@@ -152,6 +160,8 @@ class AlterForMailGunIntegration extends Migration
             function (Blueprint $table) {
                 $table->string('Mtr_Location', 100)->nullable();
                 $table->dropColumn([
+                    'Mtr_EventName',
+                    'Mtr_Recipient',
                     'Mtr_MessageHeaders',
                     'Mtr_MessageId',
                     'Mtr_Reason',
@@ -163,10 +173,14 @@ class AlterForMailGunIntegration extends Migration
                     'Mtr_Region',
                     'Mtr_City',
                     'Mtr_ClickedUrl',
+                    'Mtr_MailingList',
                     'Mtr_DeviceType',
                     'Mtr_ClientType',
                     'Mtr_ClientName',
                     'Mtr_ClientOs',
+                    'Mtr_CampaignID',
+                    'Mtr_CampaignName',
+                    'Mtr_Tag',
                     'Mtr_Token',
                     'Mtr_Signature',
                     'Mtr_CustomVariable',

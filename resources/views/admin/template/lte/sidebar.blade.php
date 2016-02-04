@@ -66,9 +66,9 @@
                     <li @if($activeSubMenu === 'mailList') class="active" @endif><a href="{{ action('Admin\Mail\MailListController@index') }}"><i class="fa fa-bookmark"></i> Mailing List</a>
                     <li @if($activeSubMenu === 'mailSubscriber') class="active" @endif><a href="{{ action('Admin\Mail\SubscriberController@index') }}"><i class="fa fa-user-md"></i> Subscribers</a>
                     <li @if($activeSubMenu === 'mailSchedule') class="active" @endif><a href="{{ action('Admin\Mail\MailScheduleController@index') }}"><i class="fa fa-calendar"></i> Schedule</a></li>
-                    <li @if($activeSubMenu === 'mailTracking') class="active" @endif><a href="{{ action('Admin\Mail\MailTrackingController@index') }}"><i class="fa fa-random"></i> Tracking</a></li>
                     <li @if($activeSubMenu === 'mailSent') class="active" @endif><a href="{{ action('Admin\Mail\SentMailController@index') }}"><i class="fa fa-paper-plane"></i> Sent Mail</a></li>
-                    <li @if($activeSubMenu === 'mailTrackingReport') class="active" @endif><a href="{{ action('Admin\Mail\TrackingReportController@index') }}"><i class="fa fa-bar-chart"></i> Tracking Report</a></li>
+                    <li @if($activeSubMenu === 'mailTracking') class="active" @endif><a href="{{ action('Admin\Mail\MailTrackingController@index') }}"><i class="fa fa-random"></i> Tracking</a></li>
+                    {{--<li @if($activeSubMenu === 'mailTrackingReport') class="active" @endif><a href="{{ action('Admin\Mail\TrackingReportController@index') }}"><i class="fa fa-bar-chart"></i> Tracking Report</a></li>--}}
                 </ul>
             </li>
             <li @if($activeMenu === 'dss') class="active" @endif class="treeview">

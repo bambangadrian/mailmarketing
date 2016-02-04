@@ -26,7 +26,7 @@ class UpdateMailListRequest extends Request
             'Mls_EmailAddressFrom'    => 'required|email|string|max:50|min:3',
             'Mls_EmailAddressReplyTo' => 'required|email|string|max:50|min:3',
             'Mls_EmailNameFrom'       => 'required|string|max:50|min:3',
-            'Cpg_EmailNameReplyTo'    => 'required|string|max:50|min:3',
+            'Mls_EmailNameReplyTo'    => 'required|string|max:50|min:3',
             'Mls_CompanyName'         => 'required|string|max:50|min:3',
             'Mls_AccessLevel'         => 'required'
         ];
