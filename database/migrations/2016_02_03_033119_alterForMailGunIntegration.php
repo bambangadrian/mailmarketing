@@ -113,7 +113,7 @@ class AlterForMailGunIntegration extends Migration
      */
     public function down()
     {
-        Schemea::table('Campaign', function (Blueprint $table) {
+        Schema::table('Campaign', function (Blueprint $table) {
             $table->dropColumn(['Cpg_MailgunCampaignID', 'Cpg_EmailAddressReplyTo', 'Cpg_EmailNameReplyTo']);
         });
         Schema::table(
@@ -151,8 +151,8 @@ class AlterForMailGunIntegration extends Migration
         Schema::table(
             'SentMail',
             function (Blueprint $table) {
-                $table->dropColumn(['Sm_MailgunSentMailID']);
                 $table->dropIndex('Idx_SentMail_Sm_MailgunSentMailID');
+                $table->dropColumn(['Sm_MailgunSentMailID']);
             }
         );
         Schema::table(

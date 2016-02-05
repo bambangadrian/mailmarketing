@@ -62,7 +62,7 @@
                             <div class="form-group">
                                 {!! Form::label('Mtr_Tag', 'Mail Tag:', ['class' => 'control-label col-sm-4']) !!}
                                 <div class="col-sm-8">
-                                    {!! Form::text('Mtr_Tag', $model->Mtr_CampaignName, ['class' => 'form-control', $fieldAttribute]) !!}
+                                    {!! Form::text('Mtr_Tag', $model->Mtr_Tag, ['class' => 'form-control', $fieldAttribute]) !!}
                                 </div>
                             </div>
                             <div class="form-group">

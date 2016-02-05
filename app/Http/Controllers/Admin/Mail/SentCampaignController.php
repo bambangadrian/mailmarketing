@@ -126,7 +126,7 @@ class SentCampaignController extends AbstractAdminController
                 'subject'     => $recordCampaign->Cpg_EmailSubject,
                 'content'     => $recordCampaign->Cpg_Content,
                 'view'        => 'storageView::'.camel_case($recordCampaign->template->Tpl_Name).'.index',
-                'tag'         => [$recordCampaign->campaignCategory->Cc_Name, $recordCampaign->campaignTopic->Cto_Name],
+                'tag'         => [$recordCampaign->campaignTopic->Cto_Name, $recordCampaign->campaignCategory->Cc_Name],
                 'campaignID'  => $recordCampaign->Cpg_MailgunCampaignID
             ];
             # Start database transaction.
