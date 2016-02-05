@@ -101,7 +101,7 @@ class AlterForMailGunIntegration extends Migration
                 $table->string('Mtr_Token', 50)->after('Mtr_Tag')->nullable();
                 $table->string('Mtr_Signature', 50)->after('Mtr_Token')->nullable();
                 $table->string('Mtr_CustomVariable', 255)->after('Mtr_Signature')->nullable();
-                $table->timestamp('Mtr_TimeStamp')->after('Mtr_CustomVariable')->nullable();
+                $table->string('Mtr_TimeStamp', 25)->after('Mtr_CustomVariable')->nullable();
             }
         );
     }

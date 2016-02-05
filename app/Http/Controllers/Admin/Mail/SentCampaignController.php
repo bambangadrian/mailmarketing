@@ -161,26 +161,24 @@ class SentCampaignController extends AbstractAdminController
             } elseif ((integer)$recordCampaignType->Cgt_ID === 2) {
                 $messageView = [$mailArr['view']];
             }
-            $sentMailgunResult = \Mailgun::send(
-                $messageView,
-                $messageData,
-                function ($message) use ($mailArr) {
-                    $message->from($mailArr['from'], $mailArr['fromName']);
-                    $message->replyTo($mailArr['replyTo'], $mailArr['replyToName']);
-                    $message->to($mailArr['mailList']['email'], $mailArr['mailList']['name']);
-                    foreach ($mailArr['to'] as $subscriber) {
-                        $message->bcc($subscriber['email'], $subscriber['name']);
-                    }
-                    $message->subject($mailArr['subject']);
-                    $message->tag($mailArr['tag']);
-                    $message->campaign($mailArr['campaignID']);
-                    $message->trackClicks(true);
-                    $message->trackOpens(true);
-                    $message->tracking(true);
-                }
-            );
             # Insert into sent mail table.
-            foreach ($massSentMailData as $row) {
+            foreach ($massSentMailData as $index => $row) {
+                $sentMailgunResult = \Mailgun::send(
+                    $messageView,
+                    $messageData,
+                    function ($message) use ($mailArr, $index) {
+                        $message->from($mailArr['from'], $mailArr['fromName']);
+                        $message->replyTo($mailArr['replyTo'], $mailArr['replyToName']);
+                        //$message->to($mailArr['mailList']['email'], $mailArr['mailList']['name']);
+                        $message->to($mailArr['to'][$index]['email'], $mailArr['to'][$index]['name']);
+                        $message->subject($mailArr['subject']);
+                        $message->tag($mailArr['tag']);
+                        $message->campaign($mailArr['campaignID']);
+                        $message->trackClicks(true);
+                        $message->trackOpens(true);
+                        $message->tracking(true);
+                    }
+                );
                 $row = array_merge($row, ['Sm_MailgunSentMailID' => $sentMailgunResult->http_response_body->id]);
                 SentMail::create($row);
             }

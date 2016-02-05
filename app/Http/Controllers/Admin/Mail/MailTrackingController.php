@@ -2,6 +2,7 @@
 namespace MailMarketing\Http\Controllers\Admin\Mail;
 
 use MailMarketing\Http\Controllers\Admin\AbstractAdminController;
+use MailMarketing\Models\MailTracking;
 
 class MailTrackingController extends AbstractAdminController
 {
@@ -16,12 +17,12 @@ class MailTrackingController extends AbstractAdminController
         $this->setEnableUpdate(false);
         parent::__construct();
         # Set content directory.
-        $this->contentDir = 'mail/sent';
+        $this->contentDir = 'mail/tracking';
         # Set page attributes.
-        $this->data['pageHeader'] = 'Sent Mail';
-        $this->data['pageDescription'] = 'All Sent Mail Data';
+        $this->data['pageHeader'] = 'Mail Tracking';
+        $this->data['pageDescription'] = 'All log data for mail tracking';
         $this->data['activeMenu'] = 'mail';
-        $this->data['activeSubMenu'] = 'sentMail';
+        $this->data['activeSubMenu'] = 'mailTracking';
     }
 
     /**
@@ -31,14 +32,23 @@ class MailTrackingController extends AbstractAdminController
      */
     public function index()
     {
-        $this->data['model'] = SentMail::notDeleted()
-                                       ->with(
-                                           'subscriberList.subscriber',
-                                           'mailSchedule.campaign',
-                                           'subscriberList.subscriberGroup',
-                                           'subscriberList.subscriberGroup.mailList'
-                                       )->paginate(10);
+        $this->data['model'] = MailTracking::orderBy('Mtr_CreatedOn', 'desc')->paginate(10);
 
         return parent::index();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  integer $id Row ID of model that want to edit.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $this->data['pageDescription'] = 'Detail of mail tracking log data';
+        $this->data['model'] = MailTracking::find($id);
+
+        return parent::edit($id);
     }
 }

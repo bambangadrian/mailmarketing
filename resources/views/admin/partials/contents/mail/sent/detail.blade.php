@@ -16,7 +16,7 @@
                 ?>
                 <div class="form-group">
                     {!! Form::label('Email', 'Email Address') !!}
-                    {!! Form::text('Email', $model->subscriberList->subscriber->Sbr_EmailAddress, ['class' => 'form-control', $fieldAttribute]) !!}
+                    {!! Form::email('Email', $model->subscriberList->subscriber->Sbr_EmailAddress, ['class' => 'form-control', $fieldAttribute]) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Campaign', 'Campaign Name') !!}
