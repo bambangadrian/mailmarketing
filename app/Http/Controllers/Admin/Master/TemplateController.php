@@ -43,7 +43,7 @@ class TemplateController extends AbstractAdminController
     public function create()
     {
         $this->data['pageDescription'] = 'Create mail template item';
-
+        $this->data['buttons'] = $this->renderPartialView('button');
         return parent::create();
     }
 
@@ -58,7 +58,7 @@ class TemplateController extends AbstractAdminController
     {
         $this->data['pageDescription'] = 'Update mail template item';
         $this->data['model'] = Template::find($id);
-
+        $this->data['buttons'] = $this->renderPartialView('button');
         return parent::edit($id);
     }
 
