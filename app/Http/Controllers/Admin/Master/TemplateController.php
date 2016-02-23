@@ -31,7 +31,6 @@ class TemplateController extends AbstractAdminController
     public function index()
     {
         $this->data['model'] = Template::notDeleted()->paginate(10);
-
         return parent::index();
     }
 
@@ -67,55 +66,98 @@ class TemplateController extends AbstractAdminController
      *
      * @param UpdateTemplateRequest $request Request object parameter.
      *
-     * @throws \Exception
-     *
+     * @throws \RuntimeException If any error raised.
      * @return \Illuminate\Http\Response
      */
     public function store(UpdateTemplateRequest $request)
     {
         try {
             # Save the template file.
-            if ($request->hasFile('Tpl_File') === true and $this->doUploadZipTemplate($request->file('Tpl_File'), $request->get('Tpl_Name')) === false) {
-                throw new \Exception('Failed to upload zip template file');
+            if ($request->hasFile('Tpl_File') === true) {
+                if ($this->doUploadZipTemplate($request->file('Tpl_File'), $request->get('Tpl_Name')) === false) {
+                    throw new \RuntimeException('Failed to upload zip template file');
+                }
+            } else {
+                if ($this->doUploadTemplateFile($request->get('Tpl_Code'), $request->get('Tpl_Name')) === false) {
+                    throw new \RuntimeException('Failed to upload template content');
+                }
             }
             # Start transaction and store the data to database.
             \DB::beginTransaction();
             $record = Template::create($request->except('_method', '_token'));
             \DB::commit();
-
-            return redirect()->action($this->controllerName.'@edit', $record->getKey());
+            return redirect()->action($this->controllerName . '@edit', $record->getKey());
         } catch (\Exception $e) {
             \DB::rollback();
-
-            return redirect()->action($this->controllerName.'@create')->withErrors($e->getMessage())->withInput();
+            return redirect()->action($this->controllerName . '@create')->withErrors($e->getMessage())->withInput();
         }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateTemplateRequest $request Request object parameter.
-     * @param  integer               $id      Model ID parameter.
+     * @param UpdateTemplateRequest $request Request object parameter.
+     * @param integer               $id      Model ID parameter.
      *
+     * @throws \RuntimeException If any error raised.
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateTemplateRequest $request, $id)
     {
-        $redirectPath = action($this->controllerName.'@edit', $id);
+        $redirectPath = action($this->controllerName . '@edit', $id);
         try {
-            if ($request->hasFile('Tpl_File') === true and $this->doUploadZipTemplate($request->file('Tpl_File'), $request->get('Tpl_Name')) === false) {
-                throw new \Exception('Failed to upload zip template file');
+            # Save the template file.
+            if ($request->hasFile('Tpl_File') === true) {
+                if ($this->doUploadZipTemplate($request->file('Tpl_File'), $request->get('Tpl_Name')) === false) {
+                    throw new \RuntimeException('Failed to upload zip template file');
+                }
+            } else {
+                if ($this->doUploadTemplateFile($request->get('Tpl_Code'), $request->get('Tpl_Name')) === false) {
+                    throw new \RuntimeException('Failed to upload template content');
+                }
             }
             $record = Template::find($id);
+            if ($record->Tpl_Name !== $request->get('Tpl_Name')) {
+                $storageViewPath = storage_path('app/resources/views/');
+                # Rename the directory.
+                $sourceDir = $storageViewPath . camel_case($record->Tpl_Name);
+                $destinationDir = $storageViewPath . camel_case($request->get('Tpl_Name'));
+                if (opendir($sourceDir) !== null and rename($sourceDir, $destinationDir) === false) {
+                    throw new \RuntimeException('Failed to rename directory');
+                }
+            }
             \DB::beginTransaction();
             $record->fill($request->except('_method', '_token'));
             $record->save();
             \DB::commit();
-
             return redirect($redirectPath);
         } catch (\Exception $e) {
             //\DB::saveRecord();
             return redirect($redirectPath)->withErrors($e->getMessage())->withInput();
+        }
+    }
+
+    /**
+     * Do upload template file.
+     *
+     * @param string $content       Content string parameter.
+     * @param string $directoryName Directory name parameter.
+     * @param string $fileName      File name parameter.
+     *
+     * @throws \RuntimeException If any error raised.
+     * @return boolean
+     */
+    private function doUploadTemplateFile($content, $directoryName, $fileName = 'index.blade.php')
+    {
+        try {
+            $storageViewPath = 'resources/views/';
+            $uploadDir = camel_case($directoryName);
+            $uploadPath = $storageViewPath . $uploadDir;
+            if (\Storage::disk('local')->makeDirectory($uploadPath) === true) {
+                return \Storage::disk('local')->put($uploadPath . '/' . $fileName, $content);
+            }
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage());
         }
     }
 
@@ -125,28 +167,25 @@ class TemplateController extends AbstractAdminController
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file          Uploaded file object parameter.
      * @param string                                              $directoryName Directory name parameter.
      *
-     * @throws \Exception If any error raised when upload and archive zip template file.
-     *
+     * @throws \RuntimeException If any error raised when upload and archive zip template file.
      * @return boolean
      */
     private function doUploadZipTemplate(UploadedFile $file, $directoryName)
     {
         try {
-            $fileName = $file->getFilename().'.'.$file->getClientOriginalExtension();
+            $fileName = $file->getFilename() . '.' . $file->getClientOriginalExtension();
             $storageViewPath = 'resources/views/';
-            $uploadDir = camel_case($directoryName).'/';
-            \Storage::disk('local')->put($storageViewPath.$fileName, \File::get($file));
-            $zipSource = storage_path('app/'.$storageViewPath.$fileName);
-            $extractDestination = storage_path('app/'.$storageViewPath.$uploadDir);
+            $uploadDir = camel_case($directoryName) . '/';
+            \Storage::disk('local')->put($storageViewPath . $fileName, \File::get($file));
+            $zipSource = storage_path('app/' . $storageViewPath . $fileName);
+            $extractDestination = storage_path('app/' . $storageViewPath . $uploadDir);
             if (Helper::extractZip($zipSource, $extractDestination)) {
-                \Storage::delete($storageViewPath.$fileName);
-
+                \Storage::delete($storageViewPath . $fileName);
                 return true;
             }
-
             return false;
         } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+            throw new \RuntimeException($e->getMessage());
         }
     }
 }
