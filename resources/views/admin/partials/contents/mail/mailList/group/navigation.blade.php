@@ -1,0 +1,1 @@
+<a class="btn btn-default btn-flat" href="{!! action('Admin\Mail\MailListController@edit', $listID) !!}"><i class="fa fa-history"></i> Mailing List</a>

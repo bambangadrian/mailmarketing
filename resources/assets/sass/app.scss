@@ -1,6 +1,108 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+label.required:after {
+  content: " *";
+  color: #d00;
+}
 
-table tr th {
-  background: #3C8DBC;
-  color: #fff;
+// Override main header logo from adminLTE
+.main-header .logo {
+  font-size: 18px;
+}
+
+.box-body {
+  .data-listing {
+    table {
+      thead {
+        tr {
+          th {
+            vertical-align: middle;
+            background: #3C8DBC;
+            color: #fff;
+          }
+
+          td {
+            background: #eee;
+          }
+
+          th.rowNumber, td.rowNumber {
+            width: 50px !important;
+          }
+          th.rowNumber, th.rowActive, th.rowFloat, td.rowNumber, td.rowActive, td.rowFloat {
+            text-align: center;
+          }
+        }
+      }
+      tbody {
+        tr {
+          td.rowNumber, td.rowActive, td.rowFloat {
+            text-align: center;
+          }
+          &:hover td {
+            cursor: pointer;
+          }
+        }
+
+      }
+    }
+  }
+}
+
+.alert-message {
+  z-index: 9999;
+  position: absolute;
+  left: 50%;
+  padding: 10px;
+  background: #eee;
+  border: 1px solid #ddd;
+  min-width: 200px;
+
+}
+
+@media (max-width: 767px) {
+  .alert-message {
+    transform: translate(-50%, 0);
+  }
+}
+
+form {
+  margin-bottom: 10px;
+  input.invalid {
+    border-color: #d00;
+  }
+  fieldset {
+    margin-bottom: 20px;
+    legend {
+      background-color: rgba(240, 240, 240, .7);
+      padding: 5px 10px;
+      border-top: 1px solid #e5e5e5;
+      border-right: 1px solid #e5e5e5;
+      border-left: 5px solid #e5e5e5;
+    }
+    & > div {
+      &.form-group {
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+    }
+  }
+  input + input {
+    margin-top: 2px;
+  }
+}
+
+.content-footer {
+  margin: auto;
+  padding: 15px;
+  .box-header {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .box-body {
+    max-height: 400px;
+    overflow: auto;
+  }
+}
+
+.btn-app {
+  margin: 0 !important;
 }

@@ -20,6 +20,7 @@ class PermissionSeeder extends Seeder
                 'Pm_Name'        => 'Show All',
                 'Pm_Slug'        => 'show-all',
                 'Pm_Description' => 'Show all menu',
+                'Pm_Active'      => 1,
                 'Pm_CreatedOn'   => Carbon\Carbon::now(),
                 'Pm_CreatedBy'   => 1,
                 'Pm_GUID'        => (string)Uuid::generate(4)
@@ -28,6 +29,7 @@ class PermissionSeeder extends Seeder
                 'Pm_Name'        => 'Show Campaign',
                 'Pm_Slug'        => 'show-campaign',
                 'Pm_Description' => 'Only show campaign menu',
+                'Pm_Active'      => 1,
                 'Pm_CreatedOn'   => Carbon\Carbon::now(),
                 'Pm_CreatedBy'   => 1,
                 'Pm_GUID'        => (string)Uuid::generate(4)

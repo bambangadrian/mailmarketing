@@ -20,7 +20,7 @@ class CreateUserAccountTable extends Migration
                 $table->string('Usr_Email', 50);
                 $table->char('Usr_Password', 128);
                 $table->char('Usr_Token', 128)->nullable();
-                $table->char('Usr_Active', 1)->default('Y');
+                $table->boolean('Usr_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Usr_CreatedOn');
                 $table->timestamp('Usr_ModifiedOn')->nullable();

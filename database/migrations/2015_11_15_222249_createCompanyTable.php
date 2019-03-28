@@ -25,7 +25,7 @@ class CreateCompanyTable extends Migration
                 $table->char('Cpy_PostCode', 6)->nullable();
                 $table->string('Cpy_Country', 25)->nullable();
                 $table->string('Cpy_TimeZone', 15);
-                $table->char('Cpy_Active', 1)->default('Y');
+                $table->boolean('Cpy_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Cpy_CreatedOn');
                 $table->timestamp('Cpy_ModifiedOn')->nullable();

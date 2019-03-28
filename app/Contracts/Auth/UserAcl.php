@@ -36,6 +36,7 @@ trait UserAcl
             },
             $this->roles->pluck('Ur_Slug')->toArray()
         );
+
         return in_array(strtolower(trim($role)), $roles, true);
     }
 
@@ -69,6 +70,7 @@ trait UserAcl
     {
         $permissions = $this->getAllPermissionsFormAllRoles();
         $result = array_intersect($permissions, $permissionSlug);
+
         return count($permissionSlug) === count($result);
     }
 
@@ -80,6 +82,7 @@ trait UserAcl
     protected function getAllPermissionsFormAllRoles()
     {
         $permissions = $this->roles->load('permissions')->pluck('permissions')->toArray();
+
         return array_map(
             'strtolower',
             array_unique(

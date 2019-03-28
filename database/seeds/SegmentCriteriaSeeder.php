@@ -18,12 +18,14 @@ class SegmentCriteriaSeeder extends Seeder
         $segmentCriterias = [
             [
                 'Sc_Name'      => 'Adult',
+                'Sc_Active'    => 1,
                 'Sc_CreatedOn' => Carbon\Carbon::now(),
                 'Sc_CreatedBy' => 1,
                 'Sc_GUID'      => (string)Uuid::generate(4)
             ],
             [
                 'Sc_Name'      => 'Kids',
+                'Sc_Active'    => 1,
                 'Sc_CreatedOn' => Carbon\Carbon::now(),
                 'Sc_CreatedBy' => 1,
                 'Sc_GUID'      => (string)Uuid::generate(4)

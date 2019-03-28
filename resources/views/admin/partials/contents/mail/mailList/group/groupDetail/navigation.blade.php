@@ -1,0 +1,1 @@
+<a class="btn btn-default btn-flat" href="{!! action('Admin\Mail\SubscriberGroupController@edit', [$listID, $groupID]) !!}"><i class="fa fa-history"></i> Subscriber Group</a>

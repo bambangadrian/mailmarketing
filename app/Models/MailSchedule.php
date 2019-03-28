@@ -1,31 +1,19 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use MailMarketing\Contracts\Model\ActiveScopeModel;
 
-class MailSchedule extends Model
+class MailSchedule extends AbstractBaseModel
 {
 
-    /**
-     * Indicates if the model should not be timestamped.
-     *
-     * @var boolean $timestamps
-     */
-    public $timestamps = false;
+    use ActiveScopeModel;
 
     /**
-     * Table name property.
+     * Fillable field using for mass assignment.
      *
-     * @var string $table
+     * @var array $fillable
      */
-    protected $table = 'MailSchedule';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Msd_ID';
+    protected $fillable = ['Msd_CampaignID', 'Msd_SubscriberGroupID', 'Msd_ExecutedDate', 'Msd_IsExecuted'];
 
     /**
      * Campaign relationship.
@@ -35,6 +23,16 @@ class MailSchedule extends Model
     public function campaign()
     {
         return $this->belongsTo('MailMarketing\Models\Campaign', 'Msd_CampaignID');
+    }
+
+    /**
+     * Subscriber group relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function subscriberGroup()
+    {
+        return $this->belongsTo('MailMarketing\Models\SubscriberGroup', 'Msd_SubscriberGroupID');
     }
 
     /**

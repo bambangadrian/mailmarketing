@@ -17,7 +17,7 @@ class CreateSegmentTable extends Migration
             function (Blueprint $table) {
                 $table->increments('Seg_ID');
                 $table->string('Seg_Name', 50);
-                $table->char('Seg_Active', 1)->default('Y');
+                $table->boolean('Seg_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Seg_CreatedOn');
                 $table->timestamp('Seg_ModifiedOn')->nullable();

@@ -17,7 +17,7 @@ class CreateCampaignTypeTable extends Migration
             function (Blueprint $table) {
                 $table->increments('Cgt_ID');
                 $table->string('Cgt_Name', 50);
-                $table->char('Cgt_Active', 1)->default('Y');
+                $table->boolean('Cgt_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Cgt_CreatedOn');
                 $table->timestamp('Cgt_ModifiedOn')->nullable();

@@ -29,6 +29,7 @@ class CreateDssResultTable extends Migration
                 # Add the uuid column field.
                 $table->char('Dsr_GUID', 36);
                 # Add all the table constraint.
+                $table->unique('Dsr_AlternativeID', 'Idx_DssResult_Dsr_AlternativeID');
                 $table->foreign('Dsr_AlternativeID', 'Idx_DssResult_Dsr_AlternativeID_DssAlternative_Dal_ID')
                       ->references('Dal_ID')
                       ->on('DssAlternative');

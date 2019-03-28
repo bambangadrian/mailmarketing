@@ -19,6 +19,7 @@ class PermissionRoleSeeder extends Seeder
             [
                 'Pmr_PermissionID' => 1,
                 'Pmr_RoleID'       => 1,
+                'Pmr_Active'       => 1,
                 'Pmr_CreatedOn'    => Carbon\Carbon::now(),
                 'Pmr_CreatedBy'    => 1,
                 'Pmr_GUID'         => (string)Uuid::generate(4)
@@ -26,6 +27,7 @@ class PermissionRoleSeeder extends Seeder
             [
                 'Pmr_PermissionID' => 2,
                 'Pmr_RoleID'       => 3,
+                'Pmr_Active'       => 1,
                 'Pmr_CreatedOn'    => Carbon\Carbon::now(),
                 'Pmr_CreatedBy'    => 1,
                 'Pmr_GUID'         => (string)Uuid::generate(4)

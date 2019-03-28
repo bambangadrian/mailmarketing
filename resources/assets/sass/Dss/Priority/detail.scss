@@ -1,0 +1,39 @@
+div.data-matrix {
+  overflow-x: auto;
+  h4{
+    &.data-matrix-title{
+      border-bottom: 1px solid #ddd;
+      padding: 5px;
+      color: #666;
+      margin: 15px 0;
+      font-size: 16px;
+    }
+  }
+  table {
+    thead, tbody {
+      tr {
+        th, td {
+          text-align: center;
+          &.table-compare, &.table-title{
+            color: white;
+          }
+          &.table-compare {
+            background-color: #55aadd;
+            font-weight: bold;
+          }
+          &.table-title {
+            background-color: #3C8DBC;
+          }
+          select {
+            padding: 2px;
+            margin: 0;
+            font-size: 12px;
+            font-weight: bold;
+            height: auto;
+            min-width: 50px !important;
+          }
+        }
+      }
+    }
+  }
+}

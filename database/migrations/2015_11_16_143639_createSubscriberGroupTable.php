@@ -20,7 +20,7 @@ class CreateSubscriberGroupTable extends Migration
                 $table->integer('Sbg_ParentID')->unsigned()->nullable();
                 $table->string('Sbg_Name', 50);
                 $table->string('Sbg_Description', 255)->nullable();
-                $table->char('Sbg_Active', 1)->default('Y');
+                $table->boolean('Sbg_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Sbg_CreatedOn');
                 $table->timestamp('Sbg_ModifiedOn')->nullable();

@@ -17,7 +17,7 @@ class CreateMailTrackingStatusTable extends Migration
             function (Blueprint $table) {
                 $table->increments('Mts_ID');
                 $table->string('Mts_Name', 50);
-                $table->char('Mts_Active', 1)->default('Y');
+                $table->boolean('Mts_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Mts_CreatedOn');
                 $table->timestamp('Mts_ModifiedOn')->nullable();

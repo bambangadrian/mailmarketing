@@ -1,7 +1,6 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -9,39 +8,19 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use MailMarketing\Contracts\Auth\UserAcl;
+use MailMarketing\Contracts\Model\ActiveScopeModel;
 
-class UserAccount extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
+class UserAccount extends AbstractBaseModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
 
-    use Authenticatable, Authorizable, CanResetPassword, UserAcl;
-
-    /**
-     * Indicates if the model should not be timestamped.
-     *
-     * @var boolean $timestamps
-     */
-    public $timestamps = false;
-
-    /**
-     * Table name property.
-     *
-     * @var string $table
-     */
-    protected $table = 'UserAccount';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Usr_ID';
+    use Authenticatable, Authorizable, CanResetPassword, UserAcl, ActiveScopeModel;
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array $hidden
      */
-    protected $hidden = ['Usr_Password', 'Usr_Token', 'Usr_GUID'];
+    protected $hidden = ['Usr_Password', 'Usr_Token'];
 
     /**
      * The attributes that are mass assignable.
@@ -119,6 +98,6 @@ class UserAccount extends Model implements AuthenticatableContract, Authorizable
      */
     public function campaigns()
     {
-        return $this->hasMany('MailMarketing\Models\Campaign', 'Cpg_CreatedOn', 'Usr_ID');
+        return $this->hasMany('MailMarketing\Models\Campaign', 'Cpg_CreatedOn');
     }
 }

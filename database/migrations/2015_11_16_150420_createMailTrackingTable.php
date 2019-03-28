@@ -16,12 +16,11 @@ class CreateMailTrackingTable extends Migration
             'MailTracking',
             function (Blueprint $table) {
                 $table->increments('Mtr_ID');
-                $table->integer('Mtr_SentMailID')->unsigned();
-                $table->integer('Mtr_StatusID')->unsigned();
+                $table->integer('Mtr_SentMailID')->unsigned()->nullable();
+                $table->integer('Mtr_StatusID')->unsigned()->nullable();
                 $table->string('Mtr_UserAgent', 255)->nullable();
                 $table->string('Mtr_Location', 100)->nullable();
                 $table->char('Mtr_IpAddress', 15)->nullable();
-                $table->char('Mtr_Active', 1)->default('Y');
                 # Create all timestamps.
                 $table->timestamp('Mtr_CreatedOn');
                 $table->timestamp('Mtr_ModifiedOn')->nullable();

@@ -1,0 +1,2 @@
+<button onclick="window.location.href='{!! action('Admin\Mail\MailListMemberController@index', $model->getKey()) !!}'" type="button" class="btn btn-app bg-green-gradient"><i class="fa fa-users"></i> Subscribers</button>
+<button onclick="window.location.href='{!! action('Admin\Mail\SubscriberGroupController@index', $model->getKey()) !!}'" type="button" class="btn btn-app bg-green-gradient"><i class="fa fa-object-group"></i> Groups</button>

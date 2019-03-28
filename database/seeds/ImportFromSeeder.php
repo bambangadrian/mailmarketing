@@ -19,6 +19,7 @@ class ImportFromSeeder extends Seeder
             [
                 'Imf_Name'        => 'Old Database',
                 'Imf_Description' => 'Import from old database',
+                'Imf_Active'      => 1,
                 'Imf_CreatedOn'   => Carbon\Carbon::now(),
                 'Imf_CreatedBy'   => 1,
                 'Imf_GUID'        => (string)Uuid::generate(4)
@@ -26,6 +27,7 @@ class ImportFromSeeder extends Seeder
             [
                 'Imf_Name'        => 'Excel',
                 'Imf_Description' => 'Import from excel',
+                'Imf_Active'      => 1,
                 'Imf_CreatedOn'   => Carbon\Carbon::now(),
                 'Imf_CreatedBy'   => 1,
                 'Imf_GUID'        => (string)Uuid::generate(4)
@@ -33,6 +35,7 @@ class ImportFromSeeder extends Seeder
             [
                 'Imf_Name'        => 'Register',
                 'Imf_Description' => 'Registered subscriber',
+                'Imf_Active'      => 1,
                 'Imf_CreatedOn'   => Carbon\Carbon::now(),
                 'Imf_CreatedBy'   => 1,
                 'Imf_GUID'        => (string)Uuid::generate(4)
@@ -40,6 +43,7 @@ class ImportFromSeeder extends Seeder
             [
                 'Imf_Name'        => 'Manual Input',
                 'Imf_Description' => 'Manual input subscriber registration',
+                'Imf_Active'      => 1,
                 'Imf_CreatedOn'   => Carbon\Carbon::now(),
                 'Imf_CreatedBy'   => 1,
                 'Imf_GUID'        => (string)Uuid::generate(4)

@@ -1,31 +1,24 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use MailMarketing\Contracts\Model\ActiveScopeModel;
 
-class SubscriberGroupDetail extends Model
+class SubscriberGroupDetail extends AbstractBaseModel
 {
 
-    /**
-     * Indicates if the model should not be timestamped.
-     *
-     * @var boolean $timestamps
-     */
-    public $timestamps = false;
+    use ActiveScopeModel;
 
     /**
-     * Table name property.
+     * Fillable field using for mass assignment.
      *
-     * @var string $table
+     * @var array $fillable
      */
-    protected $table = 'SubscriberGroupDetail';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Sgd_ID';
+    protected $fillable = [
+        'Sgd_GroupID',
+        'Sgd_SubscriberID',
+        'Sgd_SubscribedVia',
+        'Sgd_SubscribedOn'
+    ];
 
     /**
      * Subscriber group relationship.

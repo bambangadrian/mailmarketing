@@ -17,7 +17,7 @@ class CreateCampaignCategoryTable extends Migration
             function (Blueprint $table) {
                 $table->increments('Cc_ID');
                 $table->string('Cc_Name', 50);
-                $table->char('Cc_Active', 1)->default('Y');
+                $table->boolean('Cc_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Cc_CreatedOn');
                 $table->timestamp('Cc_ModifiedOn')->nullable();

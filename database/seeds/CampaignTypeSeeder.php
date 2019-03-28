@@ -18,12 +18,14 @@ class CampaignTypeSeeder extends Seeder
         $campaignTypes = [
             [
                 'Cgt_Name'      => 'Plain Text',
+                'Cgt_Active'    => 1,
                 'Cgt_CreatedOn' => Carbon\Carbon::now(),
                 'Cgt_CreatedBy' => 1,
                 'Cgt_GUID'      => (string)Uuid::generate(4)
             ],
             [
                 'Cgt_Name'      => 'HTML',
+                'Cgt_Active'    => 1,
                 'Cgt_CreatedOn' => Carbon\Carbon::now(),
                 'Cgt_CreatedBy' => 1,
                 'Cgt_GUID'      => (string)Uuid::generate(4)

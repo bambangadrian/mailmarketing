@@ -18,7 +18,7 @@ class CreateTemplateTable extends Migration
                 $table->increments('Tpl_ID');
                 $table->string('Tpl_Name', 50);
                 $table->string('Tpl_Description', 255)->nullable();
-                $table->char('Tpl_Active', 1)->default('Y');
+                $table->boolean('Tpl_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Tpl_CreatedOn');
                 $table->timestamp('Tpl_ModifiedOn')->nullable();
@@ -30,6 +30,7 @@ class CreateTemplateTable extends Migration
                 # Add the uuid column field.
                 $table->char('Tpl_GUID', 36);
                 # Add all the table constraint.
+                $table->unique('Tpl_Name', 'Idx_Template_Tpl_Name');
             }
         );
     }

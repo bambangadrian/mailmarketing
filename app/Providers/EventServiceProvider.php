@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Providers;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
@@ -13,11 +12,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
-        'MailMarketing\Events\SomeEvent' => [
-            'MailMarketing\Listeners\EventListener',
-        ],
-    ];
+    protected $listen = [];
 
     /**
      * Register any other events for your application.

@@ -18,7 +18,7 @@ class CreateSegmentDetailTable extends Migration
                 $table->increments('Sed_ID');
                 $table->integer('Sed_SegmentID')->unsigned();
                 $table->integer('Sed_SegmentCriteriaID')->unsigned();
-                $table->char('Sed_Active', 1)->default('Y');
+                $table->boolean('Sed_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Sed_CreatedOn');
                 $table->timestamp('Sed_ModifiedOn')->nullable();

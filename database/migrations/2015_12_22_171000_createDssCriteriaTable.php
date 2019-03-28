@@ -21,7 +21,7 @@ class CreateDssCriteriaTable extends Migration
                 $table->string('Dcr_Description', 255)->nullable();
                 $table->float('Dcr_EigenVector', 10, 8)->nullable();
                 $table->float('Dcr_MatrixTotal', 10, 8)->nullable();
-                $table->char('Dcr_Active', 1)->default('Y');
+                $table->boolean('Dcr_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Dcr_CreatedOn');
                 $table->timestamp('Dcr_ModifiedOn')->nullable();
@@ -36,6 +36,7 @@ class CreateDssCriteriaTable extends Migration
                 $table->foreign('Dcr_DssID', 'Idx_DssCriteria_Dcr_DssID_Dss_Dss_ID')
                       ->references('Dss_ID')
                       ->on('Dss');
+                $table->unique(['Dcr_DssID', 'Dcr_Name'], 'Idx_DssCriteria_Dcr_DssID_Dcr_Name');
             }
         );
     }

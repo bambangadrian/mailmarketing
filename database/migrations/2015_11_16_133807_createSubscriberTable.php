@@ -24,7 +24,7 @@ class CreateSubscriberTable extends Migration
                 $table->string('Sbr_Address2', 100)->nullable();
                 $table->string('Sbr_Address3', 100)->nullable();
                 $table->tinyInteger('Sbr_MemberRating')->default('0');
-                $table->char('Sbr_Active', 1)->default('Y');
+                $table->boolean('Sbr_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Sbr_CreatedOn');
                 $table->timestamp('Sbr_ModifiedOn')->nullable();

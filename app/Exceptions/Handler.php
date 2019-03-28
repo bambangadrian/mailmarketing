@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Exceptions;
 
 use Exception;
@@ -18,7 +17,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         HttpException::class,
-        ModelNotFoundException::class,
+        ModelNotFoundException::class
     ];
 
     /**

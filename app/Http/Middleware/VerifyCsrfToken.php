@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
@@ -13,6 +12,6 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+        'webhooks/mailgun/events'
     ];
 }

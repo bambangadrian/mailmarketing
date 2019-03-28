@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Http\Middleware;
 
 use Closure;
@@ -40,6 +39,10 @@ class Authenticate
                 return response('Unauthorized.', 401);
             } else {
                 return redirect()->guest('admin/login');
+            }
+        } else {
+            if ($this->auth->user()->isActivated() === false) {
+                return redirect('admin/login')->withErrors(['email' => 'Your account still not activated']);
             }
         }
 

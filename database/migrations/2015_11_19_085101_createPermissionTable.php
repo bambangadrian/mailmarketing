@@ -19,7 +19,7 @@ class CreatePermissionTable extends Migration
                 $table->string('Pm_Name', 100);
                 $table->string('Pm_Slug', 50);
                 $table->string('Pm_Description', 255)->nullable();
-                $table->char('Pm_Active', 1)->default('Y');
+                $table->boolean('Pm_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Pm_CreatedOn');
                 $table->timestamp('Pm_ModifiedOn')->nullable();

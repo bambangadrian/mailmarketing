@@ -1,5 +1,4 @@
 <?php
-
 namespace MailMarketing\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -14,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \MailMarketing\Console\Commands\Inspire::class,
+        \MailMarketing\Console\Commands\Inspire::class
     ];
 
     /**

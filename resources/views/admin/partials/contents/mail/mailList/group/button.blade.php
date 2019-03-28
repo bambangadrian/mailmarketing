@@ -1,0 +1,1 @@
+<button type="button" onclick="window.location.href='{!! action('Admin\Mail\SubscriberGroupDetailController@index', [$listID, $groupID]) !!}'" class="btn btn-app bg-green-gradient"><i class="fa fa-users"></i> Subscribers</button>

@@ -1,31 +1,45 @@
 <?php
 namespace MailMarketing\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class MailTracking extends Model
+class MailTracking extends AbstractBaseModel
 {
 
     /**
-     * Indicates if the model should not be timestamped.
+     * Fillable field using for mass assignment.
      *
-     * @var boolean $timestamps
+     * @var array $fillable
      */
-    public $timestamps = false;
-
-    /**
-     * Table name property.
-     *
-     * @var string $table
-     */
-    protected $table = 'MailTracking';
-
-    /**
-     * The primary key field name.
-     *
-     * @var string $primaryKey
-     */
-    protected $primaryKey = 'Mtr_ID';
+    protected $fillable = [
+        'Mtr_SentMailID',
+        'Mtr_StatusID',
+        'Mtr_UserAgent',
+        'Mtr_IpAddress',
+        'Mtr_EventName',
+        'Mtr_Recipient',
+        'Mtr_MessageHeaders',
+        'Mtr_MessageId',
+        'Mtr_Reason',
+        'Mtr_Code',
+        'Mtr_Error',
+        'Mtr_Description',
+        'Mtr_DomainSender',
+        'Mtr_Country',
+        'Mtr_Region',
+        'Mtr_City',
+        'Mtr_ClickedUrl',
+        'Mtr_MailingList',
+        'Mtr_DeviceType',
+        'Mtr_ClientType',
+        'Mtr_ClientName',
+        'Mtr_ClientOs',
+        'Mtr_CampaignID',
+        'Mtr_CampaignName',
+        'Mtr_Tag',
+        'Mtr_Token',
+        'Mtr_Signature',
+        'Mtr_CustomVariable',
+        'Mtr_TimeStamp'
+    ];
 
     /**
      * Sent mail relationship.

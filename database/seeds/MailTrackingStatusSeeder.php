@@ -17,43 +17,64 @@ class MailTrackingStatusSeeder extends Seeder
         # Seed the table.
         $mailTrackingStatuses = [
             [
-                'Mts_Name'      => 'open',
+                'Mts_Name'      => 'accepted',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Mts_Name'      => 'read',
+                'Mts_Name'      => 'rejected',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Mts_Name'      => 'click',
+                'Mts_Name'      => 'delivered',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Mts_Name'      => 'subscribe',
+                'Mts_Name'      => 'failed',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Mts_Name'      => 'unsubscribe',
+                'Mts_Name'      => 'opened',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Mts_Name'      => 'bounce',
+                'Mts_Name'      => 'clicked',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)
             ],
             [
-                'Mts_Name'      => 'fail',
+                'Mts_Name'      => 'unsubscribed',
+                'Mts_Active'    => 1,
+                'Mts_CreatedOn' => Carbon\Carbon::now(),
+                'Mts_CreatedBy' => 1,
+                'Mts_GUID'      => (string)Uuid::generate(4)
+            ],
+            [
+                'Mts_Name'      => 'complained',
+                'Mts_Active'    => 1,
+                'Mts_CreatedOn' => Carbon\Carbon::now(),
+                'Mts_CreatedBy' => 1,
+                'Mts_GUID'      => (string)Uuid::generate(4)
+            ],
+            [
+                'Mts_Name'      => 'stored',
+                'Mts_Active'    => 1,
                 'Mts_CreatedOn' => Carbon\Carbon::now(),
                 'Mts_CreatedBy' => 1,
                 'Mts_GUID'      => (string)Uuid::generate(4)

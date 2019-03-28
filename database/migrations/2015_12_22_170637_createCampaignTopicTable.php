@@ -17,7 +17,7 @@ class CreateCampaignTopicTable extends Migration
             function (Blueprint $table) {
                 $table->increments('Cto_ID');
                 $table->string('Cto_Name', 50);
-                $table->char('Cto_Active', 1)->default('Y');
+                $table->boolean('Cto_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Cto_CreatedOn');
                 $table->timestamp('Cto_ModifiedOn')->nullable();

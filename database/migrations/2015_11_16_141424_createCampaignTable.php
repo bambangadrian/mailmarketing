@@ -23,7 +23,7 @@ class CreateCampaignTable extends Migration
                 $table->string('Cpg_EmailAddressFrom', 50)->nullable();
                 $table->string('Cpg_EmailNameFrom', 50)->nullable();
                 $table->text('Cpg_Content')->nullable();
-                $table->char('Cpg_Active', 1)->default('Y');
+                $table->boolean('Cpg_Active')->default(0);
                 # Create all timestamps.
                 $table->timestamp('Cpg_CreatedOn');
                 $table->timestamp('Cpg_ModifiedOn')->nullable();
